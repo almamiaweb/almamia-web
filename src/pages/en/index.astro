@@ -23,7 +23,7 @@ import imgExperience from '../../assets/placeholders/service-experience.jpg';
 const lang = 'en' as const;
 const t = useTranslations(lang);
 
-const eventos = (await getEventos(lang)).filter((e) => e.data.featured).slice(0, 4);
+const eventos = await getEventos(lang);
 const testimonios = (await getTestimonios(lang)).filter((tt) => !tt.data.pending);
 
 
@@ -135,29 +135,60 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
   </section>
 
   <script>
-    function initSvcTabs() {
-      const carousel = document.querySelector('.svc-carousel');
-      const tabs = Array.from(document.querySelectorAll('.svc-tab'));
-      if (!carousel || !tabs.length) return;
+    function setupCarousel(carousel: Element, tabs: Element[] | null) {
       const slides = Array.from(carousel.querySelectorAll('.svc-slide'));
-      tabs.forEach((tab, i) => {
-        tab.addEventListener('click', () => {
-          slides[i]?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
-        });
-      });
+      if (slides.length < 1) return null;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let idx = 0;
+      let timer: number | null = null;
+      const go = (i: number) => {
+        idx = (i + slides.length) % slides.length;
+        slides[idx]?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+      };
+      const stop = () => {
+        if (timer !== null) { clearInterval(timer); timer = null; }
+      };
+      const start = () => {
+        if (reduce || slides.length < 2) return;
+        stop();
+        timer = window.setInterval(() => go(idx + 1), 3800);
+      };
+      if (tabs) tabs.forEach((t, i) => t.addEventListener('click', () => { go(i); stop(); }));
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
             if (!e.isIntersecting) return;
             const i = slides.indexOf(e.target);
-            tabs.forEach((t, j) => t.classList.toggle('is-active', j === i));
+            if (i < 0) return;
+            idx = i;
+            if (tabs) tabs.forEach((t, j) => t.classList.toggle('is-active', j === i));
           });
         },
         { root: carousel, threshold: 0.6 }
       );
       slides.forEach((s) => io.observe(s));
+      carousel.addEventListener('pointerenter', stop);
+      carousel.addEventListener('pointerleave', start);
+      carousel.addEventListener('focusin', stop);
+      carousel.addEventListener('touchstart', stop, { passive: true });
+      start();
+      return stop;
     }
-    document.addEventListener('astro:page-load', initSvcTabs);
+
+    function initCarousels() {
+      const w = window as unknown as { __almaStops?: (() => void)[] };
+      w.__almaStops?.forEach((s) => s());
+      const stops: (() => void)[] = [];
+      document.querySelectorAll('.svc-carousel').forEach((c) => {
+        const tabs = c.classList.contains('event-carousel')
+          ? null
+          : Array.from(document.querySelectorAll('.svc-tab'));
+        const stop = setupCarousel(c, tabs && tabs.length ? tabs : null);
+        if (stop) stops.push(stop);
+      });
+      w.__almaStops = stops;
+    }
+    document.addEventListener('astro:page-load', initCarousels);
   </script>
 
   <!-- Teaser Jenn -->
@@ -199,16 +230,18 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
         </div>
         <a href={route('pastEvents', lang)} class="text-sm font-semibold text-[color:var(--color-oliva-700)] link-underline reveal">{t('cta.viewAll')}</a>
       </div>
-      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
-        {eventos.slice(0, 2).map((e) => (
-          <EventCard
-            title={e.data.title}
-            story={e.data.story}
-            type={e.data.type}
-            zona={e.data.zona}
-            image={e.data.image}
-            alt={e.data.imageAlt}
-          />
+      <div class="mt-10 svc-carousel event-carousel reveal" role="region" aria-label="Experiences — slide to see more" tabindex="0">
+        {eventos.map((e) => (
+          <div class="svc-slide">
+            <EventCard
+              title={e.data.title}
+              story={e.data.story}
+              type={e.data.type}
+              zona={e.data.zona}
+              image={e.data.image}
+              alt={e.data.imageAlt}
+            />
+          </div>
         ))}
       </div>
     </section>

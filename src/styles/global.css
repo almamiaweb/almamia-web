@@ -494,31 +494,42 @@
 .svc-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.5rem 1.5rem;
   margin-top: 1.75rem;
 }
 .svc-tab {
+  position: relative;
   font-family: var(--font-mono);
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 0.5rem 0.95rem;
-  border: 1px solid var(--color-linea);
-  border-radius: 999px;
+  letter-spacing: 0.12em;
+  padding: 0.2rem 0;
+  border: 0;
   background: transparent;
   color: var(--color-suave);
   cursor: pointer;
-  transition: background-color 0.3s var(--ease-soft), color 0.3s var(--ease-soft),
-    border-color 0.3s var(--ease-soft);
+  transition: color 0.3s var(--ease-soft);
+}
+.svc-tab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 2px;
+  width: 100%;
+  background: var(--color-ocre);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease-soft);
 }
 .svc-tab:hover {
-  border-color: var(--color-oliva);
   color: var(--color-oliva-700);
 }
 .svc-tab.is-active {
-  background: var(--color-oliva-700);
-  color: var(--color-crema);
-  border-color: var(--color-oliva-700);
+  color: var(--color-carbon);
+}
+.svc-tab.is-active::after {
+  transform: scaleX(1);
 }
 
 /* Carrusel horizontal de servicios (scroll-snap) */
