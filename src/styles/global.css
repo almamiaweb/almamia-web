@@ -468,25 +468,26 @@
 }
 .fsmenu.is-open { transform: translateY(0); visibility: visible; }
 .fsmenu li { overflow: hidden; }
-.fsmenu a {
+/* Solo los enlaces de la LISTA principal son grandes (no las zonas) */
+.fsmenu li a {
   display: inline-block;
   font-family: var(--font-serif);
-  font-size: clamp(2rem, 7vw, 3.75rem);
-  line-height: 1.22;
+  font-size: clamp(1.9rem, 6vw, 3.25rem);
+  line-height: 1.18;
   color: var(--color-crema);
   text-decoration: none;
   transform: translateY(115%);
   transition: transform 0.6s var(--ease-soft), color 0.25s var(--ease-soft);
 }
-.fsmenu.is-open a { transform: translateY(0); }
-.fsmenu.is-open li:nth-child(1) a { transition-delay: 0.12s; }
-.fsmenu.is-open li:nth-child(2) a { transition-delay: 0.18s; }
-.fsmenu.is-open li:nth-child(3) a { transition-delay: 0.24s; }
-.fsmenu.is-open li:nth-child(4) a { transition-delay: 0.3s; }
-.fsmenu.is-open li:nth-child(5) a { transition-delay: 0.36s; }
-.fsmenu.is-open li:nth-child(6) a { transition-delay: 0.42s; }
-.fsmenu.is-open li:nth-child(7) a { transition-delay: 0.48s; }
-.fsmenu a:hover { color: var(--color-ocre); }
+.fsmenu.is-open li a { transform: translateY(0); }
+.fsmenu.is-open li:nth-child(1) a { transition-delay: 0.1s; }
+.fsmenu.is-open li:nth-child(2) a { transition-delay: 0.15s; }
+.fsmenu.is-open li:nth-child(3) a { transition-delay: 0.2s; }
+.fsmenu.is-open li:nth-child(4) a { transition-delay: 0.25s; }
+.fsmenu.is-open li:nth-child(5) a { transition-delay: 0.3s; }
+.fsmenu.is-open li:nth-child(6) a { transition-delay: 0.35s; }
+.fsmenu.is-open li:nth-child(7) a { transition-delay: 0.4s; }
+.fsmenu li a:hover { color: var(--color-ocre); }
 .fsmenu__close { position: absolute; top: 1.25rem; right: clamp(1.25rem, 4vw, 2.5rem); background: none; border: 0; color: var(--color-crema); cursor: pointer; transition: transform 0.3s var(--ease-soft); }
 .fsmenu__close:hover { transform: rotate(90deg); }
 

@@ -24,7 +24,7 @@ export default defineConfig({
   // i18n nativo de Astro: español en la raíz, inglés bajo /en/.
   i18n: {
     defaultLocale: 'es',
-    locales: ['es', 'en'],
+    locales: ['es', 'ca', 'en', 'de', 'it'],
     routing: {
       prefixDefaultLocale: false,
       redirectToDefaultLocale: false,
