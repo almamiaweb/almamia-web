@@ -188,7 +188,8 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
       });
       w.__almaStops = stops;
     }
-    document.addEventListener('astro:page-load', initCarousels);
+    if (document.readyState !== 'loading') initCarousels();
+    else document.addEventListener('DOMContentLoaded', initCarousels);
   </script>
 
   <!-- Teaser Jenn -->

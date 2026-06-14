@@ -113,5 +113,6 @@ const home = route('home', lang);
     });
   }
 
-  document.addEventListener('astro:page-load', initMinimalNav);
+  if (document.readyState !== 'loading') initMinimalNav();
+  else document.addEventListener('DOMContentLoaded', initMinimalNav);
 </script>

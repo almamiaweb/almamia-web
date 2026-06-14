@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css';
 import { Font } from 'astro:assets';
-import { ClientRouter } from 'astro:transitions';
 import SpeedInsights from '@vercel/speed-insights/astro';
 
 import SEO from '../components/SEO.astro';
@@ -50,9 +49,6 @@ const t = useTranslations(lang);
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-
-    {/* Transiciones suaves entre páginas (View Transitions) */}
-    <ClientRouter />
 
     {/* Fuentes: precarga la display (titulares = LCP frecuente) */}
     {/* Sin preload: display:swap pinta con Georgia al instante y no compite con la imagen LCP del hero */}
@@ -126,7 +122,8 @@ const t = useTranslations(lang);
         );
         els.forEach((el) => io.observe(el));
       }
-      document.addEventListener('astro:page-load', initReveals);
+      if (document.readyState !== 'loading') initReveals();
+      else document.addEventListener('DOMContentLoaded', initReveals);
     </script>
   </body>
 </html>
