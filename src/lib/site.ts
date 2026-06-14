@@ -49,8 +49,8 @@ export const SOCIAL: {
 } = {
   instagram: 'https://www.instagram.com/alma.mia.es/',
   instagramHandle: '@alma.mia.es',
-  // URL exacta del perfil en Take a Chef — pendiente de confirmar.
-  takeachef: '',
+  // Perfil de Jenn en Take a Chef (dato real, para sameAs / E-E-A-T).
+  takeachef: 'https://www.takeachef.com/chef/jenn-garrido-umana',
 };
 
 /** Indicador cualitativo de rango de precio (Schema.org, no es un precio real). */

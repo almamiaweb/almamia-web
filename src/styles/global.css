@@ -490,6 +490,37 @@
 .fsmenu__close { position: absolute; top: 1.25rem; right: clamp(1.25rem, 4vw, 2.5rem); background: none; border: 0; color: var(--color-crema); cursor: pointer; transition: transform 0.3s var(--ease-soft); }
 .fsmenu__close:hover { transform: rotate(90deg); }
 
+/* Tira de pestañas de servicios (deslizan el carrusel) */
+.svc-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.75rem;
+}
+.svc-tab {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--color-linea);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-suave);
+  cursor: pointer;
+  transition: background-color 0.3s var(--ease-soft), color 0.3s var(--ease-soft),
+    border-color 0.3s var(--ease-soft);
+}
+.svc-tab:hover {
+  border-color: var(--color-oliva);
+  color: var(--color-oliva-700);
+}
+.svc-tab.is-active {
+  background: var(--color-oliva-700);
+  color: var(--color-crema);
+  border-color: var(--color-oliva-700);
+}
+
 /* Carrusel horizontal de servicios (scroll-snap) */
 .svc-carousel {
   display: flex;

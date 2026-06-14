@@ -28,11 +28,11 @@ const testimonios = (await getTestimonios(lang)).filter((tt) => !tt.data.pending
 
 
 const services = [
-  { key: 'breakfasts' as const, title: 'Healthy breakfasts & brunch', blurb: 'Luminous mornings, fresh produce and wholesome pastries with thoughtful table styling.', image: imgBreakfast, alt: 'Healthy brunch table with fresh fruit and breads' },
-  { key: 'lunches' as const, title: 'Lunches & midday meals', blurb: 'Mediterranean lunches served at the pace of the day, without ever compromising on eating well.', image: imgLunch, alt: 'Mediterranean lunch plate, carefully plated' },
-  { key: 'dinners' as const, title: 'Private dinners', blurb: 'Multi-course menus made for lingering, with the cooking taken care of from start to finish.', image: imgDinner, alt: 'Private dinner table set with candles and lavender' },
-  { key: 'serviceEvents' as const, title: 'Events & celebrations', blurb: 'Birthdays and themed experiences designed as one coherent whole.', image: imgEvents, alt: 'Festive event setting with natural décor' },
-  { key: 'experience' as const, title: 'Private chef experience', blurb: 'A complete service from start to finish: from menu design to the last lingering conversation.', image: imgExperience, alt: 'Private chef finishing a plate in a kitchen' },
+  { key: 'breakfasts' as const, tab: 'Breakfast', title: 'Healthy breakfasts & brunch', blurb: 'Luminous mornings, fresh produce and wholesome pastries with thoughtful table styling.', image: imgBreakfast, alt: 'Healthy brunch table with fresh fruit and breads' },
+  { key: 'lunches' as const, tab: 'Lunch', title: 'Lunches & midday meals', blurb: 'Mediterranean lunches served at the pace of the day, without ever compromising on eating well.', image: imgLunch, alt: 'Mediterranean lunch plate, carefully plated' },
+  { key: 'dinners' as const, tab: 'Dinners', title: 'Private dinners', blurb: 'Multi-course menus made for lingering, with the cooking taken care of from start to finish.', image: imgDinner, alt: 'Private dinner table set with candles and lavender' },
+  { key: 'serviceEvents' as const, tab: 'Events', title: 'Events & celebrations', blurb: 'Birthdays and themed experiences designed as one coherent whole.', image: imgEvents, alt: 'Festive event setting with natural décor' },
+  { key: 'experience' as const, tab: 'Experience', title: 'Private chef experience', blurb: 'A complete service from start to finish: from menu design to the last lingering conversation.', image: imgExperience, alt: 'Private chef finishing a plate in a kitchen' },
 ];
 
 const faq = [
@@ -110,7 +110,15 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
       </div>
       <a href={route('services', lang)} class="text-sm font-semibold text-[color:var(--color-oliva-700)] link-underline reveal">{t('cta.viewServices')}</a>
     </div>
-    <div class="mt-10 svc-carousel reveal" role="region" aria-label="Services — slide to see more" tabindex="0">
+
+    <!-- Tab strip: each title slides the carousel to its card -->
+    <div class="svc-tabs reveal" role="tablist" aria-label="Services">
+      {services.map((s, i) => (
+        <button type="button" class:list={['svc-tab', { 'is-active': i === 0 }]} data-svc-tab={i}>{s.tab}</button>
+      ))}
+    </div>
+
+    <div class="mt-6 svc-carousel reveal" role="region" aria-label="Services — slide to see more" tabindex="0">
       {services.map((s) => (
         <div class="svc-slide">
           <ServiceCard
@@ -124,8 +132,33 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
         </div>
       ))}
     </div>
-    <p class="mt-3 font-mono text-xs uppercase tracking-[0.2em] text-[color:var(--color-suave)] reveal">← slide →</p>
   </section>
+
+  <script>
+    function initSvcTabs() {
+      const carousel = document.querySelector('.svc-carousel');
+      const tabs = Array.from(document.querySelectorAll('.svc-tab'));
+      if (!carousel || !tabs.length) return;
+      const slides = Array.from(carousel.querySelectorAll('.svc-slide'));
+      tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => {
+          slides[i]?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+        });
+      });
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            const i = slides.indexOf(e.target);
+            tabs.forEach((t, j) => t.classList.toggle('is-active', j === i));
+          });
+        },
+        { root: carousel, threshold: 0.6 }
+      );
+      slides.forEach((s) => io.observe(s));
+    }
+    document.addEventListener('astro:page-load', initSvcTabs);
+  </script>
 
   <!-- Teaser Jenn -->
   <section class="container-alma py-12">
