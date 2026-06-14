@@ -53,6 +53,17 @@ export default defineConfig({
       fallbacks: ['system-ui', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
       display: 'swap',
     },
+    {
+      // Mono editorial para etiquetas, índices de sección y detalles "de revista".
+      provider: fontProviders.fontsource(),
+      name: 'Spline Sans Mono',
+      cssVariable: '--ff-mono',
+      weights: [400, 500],
+      styles: ['normal'],
+      subsets: ['latin'],
+      fallbacks: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+      display: 'swap',
+    },
   ],
 
   // Content Security Policy de Astro 6 (hashes automáticos de scripts/estilos
