@@ -12,7 +12,7 @@ import {
   AREAS_SERVED,
   sameAsList,
 } from './site';
-import type { Locale } from '@i18n/routes';
+import type { Locale } from '../i18n/routes';
 
 type Json = Record<string, unknown>;
 

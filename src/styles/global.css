@@ -28,7 +28,7 @@
   --font-serif: var(--ff-display), Georgia, Cambria, 'Times New Roman', serif;
   --font-sans: var(--ff-body), system-ui, 'Segoe UI', 'Helvetica Neue', Arial,
     sans-serif;
-  --font-mono: var(--ff-mono), ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
   /* Escala tipográfica editorial (rítmica, no lineal) */
   --text-xs: 0.78rem;
@@ -39,21 +39,21 @@
   --text-2xl: 1.62rem;
   --text-3xl: 2.05rem;
   --text-4xl: 2.6rem;
-  --text-5xl: 3.5rem;
-  --text-6xl: 4.75rem;
-  --text-7xl: 6.25rem;
+  --text-5xl: 3.35rem;
+  --text-6xl: 4.4rem;
+  --text-7xl: 5.6rem;
 
-  /* ---- Radios casi rectos (editorial) y sombras finas ----
-     Esquinas planas + filetes en lugar de tarjetas flotantes redondeadas. */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.3rem;
-  --radius-lg: 0.4rem;
-  --radius-xl: 0.5rem;
-  --radius-2xl: 0.6rem;
+  /* ---- Radios sutiles y sombras suaves con intención ---- */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
 
-  --shadow-soft: 0 1px 0 rgba(46, 43, 40, 0.04);
-  --shadow-lift: 0 1px 2px rgba(46, 43, 40, 0.05),
-    0 18px 40px -28px rgba(46, 43, 40, 0.22);
+  --shadow-soft: 0 1px 2px rgba(46, 43, 40, 0.04),
+    0 12px 32px -16px rgba(46, 43, 40, 0.18);
+  --shadow-lift: 0 2px 6px rgba(46, 43, 40, 0.05),
+    0 28px 60px -28px rgba(46, 43, 40, 0.28);
 
   /* ---- Ritmo de animación (respetando reduced-motion en base) ---- */
   --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -155,12 +155,12 @@
     border: 0;
   }
 
-  /* Etiqueta superior tipo editorial (mono = sello "de revista") */
+  /* Etiqueta superior tipo editorial */
   .eyebrow {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
+    font-weight: 600;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--color-oliva-700);
   }
@@ -201,33 +201,13 @@
     background-color: var(--color-arena);
     transform: translateY(-2px);
   }
-  .btn-ghost {
-    background-color: var(--color-crema);
-    color: var(--color-oliva-700);
-  }
-  .btn-ghost:hover {
-    background-color: #fff;
-    transform: translateY(-2px);
-  }
 
-  /* Tarjeta editorial: plana, filete fino, sin sombra flotante */
+  /* Tarjeta editorial */
   .card-alma {
     background-color: var(--color-superficie);
     border: 1px solid var(--color-linea);
-    border-radius: var(--radius-md);
-    box-shadow: none;
-  }
-
-  /* Bloque destacado con filete ocre superior (acento de marca) */
-  .frame-top {
-    border-top: 2px solid var(--color-ocre);
-  }
-
-  /* Cabecera de sección editorial: índice mono + título serif grande */
-  .section-head {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-soft);
   }
 
   /* Prosa para legales y artículos de blog */
@@ -333,6 +313,122 @@
     border: 0;
   }
 }
+
+/* ---------- Hero a pantalla completa + CTA redondo + nav minimalista ---------- */
+
+/* Entrada escalonada del hero */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+.fx { opacity: 0; animation: fadeUp 0.9s var(--ease-soft) forwards; }
+.fx-1 { animation-delay: 0.1s; }
+.fx-2 { animation-delay: 0.25s; }
+.fx-3 { animation-delay: 0.45s; }
+
+/* Hero a sangre completa (preparado para foto o vídeo de fondo) */
+.hero-full {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  color: var(--color-crema);
+}
+.hero-full__media { position: absolute; inset: 0; z-index: -2; }
+.hero-full__media img { width: 100%; height: 100%; object-fit: cover; }
+.hero-full__veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(33, 35, 28, 0.4) 0%,
+    rgba(33, 35, 28, 0.12) 38%,
+    rgba(33, 35, 28, 0.62) 100%
+  );
+}
+
+/* CTA totalmente redondo con texto girando alrededor */
+.round-cta {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(8.5rem, 24vw, 12rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--color-crema);
+  color: var(--color-carbon);
+  text-decoration: none;
+  transition: transform 0.45s var(--ease-soft), background-color 0.3s;
+}
+.round-cta:hover { transform: scale(1.07); background: #fff; }
+.round-cta__ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 18s linear infinite; }
+.round-cta__ring text {
+  font-family: var(--font-mono);
+  font-size: 7.2px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  fill: var(--color-oliva-700);
+}
+.round-cta__icon { display: grid; place-items: center; color: var(--color-oliva-700); transition: transform 0.4s var(--ease-soft); }
+.round-cta:hover .round-cta__icon { transform: rotate(45deg); }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Navbar minimalista: texto en mix-blend para leerse sobre cualquier fondo */
+.mnav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem clamp(1.25rem, 4vw, 2.5rem);
+  color: #fff;
+  mix-blend-mode: difference;
+}
+.mnav__brand { font-family: var(--font-serif); font-size: 1.4rem; color: #fff; text-decoration: none; }
+.mnav__right { display: flex; align-items: center; gap: 1.25rem; }
+.burger {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 6px;
+  color: inherit;
+}
+.burger span { display: block; width: 30px; height: 2px; background: currentColor; }
+
+/* Menú a pantalla completa */
+.fsmenu {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: var(--color-oliva);
+  color: var(--color-crema);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  transform: translateY(-100%);
+  transition: transform 0.6s var(--ease-soft);
+  visibility: hidden;
+}
+.fsmenu.is-open { transform: translateY(0); visibility: visible; }
+.fsmenu a {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 7vw, 3.75rem);
+  line-height: 1.18;
+  color: var(--color-crema);
+  text-decoration: none;
+  transition: color 0.25s, padding-left 0.35s var(--ease-soft);
+}
+.fsmenu a:hover { color: var(--color-ocre); padding-left: 0.6rem; }
+.fsmenu__close { position: absolute; top: 1.25rem; right: clamp(1.25rem, 4vw, 2.5rem); background: none; border: 0; color: var(--color-crema); cursor: pointer; }
 
 /* Respeto absoluto a quien reduce el movimiento */
 @media (prefers-reduced-motion: reduce) {

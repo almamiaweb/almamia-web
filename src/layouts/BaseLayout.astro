@@ -1,16 +1,16 @@
 ---
-import '@styles/global.css';
+import '../styles/global.css';
 import { Font } from 'astro:assets';
 import SpeedInsights from '@vercel/speed-insights/astro';
 
-import SEO from '@organisms/SEO.astro';
-import Header from '@organisms/Header.astro';
-import Footer from '@organisms/Footer.astro';
-import WhatsAppButton from '@organisms/WhatsAppButton.astro';
-import JsonLd from '@organisms/JsonLd.astro';
-import Analytics from '@organisms/Analytics.astro';
-import { useTranslations } from '@i18n/ui';
-import type { Locale, RouteKey } from '@i18n/routes';
+import SEO from '../components/SEO.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import JsonLd from '../components/JsonLd.astro';
+import Analytics from '../components/Analytics.astro';
+import { useTranslations } from '../i18n/ui';
+import type { Locale, RouteKey } from '../i18n/routes';
 
 interface Props {
   title: string;
@@ -20,6 +20,8 @@ interface Props {
   ogImage?: string;
   ogType?: 'website' | 'article';
   noindex?: boolean;
+  /** Oculta la cabecera estándar (para la home con nav minimalista propia). */
+  hideHeader?: boolean;
   /** Datos estructurados adicionales (LocalBusiness, Service, Article…). */
   jsonLd?: Record<string, unknown>[];
 }
@@ -32,6 +34,7 @@ const {
   ogImage,
   ogType,
   noindex,
+  hideHeader = false,
   jsonLd = [],
 } = Astro.props;
 
@@ -50,7 +53,6 @@ const t = useTranslations(lang);
     {/* Fuentes: precarga la display (titulares = LCP frecuente) */}
     <Font cssVariable="--ff-display" preload />
     <Font cssVariable="--ff-body" />
-    <Font cssVariable="--ff-mono" />
 
     <SEO
       title={title}
@@ -70,7 +72,7 @@ const t = useTranslations(lang);
   <body>
     <a href="#contenido" class="skip-link">{t('common.skipToContent')}</a>
 
-    <Header lang={lang} pageKey={pageKey} />
+    {!hideHeader && <Header lang={lang} pageKey={pageKey} />}
 
     <main id="contenido">
       <slot />

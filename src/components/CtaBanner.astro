@@ -1,8 +1,7 @@
 ---
-import { route, type Locale } from '@i18n/routes';
-import { useTranslations } from '@i18n/ui';
-import { whatsappLink } from '@lib/site';
-import Rule from '@atoms/Rule.astro';
+import { route, type Locale } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+import { whatsappLink } from '../lib/site';
 
 interface Props {
   lang: Locale;
@@ -26,7 +25,7 @@ const waMsg =
 <section class="container-alma py-8">
   <div class="card-alma overflow-hidden bg-[color:var(--color-oliva)] text-[color:var(--color-crema)]">
     <div class="relative px-6 py-14 text-center md:px-16">
-      <Rule class="mx-auto" />
+      <hr class="rule-ocre mx-auto" />
       <h2 class="mt-5 text-3xl md:text-4xl text-[color:var(--color-crema)]">{title ?? defaultTitle}</h2>
       <p class="mx-auto mt-4 max-w-xl text-[color:var(--color-crema)]/90">{text ?? defaultText}</p>
       <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">

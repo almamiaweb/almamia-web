@@ -2,13 +2,13 @@
 import { Image } from 'astro:assets';
 import { render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
-import BaseLayout from '@templates/BaseLayout.astro';
-import Breadcrumbs from '@molecules/Breadcrumbs.astro';
-import CtaBanner from '@organisms/CtaBanner.astro';
-import { route } from '@i18n/routes';
-import { useTranslations } from '@i18n/ui';
-import { articleSchema } from '@lib/schema';
-import { getBlogPosts } from '@lib/content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import { route } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import { articleSchema } from '../../lib/schema';
+import { getBlogPosts } from '../../lib/content';
 
 const lang = 'es' as const;
 const slugOf = (id: string) => id.replace(/-(es|en)$/, '');

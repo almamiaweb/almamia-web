@@ -1,17 +1,17 @@
 ---
 import { Image } from 'astro:assets';
-import BaseLayout from '@templates/BaseLayout.astro';
-import AnswerBox from '@molecules/AnswerBox.astro';
-import ServiceCard from '@molecules/ServiceCard.astro';
-import EventCard from '@molecules/EventCard.astro';
-import Faq from '@organisms/Faq.astro';
-import CtaBanner from '@organisms/CtaBanner.astro';
-import SectionIndex from '@atoms/SectionIndex.astro';
-import { route } from '@i18n/routes';
-import { useTranslations } from '@i18n/ui';
-import { localBusinessSchema } from '@lib/schema';
-import { whatsappLink, SOCIAL } from '@lib/site';
-import { getEventos, getTestimonios } from '@lib/content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import EventCard from '../../components/EventCard.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import MinimalNav from '../../components/MinimalNav.astro';
+import { route } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import { localBusinessSchema } from '../../lib/schema';
+import { whatsappLink, SOCIAL } from '../../lib/site';
+import { getEventos, getTestimonios } from '../../lib/content';
 
 import heroImg from '../../assets/placeholders/hero.jpg';
 import jennImg from '../../assets/placeholders/jenn-portrait.jpg';
@@ -53,35 +53,44 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
   title="Alma Mía · Private chef in Ibiza, Barcelona & Mallorca | Jenn Garrido"
   description="Private cooking that nourishes body and soul. Jenn Garrido Umaña, private chef based in Ibiza: private dinners, healthy brunch and at-home dining experiences in Ibiza, Barcelona and Mallorca."
   jsonLd={[business]}
+  hideHeader
 >
-  <!-- Hero -->
-  <section class="container-alma grid items-center gap-10 pt-12 pb-8 md:pt-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:pt-20">
-    <div>
-      <p class="eyebrow reveal">Private chef · Ibiza · Barcelona · Mallorca</p>
-      <h1 class="mt-4 display-fluid reveal">
-        Private cooking that nourishes<br class="hidden md:block" />
-        <em class="italic text-[color:var(--color-oliva)]">body and soul</em>
-      </h1>
-      <p class="mt-6 max-w-lg text-lg text-[color:var(--color-suave)] reveal">
-        Bespoke at-home dining experiences, with seasonal produce treated with
-        respect and intention in every dish.
-      </p>
-      <div class="mt-8 flex flex-col gap-3 sm:flex-row reveal">
-        <a href={whatsappLink(waMsg)} class="btn btn-primary" data-cta="reserve">{t('cta.reserve')}</a>
-        <a href={route('contact', lang)} class="btn btn-secondary">{t('cta.contact')}</a>
-      </div>
-    </div>
-    <div class="reveal">
+  <MinimalNav lang={lang} pageKey="home" />
+
+  <!-- Full-screen hero with single round CTA -->
+  <section class="hero-full">
+    <div class="hero-full__media">
       <Image
         src={heroImg}
         alt="Alma Mía private dinner table set with linen, candles and lavender"
-        widths={[600, 900, 1200]}
-        sizes="(min-width: 1024px) 45vw, 92vw"
+        widths={[768, 1280, 1920]}
+        sizes="100vw"
         format="avif"
         loading="eager"
         fetchpriority="high"
-        class="aspect-[4/5] w-full rounded-[var(--radius-2xl)] object-cover shadow-[var(--shadow-lift)]"
       />
+    </div>
+    <div class="hero-full__veil"></div>
+    <div class="container-alma relative flex flex-1 flex-col justify-end pb-12 pt-28 md:pb-16">
+      <div class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="fx fx-1 font-mono text-sm uppercase tracking-[0.24em] text-[color:var(--color-crema)]/85">
+            Private chef · Ibiza · Barcelona · Mallorca
+          </p>
+          <h1 class="fx fx-2 mt-5 display-fluid max-w-[13ch] text-[color:var(--color-crema)]">
+            Private cooking that nourishes <em class="italic text-[color:var(--color-ocre)]">body and soul</em>
+          </h1>
+        </div>
+        <a href={whatsappLink(waMsg)} data-cta="reserve" class="round-cta fx fx-3 shrink-0 self-start md:self-end" aria-label="Book your experience">
+          <svg class="round-cta__ring" viewBox="0 0 100 100" aria-hidden="true">
+            <defs><path id="cta-ring" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0" /></defs>
+            <text><textPath href="#cta-ring" startOffset="0">BOOK YOUR EXPERIENCE · ALMA MÍA · BOOK YOUR EXPERIENCE · ALMA MÍA · </textPath></text>
+          </svg>
+          <span class="round-cta__icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" /></svg>
+          </span>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -98,8 +107,8 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
   <section class="container-alma py-12">
     <div class="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <SectionIndex n={1} label="Services" class="reveal" />
-        <h2 class="mt-3 text-3xl md:text-4xl reveal">A table for every occasion</h2>
+        <hr class="rule-ocre reveal" />
+        <h2 class="mt-4 text-3xl md:text-4xl reveal">A table for every occasion</h2>
       </div>
       <a href={route('services', lang)} class="text-sm font-semibold text-[color:var(--color-oliva-700)] link-underline reveal">{t('cta.viewServices')}</a>
     </div>
@@ -121,8 +130,8 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
   <section class="container-alma py-12">
     <div class="grid items-center gap-10 md:grid-cols-2">
       <div class="reveal order-2 md:order-1">
-        <SectionIndex n={2} label="About Jenn" />
-        <h2 class="mt-3 text-3xl md:text-4xl">Behind every dish, an intention</h2>
+        <hr class="rule-ocre" />
+        <h2 class="mt-4 text-3xl md:text-4xl">Behind every dish, an intention</h2>
         <p class="mt-5 text-[color:var(--color-suave)] leading-relaxed">
           Jenn Garrido Umaña is a Colombian chef with a decade of craft spanning
           catering, events and restaurants across several countries. Trained at Mausi
@@ -151,8 +160,8 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
     <section class="container-alma py-12">
       <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <SectionIndex n={3} label="Events" class="reveal" />
-          <h2 class="mt-3 text-3xl md:text-4xl reveal">Experiences that have come to life</h2>
+          <hr class="rule-ocre reveal" />
+          <h2 class="mt-4 text-3xl md:text-4xl reveal">Experiences that have come to life</h2>
         </div>
         <a href={route('pastEvents', lang)} class="text-sm font-semibold text-[color:var(--color-oliva-700)] link-underline reveal">{t('cta.viewAll')}</a>
       </div>
@@ -173,8 +182,8 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
 
   <!-- Testimonios -->
   <section class="container-narrow py-12 text-center">
-    <SectionIndex n={4} label="Testimonials" class="justify-center" />
-    <h2 class="mt-3 text-3xl md:text-4xl reveal">What you feel at the table</h2>
+    <hr class="rule-ocre mx-auto reveal" />
+    <h2 class="mt-4 text-3xl md:text-4xl reveal">What you feel at the table</h2>
     {testimonios.length > 0 ? (
       <div class="mt-8 grid gap-6">
         {testimonios.map((tt) => (
@@ -196,8 +205,8 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
   <!-- Instagram -->
   <section class="container-alma py-12">
     <div class="card-alma reveal flex flex-col items-center gap-4 bg-[color:var(--color-arena)] px-6 py-12 text-center">
-      <SectionIndex n={5} label="Instagram" class="justify-center" />
-      <h2 class="mt-3 text-3xl md:text-4xl">Cooking, the table and life on Instagram</h2>
+      <hr class="rule-ocre" />
+      <h2 class="text-3xl md:text-4xl">Cooking, the table and life on Instagram</h2>
       <p class="max-w-xl text-[color:var(--color-suave)]">
         I share the day-to-day of Alma Mía with a community of more than 6,000
         people. Inspiration, recipes and the table always set.

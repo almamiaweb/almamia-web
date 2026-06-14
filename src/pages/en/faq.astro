@@ -1,11 +1,11 @@
 ---
-import BaseLayout from '@templates/BaseLayout.astro';
-import Breadcrumbs from '@molecules/Breadcrumbs.astro';
-import AnswerBox from '@molecules/AnswerBox.astro';
-import Faq from '@organisms/Faq.astro';
-import CtaBanner from '@organisms/CtaBanner.astro';
-import { route } from '@i18n/routes';
-import { useTranslations } from '@i18n/ui';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import { route } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
 
 const lang = 'en' as const;
 const t = useTranslations(lang);

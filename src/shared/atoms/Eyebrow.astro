@@ -1,9 +1,0 @@
----
-/** Átomo Eyebrow: etiqueta editorial superior (versalitas espaciadas). */
-interface Props {
-  class?: string | undefined;
-}
-const { class: className = '' } = Astro.props;
----
-
-<p class={`eyebrow ${className}`}><slot /></p>
