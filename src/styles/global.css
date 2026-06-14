@@ -360,9 +360,10 @@
   background: var(--color-crema);
   color: var(--color-carbon);
   text-decoration: none;
-  transition: transform 0.45s var(--ease-soft), background-color 0.3s;
+  transition: transform 1.5s cubic-bezier(0.3, 0, 0.2, 1), background-color 0.35s;
 }
-.round-cta:hover { transform: scale(1.07); background: #fff; }
+/* Giro completo del botón: dos vueltas con arranque suave y aceleración */
+.round-cta:hover { transform: rotate(720deg) scale(1.05); background: #fff; }
 .round-cta__ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 18s linear infinite; }
 .round-cta__ring text {
   font-family: var(--font-mono);
@@ -371,11 +372,10 @@
   text-transform: uppercase;
   fill: var(--color-oliva-700);
 }
-.round-cta__icon { display: grid; place-items: center; color: var(--color-oliva-700); transition: transform 0.4s var(--ease-soft); }
-.round-cta:hover .round-cta__icon { transform: rotate(45deg); }
+.round-cta__icon { display: grid; place-items: center; color: var(--color-oliva-700); }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Navbar minimalista: texto en mix-blend para leerse sobre cualquier fondo */
+/* Navbar minimalista: crema sobre el hero, sólida (crema + tinta) al hacer scroll */
 .mnav {
   position: fixed;
   top: 0;
@@ -385,30 +385,78 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem clamp(1.25rem, 4vw, 2.5rem);
-  color: #fff;
-  mix-blend-mode: difference;
+  padding: 1.1rem clamp(1.25rem, 4vw, 2.5rem);
+  color: var(--color-crema);
+  text-shadow: 0 1px 14px rgba(20, 22, 16, 0.45);
+  transition: background-color 0.4s var(--ease-soft), color 0.4s var(--ease-soft),
+    padding 0.4s var(--ease-soft), box-shadow 0.4s var(--ease-soft);
 }
-.mnav__brand { font-family: var(--font-serif); font-size: 1.4rem; color: #fff; text-decoration: none; }
+.mnav--scrolled {
+  background-color: color-mix(in srgb, var(--color-crema) 90%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: var(--color-carbon);
+  text-shadow: none;
+  padding-block: 0.65rem;
+  box-shadow: 0 1px 0 var(--color-linea);
+}
+.mnav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+  color: inherit;
+  text-decoration: none;
+}
+/* Marca ingeniosa: punto ocre que late suave y crece al pasar el ratón */
+.mnav__mark {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-ocre);
+  animation: markPulse 3.5s ease-in-out infinite;
+  transition: transform 0.4s var(--ease-soft);
+}
+.mnav__brand:hover .mnav__mark { transform: scale(1.7); }
+@keyframes markPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
 .mnav__right { display: flex; align-items: center; gap: 1.25rem; }
+
+/* Icono de menú: dos trazos asimétricos que se igualan y giran al abrir */
 .burger {
   display: inline-flex;
   flex-direction: column;
-  gap: 6px;
+  align-items: flex-end;
+  gap: 7px;
   background: none;
   border: 0;
   cursor: pointer;
   padding: 6px;
   color: inherit;
 }
-.burger span { display: block; width: 30px; height: 2px; background: currentColor; }
+.burger span {
+  display: block;
+  height: 2px;
+  background: currentColor;
+  transition: width 0.35s var(--ease-soft), transform 0.4s var(--ease-soft);
+  transform-origin: center;
+}
+.burger span:first-child { width: 30px; }
+.burger span:last-child { width: 19px; }
+.burger:hover span:last-child { width: 30px; }
+.burger.is-active span:first-child { transform: translateY(4.5px) rotate(45deg); }
+.burger.is-active span:last-child { width: 30px; transform: translateY(-4.5px) rotate(-45deg); }
 
-/* Menú a pantalla completa */
+/* Menú a pantalla completa con revelado escalonado de los enlaces */
 .fsmenu {
   position: fixed;
   inset: 0;
   z-index: 70;
-  background: var(--color-oliva);
+  background: var(--color-oliva-700);
   color: var(--color-crema);
   display: flex;
   flex-direction: column;
@@ -419,16 +467,48 @@
   visibility: hidden;
 }
 .fsmenu.is-open { transform: translateY(0); visibility: visible; }
+.fsmenu li { overflow: hidden; }
 .fsmenu a {
+  display: inline-block;
   font-family: var(--font-serif);
   font-size: clamp(2rem, 7vw, 3.75rem);
-  line-height: 1.18;
+  line-height: 1.22;
   color: var(--color-crema);
   text-decoration: none;
-  transition: color 0.25s, padding-left 0.35s var(--ease-soft);
+  transform: translateY(115%);
+  transition: transform 0.6s var(--ease-soft), color 0.25s var(--ease-soft);
 }
-.fsmenu a:hover { color: var(--color-ocre); padding-left: 0.6rem; }
-.fsmenu__close { position: absolute; top: 1.25rem; right: clamp(1.25rem, 4vw, 2.5rem); background: none; border: 0; color: var(--color-crema); cursor: pointer; }
+.fsmenu.is-open a { transform: translateY(0); }
+.fsmenu.is-open li:nth-child(1) a { transition-delay: 0.12s; }
+.fsmenu.is-open li:nth-child(2) a { transition-delay: 0.18s; }
+.fsmenu.is-open li:nth-child(3) a { transition-delay: 0.24s; }
+.fsmenu.is-open li:nth-child(4) a { transition-delay: 0.3s; }
+.fsmenu.is-open li:nth-child(5) a { transition-delay: 0.36s; }
+.fsmenu.is-open li:nth-child(6) a { transition-delay: 0.42s; }
+.fsmenu.is-open li:nth-child(7) a { transition-delay: 0.48s; }
+.fsmenu a:hover { color: var(--color-ocre); }
+.fsmenu__close { position: absolute; top: 1.25rem; right: clamp(1.25rem, 4vw, 2.5rem); background: none; border: 0; color: var(--color-crema); cursor: pointer; transition: transform 0.3s var(--ease-soft); }
+.fsmenu__close:hover { transform: rotate(90deg); }
+
+/* Carrusel horizontal de servicios (scroll-snap) */
+.svc-carousel {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 1.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-oliva) var(--color-arena);
+  -webkit-overflow-scrolling: touch;
+}
+.svc-carousel::-webkit-scrollbar { height: 6px; }
+.svc-carousel::-webkit-scrollbar-thumb { background: var(--color-oliva); border-radius: 999px; }
+.svc-carousel::-webkit-scrollbar-track { background: var(--color-arena); border-radius: 999px; }
+.svc-slide {
+  flex: 0 0 auto;
+  width: min(82vw, 21rem);
+  scroll-snap-align: start;
+}
 
 /* Respeto absoluto a quien reduce el movimiento */
 @media (prefers-reduced-motion: reduce) {

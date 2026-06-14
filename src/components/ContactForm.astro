@@ -91,7 +91,10 @@ const services =
     invalidEmailMsg: t('form.invalidEmail'),
   }}
 >
+  function initContactForm() {
   const form = document.getElementById('contact-form');
+  if (!form || form.dataset.bound) return;
+  form.dataset.bound = '1';
   const status = document.getElementById('cf-status');
   const btn = form?.querySelector('button[type="submit"]');
 
@@ -139,6 +142,9 @@ const services =
       btn?.removeAttribute('disabled');
     }
   });
+  }
+
+  document.addEventListener('astro:page-load', initContactForm);
 </script>
 
 <style>

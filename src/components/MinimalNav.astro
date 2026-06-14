@@ -28,7 +28,7 @@ const home = route('home', lang);
 ---
 
 <div class="mnav">
-  <a href={home} class="mnav__brand" aria-label="Alma Mía">Alma Mía</a>
+  <a href={home} class="mnav__brand" aria-label="Alma Mía"><span class="mnav__mark" aria-hidden="true"></span>Alma&nbsp;Mía</a>
   <div class="mnav__right">
     <LanguageSwitch lang={lang} pageKey={pageKey} class="!text-white" />
     <button type="button" id="mnav-burger" class="burger" aria-label={t('nav.menu')} aria-controls="fsmenu" aria-expanded="false">
@@ -58,22 +58,51 @@ const home = route('home', lang);
 </nav>
 
 <script>
-  const burger = document.getElementById('mnav-burger');
-  const menu = document.getElementById('fsmenu');
-  const closeBtn = document.getElementById('fsmenu-close');
+  function initMinimalNav() {
+    const burger = document.getElementById('mnav-burger');
+    const menu = document.getElementById('fsmenu');
+    const closeBtn = document.getElementById('fsmenu-close');
+    const nav = document.querySelector('.mnav');
+    if (!burger || !menu) return;
 
-  function setMenu(open: boolean) {
-    if (!menu || !burger) return;
-    menu.classList.toggle('is-open', open);
-    menu.setAttribute('aria-hidden', String(!open));
-    burger.setAttribute('aria-expanded', String(open));
-    document.body.style.overflow = open ? 'hidden' : '';
+    const setMenu = (open: boolean) => {
+      menu.classList.toggle('is-open', open);
+      menu.setAttribute('aria-hidden', String(!open));
+      burger.classList.toggle('is-active', open);
+      burger.setAttribute('aria-expanded', String(open));
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+
+    burger.addEventListener('click', () => setMenu(!menu.classList.contains('is-open')));
+    closeBtn?.addEventListener('click', () => setMenu(false));
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+
+    if (nav) nav.classList.toggle('mnav--scrolled', window.scrollY > window.innerHeight * 0.7);
   }
 
-  burger?.addEventListener('click', () => setMenu(!menu?.classList.contains('is-open')));
-  closeBtn?.addEventListener('click', () => setMenu(false));
-  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') setMenu(false);
-  });
+  // Nav sólida al hacer scroll (contraste garantizado), registrado una sola vez
+  if (!(window as unknown as { __almaNav?: boolean }).__almaNav) {
+    (window as unknown as { __almaNav?: boolean }).__almaNav = true;
+    window.addEventListener(
+      'scroll',
+      () => {
+        const nav = document.querySelector('.mnav');
+        if (nav) nav.classList.toggle('mnav--scrolled', window.scrollY > window.innerHeight * 0.7);
+      },
+      { passive: true }
+    );
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      const menu = document.getElementById('fsmenu');
+      if (!menu?.classList.contains('is-open')) return;
+      menu.classList.remove('is-open');
+      menu.setAttribute('aria-hidden', 'true');
+      const burger = document.getElementById('mnav-burger');
+      burger?.classList.remove('is-active');
+      burger?.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  }
+
+  document.addEventListener('astro:page-load', initMinimalNav);
 </script>

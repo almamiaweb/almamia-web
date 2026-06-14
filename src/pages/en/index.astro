@@ -10,7 +10,7 @@ import MinimalNav from '../../components/MinimalNav.astro';
 import { route } from '../../i18n/routes';
 import { useTranslations } from '../../i18n/ui';
 import { localBusinessSchema } from '../../lib/schema';
-import { whatsappLink, SOCIAL } from '../../lib/site';
+import { SOCIAL } from '../../lib/site';
 import { getEventos, getTestimonios } from '../../lib/content';
 
 import heroImg from '../../assets/placeholders/hero.jpg';
@@ -27,7 +27,6 @@ const t = useTranslations(lang);
 const eventos = (await getEventos(lang)).filter((e) => e.data.featured).slice(0, 4);
 const testimonios = (await getTestimonios(lang)).filter((tt) => !tt.data.pending);
 
-const waMsg = 'Hi Jenn, I would love to book an Alma Mía experience.';
 
 const services = [
   { key: 'breakfasts' as const, title: 'Healthy breakfasts & brunch', blurb: 'Luminous mornings, fresh produce and wholesome pastries with thoughtful table styling.', image: imgBreakfast, alt: 'Healthy brunch table with fresh fruit and breads' },
@@ -81,7 +80,7 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
             Private cooking that nourishes <em class="italic text-[color:var(--color-ocre)]">body and soul</em>
           </h1>
         </div>
-        <a href={whatsappLink(waMsg)} data-cta="reserve" class="round-cta fx fx-3 shrink-0 self-start md:self-end" aria-label="Book your experience">
+        <a href={route('contact', lang)} data-cta="reserve" class="round-cta fx fx-3 shrink-0 self-start md:self-end" aria-label="Book your experience — contact">
           <svg class="round-cta__ring" viewBox="0 0 100 100" aria-hidden="true">
             <defs><path id="cta-ring" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0" /></defs>
             <text><textPath href="#cta-ring" startOffset="0">BOOK YOUR EXPERIENCE · ALMA MÍA · BOOK YOUR EXPERIENCE · ALMA MÍA · </textPath></text>
@@ -112,18 +111,21 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
       </div>
       <a href={route('services', lang)} class="text-sm font-semibold text-[color:var(--color-oliva-700)] link-underline reveal">{t('cta.viewServices')}</a>
     </div>
-    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="mt-10 svc-carousel reveal">
       {services.map((s) => (
-        <ServiceCard
-          title={s.title}
-          blurb={s.blurb}
-          href={route(s.key, lang)}
-          image={s.image}
-          alt={s.alt}
-          cta={t('cta.discover')}
-        />
+        <div class="svc-slide">
+          <ServiceCard
+            title={s.title}
+            blurb={s.blurb}
+            href={route(s.key, lang)}
+            image={s.image}
+            alt={s.alt}
+            cta={t('cta.discover')}
+          />
+        </div>
       ))}
     </div>
+    <p class="mt-3 font-mono text-xs uppercase tracking-[0.2em] text-[color:var(--color-suave)] reveal">← slide →</p>
   </section>
 
   <!-- Teaser Jenn -->

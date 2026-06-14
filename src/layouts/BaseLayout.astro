@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { Font } from 'astro:assets';
+import { ClientRouter } from 'astro:transitions';
 import SpeedInsights from '@vercel/speed-insights/astro';
 
 import SEO from '../components/SEO.astro';
@@ -49,6 +50,9 @@ const t = useTranslations(lang);
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {/* Transiciones suaves entre páginas (View Transitions) */}
+    <ClientRouter />
 
     {/* Fuentes: precarga la display (titulares = LCP frecuente) */}
     <Font cssVariable="--ff-display" preload />
@@ -112,11 +116,13 @@ const t = useTranslations(lang);
 
     {/* Micro-animaciones de entrada al scroll (respetan reduced-motion) */}
     <script>
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const els = document.querySelectorAll('.reveal');
-      if (prefersReduced || !('IntersectionObserver' in window)) {
-        els.forEach((el) => el.classList.add('is-visible'));
-      } else {
+      function initReveals() {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const els = document.querySelectorAll('.reveal');
+        if (prefersReduced || !('IntersectionObserver' in window)) {
+          els.forEach((el) => el.classList.add('is-visible'));
+          return;
+        }
         const io = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
@@ -130,6 +136,7 @@ const t = useTranslations(lang);
         );
         els.forEach((el) => io.observe(el));
       }
+      document.addEventListener('astro:page-load', initReveals);
     </script>
   </body>
 </html>
