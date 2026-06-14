@@ -6,6 +6,7 @@ import ServiceCard from '@molecules/ServiceCard.astro';
 import EventCard from '@molecules/EventCard.astro';
 import Faq from '@organisms/Faq.astro';
 import CtaBanner from '@organisms/CtaBanner.astro';
+import SectionIndex from '@atoms/SectionIndex.astro';
 import { route } from '@i18n/routes';
 import { useTranslations } from '@i18n/ui';
 import { localBusinessSchema } from '@lib/schema';
@@ -97,8 +98,8 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
   <section class="container-alma py-12">
     <div class="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <hr class="rule-ocre reveal" />
-        <h2 class="mt-4 text-3xl md:text-4xl reveal">A table for every occasion</h2>
+        <SectionIndex n={1} label="Services" class="reveal" />
+        <h2 class="mt-3 text-3xl md:text-4xl reveal">A table for every occasion</h2>
       </div>
       <a href={route('services', lang)} class="text-sm font-semibold text-[color:var(--color-oliva-700)] link-underline reveal">{t('cta.viewServices')}</a>
     </div>
@@ -120,8 +121,8 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
   <section class="container-alma py-12">
     <div class="grid items-center gap-10 md:grid-cols-2">
       <div class="reveal order-2 md:order-1">
-        <hr class="rule-ocre" />
-        <h2 class="mt-4 text-3xl md:text-4xl">Behind every dish, an intention</h2>
+        <SectionIndex n={2} label="About Jenn" />
+        <h2 class="mt-3 text-3xl md:text-4xl">Behind every dish, an intention</h2>
         <p class="mt-5 text-[color:var(--color-suave)] leading-relaxed">
           Jenn Garrido Umaña is a Colombian chef with a decade of craft spanning
           catering, events and restaurants across several countries. Trained at Mausi
@@ -150,8 +151,8 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
     <section class="container-alma py-12">
       <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <hr class="rule-ocre reveal" />
-          <h2 class="mt-4 text-3xl md:text-4xl reveal">Experiences that have come to life</h2>
+          <SectionIndex n={3} label="Events" class="reveal" />
+          <h2 class="mt-3 text-3xl md:text-4xl reveal">Experiences that have come to life</h2>
         </div>
         <a href={route('pastEvents', lang)} class="text-sm font-semibold text-[color:var(--color-oliva-700)] link-underline reveal">{t('cta.viewAll')}</a>
       </div>
@@ -172,8 +173,8 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
 
   <!-- Testimonios -->
   <section class="container-narrow py-12 text-center">
-    <hr class="rule-ocre mx-auto reveal" />
-    <h2 class="mt-4 text-3xl md:text-4xl reveal">What you feel at the table</h2>
+    <SectionIndex n={4} label="Testimonials" class="justify-center" />
+    <h2 class="mt-3 text-3xl md:text-4xl reveal">What you feel at the table</h2>
     {testimonios.length > 0 ? (
       <div class="mt-8 grid gap-6">
         {testimonios.map((tt) => (
@@ -195,8 +196,8 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
   <!-- Instagram -->
   <section class="container-alma py-12">
     <div class="card-alma reveal flex flex-col items-center gap-4 bg-[color:var(--color-arena)] px-6 py-12 text-center">
-      <hr class="rule-ocre" />
-      <h2 class="text-3xl md:text-4xl">Cooking, the table and life on Instagram</h2>
+      <SectionIndex n={5} label="Instagram" class="justify-center" />
+      <h2 class="mt-3 text-3xl md:text-4xl">Cooking, the table and life on Instagram</h2>
       <p class="max-w-xl text-[color:var(--color-suave)]">
         I share the day-to-day of Alma Mía with a community of more than 6,000
         people. Inspiration, recipes and the table always set.
