@@ -1,0 +1,38 @@
+---
+/**
+ * Átomo SectionIndex: índice numérico editorial (01 — Servicios).
+ * Aporta un detalle de "revista" que aleja el diseño de las plantillas genéricas.
+ */
+interface Props {
+  n: number;
+  label?: string | undefined;
+  class?: string | undefined;
+}
+const { n, label, class: className = '' } = Astro.props;
+const num = String(n).padStart(2, '0');
+---
+
+<span class={`section-index ${className}`}>
+  <span class="section-index__num">{num}</span>
+  {label && <span class="section-index__label">— {label}</span>}
+</span>
+
+<style>
+  .section-index {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-oliva-700);
+  }
+  .section-index__num {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+  .section-index__label {
+    color: var(--color-suave);
+  }
+</style>

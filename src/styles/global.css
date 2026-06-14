@@ -200,6 +200,14 @@
     background-color: var(--color-arena);
     transform: translateY(-2px);
   }
+  .btn-ghost {
+    background-color: var(--color-crema);
+    color: var(--color-oliva-700);
+  }
+  .btn-ghost:hover {
+    background-color: #fff;
+    transform: translateY(-2px);
+  }
 
   /* Tarjeta editorial */
   .card-alma {

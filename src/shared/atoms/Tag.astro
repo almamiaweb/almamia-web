@@ -1,0 +1,14 @@
+---
+/** Átomo Tag: etiqueta-píldora (tipo de evento, zona…). */
+interface Props {
+  variant?: 'solid' | 'outline';
+  class?: string | undefined;
+}
+const { variant = 'solid', class: className = '' } = Astro.props;
+const cls =
+  variant === 'solid'
+    ? 'bg-[color:var(--color-arena)] font-semibold text-[color:var(--color-oliva-700)]'
+    : 'border border-[color:var(--color-linea)] text-[color:var(--color-suave)]';
+---
+
+<span class={`inline-flex rounded-full px-3 py-1 text-xs ${cls} ${className}`}><slot /></span>

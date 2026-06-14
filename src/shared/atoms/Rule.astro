@@ -1,0 +1,9 @@
+---
+/** Átomo Rule: filete fino ocre, divisor recurrente de la marca. */
+interface Props {
+  class?: string | undefined;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<hr class={`rule-ocre ${className}`} aria-hidden="true" />
