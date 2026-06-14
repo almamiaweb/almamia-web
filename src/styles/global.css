@@ -532,12 +532,13 @@
   transform: scaleX(1);
 }
 
-/* Carrusel horizontal de servicios (scroll-snap) */
+/* Carrusel horizontal de servicios (scroll-snap suave) */
 .svc-carousel {
   display: flex;
   gap: 1.25rem;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity; /* proximity = desliza suave, no salta en seco */
+  scroll-behavior: smooth;
   padding-bottom: 1.25rem;
   scrollbar-width: thin;
   scrollbar-color: var(--color-oliva) var(--color-arena);
@@ -550,6 +551,31 @@
   flex: 0 0 auto;
   width: min(82vw, 21rem);
   scroll-snap-align: start;
+  transition: opacity 0.5s var(--ease-soft), transform 0.5s var(--ease-soft);
+}
+/* Énfasis de la card activa (las demás se atenúan y encogen sutilmente) */
+.svc-carousel .svc-slide:not(.is-current) {
+  opacity: 0.62;
+  transform: scale(0.97);
+}
+
+/* Feedback de pulsación (press) en cada clic — toda la web */
+.btn:active {
+  transform: scale(0.96);
+}
+.svc-tab:active {
+  opacity: 0.6;
+}
+a.card-alma:active {
+  transform: scale(0.985);
+}
+.fsmenu a:active,
+.mnav__brand:active,
+.link-underline:active {
+  opacity: 0.6;
+}
+.round-cta:active {
+  filter: brightness(0.96);
 }
 
 /* Respeto absoluto a quien reduce el movimiento */

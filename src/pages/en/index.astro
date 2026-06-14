@@ -161,6 +161,7 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
             const i = slides.indexOf(e.target);
             if (i < 0) return;
             idx = i;
+            slides.forEach((sl, j) => sl.classList.toggle('is-current', j === i));
             if (tabs) tabs.forEach((t, j) => t.classList.toggle('is-active', j === i));
           });
         },
@@ -180,10 +181,9 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
       w.__almaStops?.forEach((s) => s());
       const stops: (() => void)[] = [];
       document.querySelectorAll('.svc-carousel').forEach((c) => {
-        const tabs = c.classList.contains('event-carousel')
-          ? null
-          : Array.from(document.querySelectorAll('.svc-tab'));
-        const stop = setupCarousel(c, tabs && tabs.length ? tabs : null);
+        const section = c.closest('section');
+        const tabs = section ? Array.from(section.querySelectorAll('.svc-tab')) : [];
+        const stop = setupCarousel(c, tabs.length ? tabs : null);
         if (stop) stops.push(stop);
       });
       w.__almaStops = stops;
@@ -230,7 +230,14 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
         </div>
         <a href={route('pastEvents', lang)} class="text-sm font-semibold text-[color:var(--color-oliva-700)] link-underline reveal">{t('cta.viewAll')}</a>
       </div>
-      <div class="mt-10 svc-carousel event-carousel reveal" role="region" aria-label="Experiences — slide to see more" tabindex="0">
+
+      <div class="svc-tabs reveal" role="tablist" aria-label="Experiences">
+        {eventos.map((e, i) => (
+          <button type="button" class:list={['svc-tab', { 'is-active': i === 0 }]}>{e.data.type}</button>
+        ))}
+      </div>
+
+      <div class="mt-6 svc-carousel event-carousel reveal" role="region" aria-label="Experiences — slide to see more" tabindex="0">
         {eventos.map((e) => (
           <div class="svc-slide">
             <EventCard
