@@ -296,10 +296,6 @@
     letter-spacing: -0.02em;
   }
 
-  .text-balance {
-    text-wrap: balance;
-  }
-
   /* Solo lectores de pantalla */
   .sr-only {
     position: absolute;
@@ -341,12 +337,15 @@
   position: absolute;
   inset: 0;
   z-index: -1;
+  /* Oscurecido arriba (nav) y, sobre todo, abajo (titular) para contraste AA */
   background: linear-gradient(
-    180deg,
-    rgba(33, 35, 28, 0.4) 0%,
-    rgba(33, 35, 28, 0.12) 38%,
-    rgba(33, 35, 28, 0.62) 100%
-  );
+      180deg,
+      rgba(26, 28, 21, 0.62) 0%,
+      rgba(26, 28, 21, 0.25) 26%,
+      rgba(26, 28, 21, 0.45) 60%,
+      rgba(26, 28, 21, 0.86) 100%
+    ),
+    radial-gradient(120% 80% at 20% 100%, rgba(26, 28, 21, 0.5) 0%, transparent 60%);
 }
 
 /* CTA totalmente redondo con texto girando alrededor */
@@ -391,7 +390,8 @@
   transition: background-color 0.4s var(--ease-soft), color 0.4s var(--ease-soft),
     padding 0.4s var(--ease-soft), box-shadow 0.4s var(--ease-soft);
 }
-.mnav--scrolled {
+.mnav--scrolled,
+.mnav--solid {
   background-color: color-mix(in srgb, var(--color-crema) 90%, transparent);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);

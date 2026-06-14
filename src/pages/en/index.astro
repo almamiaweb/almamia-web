@@ -6,7 +6,6 @@ import ServiceCard from '../../components/ServiceCard.astro';
 import EventCard from '../../components/EventCard.astro';
 import Faq from '../../components/Faq.astro';
 import CtaBanner from '../../components/CtaBanner.astro';
-import MinimalNav from '../../components/MinimalNav.astro';
 import { route } from '../../i18n/routes';
 import { useTranslations } from '../../i18n/ui';
 import { localBusinessSchema } from '../../lib/schema';
@@ -52,10 +51,8 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
   title="Alma Mía · Private chef in Ibiza, Barcelona & Mallorca | Jenn Garrido"
   description="Private cooking that nourishes body and soul. Jenn Garrido Umaña, private chef based in Ibiza: private dinners, healthy brunch and at-home dining experiences in Ibiza, Barcelona and Mallorca."
   jsonLd={[business]}
-  hideHeader
+  navOverlay
 >
-  <MinimalNav lang={lang} pageKey="home" />
-
   <!-- Full-screen hero with single round CTA -->
   <section class="hero-full">
     <div class="hero-full__media">
@@ -80,15 +77,17 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
             Private cooking that nourishes <em class="italic text-[color:var(--color-ocre)]">body and soul</em>
           </h1>
         </div>
-        <a href={route('contact', lang)} data-cta="reserve" class="round-cta fx fx-3 shrink-0 self-start md:self-end" aria-label="Book your experience — contact">
-          <svg class="round-cta__ring" viewBox="0 0 100 100" aria-hidden="true">
-            <defs><path id="cta-ring" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0" /></defs>
-            <text><textPath href="#cta-ring" startOffset="0">BOOK YOUR EXPERIENCE · ALMA MÍA · BOOK YOUR EXPERIENCE · ALMA MÍA · </textPath></text>
-          </svg>
-          <span class="round-cta__icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" /></svg>
-          </span>
-        </a>
+        <div class="fx fx-3 shrink-0 self-start md:self-end">
+          <a href={route('contact', lang)} data-cta="reserve" class="round-cta" aria-label="Book your experience — contact">
+            <svg class="round-cta__ring" viewBox="0 0 100 100" aria-hidden="true">
+              <defs><path id="cta-ring" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0" /></defs>
+              <text><textPath href="#cta-ring" startOffset="0">BOOK YOUR EXPERIENCE · ALMA MÍA · BOOK YOUR EXPERIENCE · ALMA MÍA · </textPath></text>
+            </svg>
+            <span class="round-cta__icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" /></svg>
+            </span>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -111,7 +110,7 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
       </div>
       <a href={route('services', lang)} class="text-sm font-semibold text-[color:var(--color-oliva-700)] link-underline reveal">{t('cta.viewServices')}</a>
     </div>
-    <div class="mt-10 svc-carousel reveal">
+    <div class="mt-10 svc-carousel reveal" role="region" aria-label="Services — slide to see more" tabindex="0">
       {services.map((s) => (
         <div class="svc-slide">
           <ServiceCard

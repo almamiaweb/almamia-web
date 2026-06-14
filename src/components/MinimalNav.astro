@@ -6,8 +6,10 @@ import LanguageSwitch from './LanguageSwitch.astro';
 interface Props {
   lang: Locale;
   pageKey: RouteKey;
+  /** true = transparente sobre el hero (home); false = sólida (resto del sitio). */
+  overlay?: boolean;
 }
-const { lang, pageKey } = Astro.props;
+const { lang, pageKey, overlay = true } = Astro.props;
 const t = useTranslations(lang);
 
 const links: { key: RouteKey; label: string }[] = [
@@ -27,10 +29,10 @@ const zones: { key: RouteKey; label: string }[] = [
 const home = route('home', lang);
 ---
 
-<div class="mnav">
+<div class:list={['mnav', { 'mnav--solid': !overlay }]}>
   <a href={home} class="mnav__brand" aria-label="Alma Mía"><span class="mnav__mark" aria-hidden="true"></span>Alma&nbsp;Mía</a>
   <div class="mnav__right">
-    <LanguageSwitch lang={lang} pageKey={pageKey} class="!text-white" />
+    <LanguageSwitch lang={lang} pageKey={pageKey} class="!text-current" />
     <button type="button" id="mnav-burger" class="burger" aria-label={t('nav.menu')} aria-controls="fsmenu" aria-expanded="false">
       <span></span><span></span>
     </button>
@@ -65,12 +67,23 @@ const home = route('home', lang);
     const nav = document.querySelector('.mnav');
     if (!burger || !menu) return;
 
+    const main = document.getElementById('contenido');
+    const footer = document.querySelector('footer');
     const setMenu = (open: boolean) => {
       menu.classList.toggle('is-open', open);
       menu.setAttribute('aria-hidden', String(!open));
       burger.classList.toggle('is-active', open);
       burger.setAttribute('aria-expanded', String(open));
       document.body.style.overflow = open ? 'hidden' : '';
+      // Inertiza el fondo para lectores de pantalla/teclado mientras el menú está abierto
+      [main, footer].forEach((el) => {
+        if (!el) return;
+        if (open) el.setAttribute('inert', '');
+        else el.removeAttribute('inert');
+      });
+      // Gestión de foco
+      if (open) (menu.querySelector('a') as HTMLElement | null)?.focus();
+      else burger.focus();
     };
 
     burger.addEventListener('click', () => setMenu(!menu.classList.contains('is-open')));
@@ -95,12 +108,8 @@ const home = route('home', lang);
       if (e.key !== 'Escape') return;
       const menu = document.getElementById('fsmenu');
       if (!menu?.classList.contains('is-open')) return;
-      menu.classList.remove('is-open');
-      menu.setAttribute('aria-hidden', 'true');
-      const burger = document.getElementById('mnav-burger');
-      burger?.classList.remove('is-active');
-      burger?.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
+      // Reutiliza el botón cerrar → aplica foco e inert correctamente
+      (document.getElementById('fsmenu-close') as HTMLElement | null)?.click();
     });
   }
 

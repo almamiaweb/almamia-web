@@ -58,18 +58,3 @@ export const ROUTES: Record<RouteKey, Record<Locale, string>> = {
 export function route(key: RouteKey, lang: Locale): string {
   return ROUTES[key][lang];
 }
-
-/** Detecta el idioma a partir del pathname (es por defecto). */
-export function getLangFromUrl(url: URL): Locale {
-  const [, first] = url.pathname.split('/');
-  return first === 'en' ? 'en' : 'es';
-}
-
-/** Devuelve la clave de ruta que corresponde a un pathname dado (o null). */
-export function routeKeyForPath(pathname: string): RouteKey | null {
-  const clean = pathname.endsWith('/') ? pathname : `${pathname}/`;
-  for (const key of Object.keys(ROUTES) as RouteKey[]) {
-    if (ROUTES[key].es === clean || ROUTES[key].en === clean) return key;
-  }
-  return null;
-}

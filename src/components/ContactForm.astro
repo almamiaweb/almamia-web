@@ -19,7 +19,16 @@ const services =
     : ['Private dinner', 'Breakfast & brunch', 'Lunches', 'Events & celebrations', 'Private chef experience', 'Other'];
 ---
 
-<form id="contact-form" class="card-alma reveal p-7 md:p-9" novalidate>
+<form
+  id="contact-form"
+  class="card-alma reveal p-7 md:p-9"
+  novalidate
+  data-msg-sending={t('form.sending')}
+  data-msg-success={t('form.success')}
+  data-msg-error={t('form.error')}
+  data-msg-required={t('form.required')}
+  data-msg-invalid={t('form.invalidEmail')}
+>
   <div class="grid gap-5 sm:grid-cols-2">
     <div class="sm:col-span-2">
       <label class="form-label" for="cf-name">{t('form.name')} *</label>
@@ -81,69 +90,73 @@ const services =
   <p id="cf-status" class="mt-4 text-sm" role="status" aria-live="polite"></p>
 </form>
 
-<script
-  is:inline
-  define:vars={{
-    sending: t('form.sending'),
-    successMsg: t('form.success'),
-    errorMsg: t('form.error'),
-    requiredMsg: t('form.required'),
-    invalidEmailMsg: t('form.invalidEmail'),
-  }}
->
+<script>
   function initContactForm() {
-  const form = document.getElementById('contact-form');
-  if (!form || form.dataset.bound) return;
-  form.dataset.bound = '1';
-  const status = document.getElementById('cf-status');
-  const btn = form?.querySelector('button[type="submit"]');
+    const form = document.getElementById('contact-form');
+    if (!(form instanceof HTMLFormElement) || form.dataset.bound) return;
+    form.dataset.bound = '1';
+    const status = document.getElementById('cf-status');
+    const btn = form.querySelector('button[type="submit"]');
+    const msg = {
+      sending: form.dataset.msgSending || '',
+      success: form.dataset.msgSuccess || '',
+      error: form.dataset.msgError || '',
+      required: form.dataset.msgRequired || '',
+      invalid: form.dataset.msgInvalid || '',
+    };
 
-  function setStatus(msg, kind) {
-    if (!status) return;
-    status.textContent = msg;
-    status.style.color = kind === 'error' ? '#9a3324' : kind === 'ok' ? '#3a5a40' : 'var(--color-suave)';
+    const setStatus = (text: string, kind: 'error' | 'ok' | 'info') => {
+      if (!status) return;
+      status.textContent = text;
+      status.style.color =
+        kind === 'error' ? '#9a3324' : kind === 'ok' ? '#3a5a40' : 'var(--color-suave)';
+    };
+
+    const clearInvalid = () =>
+      form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+    const fail = (text: string, name: string) => {
+      setStatus(text, 'error');
+      const el = form.querySelector(`[name="${name}"]`);
+      if (el instanceof HTMLElement) {
+        el.setAttribute('aria-invalid', 'true');
+        el.focus();
+      }
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearInvalid();
+      const data = new FormData(form);
+      const name = String(data.get('name') || '').trim();
+      const email = String(data.get('email') || '').trim();
+      const message = String(data.get('message') || '').trim();
+      const consent = data.get('consent');
+
+      if (!name) return fail(msg.required, 'name');
+      if (!email) return fail(msg.required, 'email');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail(msg.invalid, 'email');
+      if (!message) return fail(msg.required, 'message');
+      if (!consent) return fail(msg.required, 'consent');
+
+      const payload = Object.fromEntries(data.entries());
+      btn?.setAttribute('disabled', 'true');
+      setStatus(msg.sending, 'info');
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error('Request failed');
+        form.reset();
+        setStatus(msg.success, 'ok');
+      } catch {
+        setStatus(msg.error, 'error');
+      } finally {
+        btn?.removeAttribute('disabled');
+      }
+    });
   }
-
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (!(form instanceof HTMLFormElement)) return;
-    const data = new FormData(form);
-
-    const name = String(data.get('name') || '').trim();
-    const email = String(data.get('email') || '').trim();
-    const message = String(data.get('message') || '').trim();
-    const consent = data.get('consent');
-
-    if (!name || !email || !message || !consent) {
-      setStatus(requiredMsg, 'error');
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setStatus(invalidEmailMsg, 'error');
-      return;
-    }
-
-    const payload = Object.fromEntries(data.entries());
-    btn?.setAttribute('disabled', 'true');
-    setStatus(sending, 'info');
-
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error('Request failed');
-      form.reset();
-      setStatus(successMsg, 'ok');
-    } catch (err) {
-      setStatus(errorMsg, 'error');
-    } finally {
-      btn?.removeAttribute('disabled');
-    }
-  });
-  }
-
   document.addEventListener('astro:page-load', initContactForm);
 </script>
 
