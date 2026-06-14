@@ -1,12 +1,12 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumbs from '../components/Breadcrumbs.astro';
-import AnswerBox from '../components/AnswerBox.astro';
-import ContactForm from '../components/ContactForm.astro';
-import { route } from '../i18n/routes';
-import { useTranslations } from '../i18n/ui';
-import { localBusinessSchema } from '../lib/schema';
-import { CONTACT, SOCIAL, PENDIENTE, whatsappLink, AREAS_SERVED } from '../lib/site';
+import BaseLayout from '@templates/BaseLayout.astro';
+import Breadcrumbs from '@molecules/Breadcrumbs.astro';
+import AnswerBox from '@molecules/AnswerBox.astro';
+import ContactForm from '@organisms/ContactForm.astro';
+import { route } from '@i18n/routes';
+import { useTranslations } from '@i18n/ui';
+import { localBusinessSchema } from '@lib/schema';
+import { CONTACT, SOCIAL, PENDIENTE, whatsappLink, AREAS_SERVED } from '@lib/site';
 
 const lang = 'es' as const;
 const t = useTranslations(lang);

@@ -1,8 +1,8 @@
 ---
-import BaseLayout from './BaseLayout.astro';
-import Breadcrumbs from '../components/Breadcrumbs.astro';
-import { route, type Locale, type RouteKey } from '../i18n/routes';
-import { useTranslations } from '../i18n/ui';
+import BaseLayout from '@templates/BaseLayout.astro';
+import Breadcrumbs from '@molecules/Breadcrumbs.astro';
+import { route, type Locale, type RouteKey } from '@i18n/routes';
+import { useTranslations } from '@i18n/ui';
 
 interface Props {
   lang: Locale;

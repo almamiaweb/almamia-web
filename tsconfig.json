@@ -9,8 +9,12 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@layouts/*": ["src/layouts/*"],
+      "@shared/*": ["src/shared/*"],
+      "@atoms/*": ["src/shared/atoms/*"],
+      "@molecules/*": ["src/shared/molecules/*"],
+      "@organisms/*": ["src/shared/organisms/*"],
+      "@templates/*": ["src/shared/templates/*"],
+      "@styles/*": ["src/styles/*"],
       "@lib/*": ["src/lib/*"],
       "@i18n/*": ["src/i18n/*"]
     }

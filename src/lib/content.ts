@@ -1,5 +1,5 @@
 import { getCollection } from 'astro:content';
-import type { Locale } from '../i18n/routes';
+import type { Locale } from '@i18n/routes';
 
 /** Eventos realizados de un idioma, ordenados por `order`. */
 export async function getEventos(lang: Locale) {
