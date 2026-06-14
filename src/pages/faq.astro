@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import AnswerBox from '../components/AnswerBox.astro';
+import Faq from '../components/Faq.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import { route } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+
+const lang = 'es' as const;
+const t = useTranslations(lang);
+const crumbs = [
+  { name: t('breadcrumb.home'), url: route('home', lang) },
+  { name: t('nav.faq'), url: route('faq', lang) },
+];
+
+const faq = [
+  { q: '¿Qué es un chef privado a domicilio?', a: 'Es un servicio en el que la chef diseña el menú, compra el producto, cocina en tu espacio y se ocupa del servicio y la recogida. Tú solo disfrutas de la experiencia con tus invitados.' },
+  { q: '¿En qué zonas trabaja Alma Mía?', a: 'La base está en Ibiza y se cubre también Formentera, además de Barcelona y Mallorca. Para otras ubicaciones, consulta la disponibilidad para desplazarme.' },
+  { q: '¿Cuánto cuesta contratar a una chef privada?', a: 'El precio depende del menú, el número de comensales y la ubicación. Te preparo siempre una propuesta a medida y sin compromiso; escríbeme con los detalles.' },
+  { q: '¿Cómo se reserva una experiencia?', a: 'Escríbeme por WhatsApp o rellena el formulario de contacto con la fecha, la zona y el tipo de experiencia. Te respondo con disponibilidad y una propuesta personalizada.' },
+  { q: '¿Se adaptan los menús a alergias y dietas?', a: 'Sí. Cada menú se diseña teniendo en cuenta alergias, intolerancias y preferencias, con opciones vegetarianas, veganas, sin gluten o sin lactosa cuando se necesitan.' },
+  { q: '¿Qué tipo de cocina ofreces?', a: 'Cocina mediterránea saludable abierta a los sabores del mundo, con producto de temporada tratado con respeto y repostería saludable como complemento.' },
+  { q: '¿Cocinas en mi casa o villa con su equipamiento?', a: 'Sí, cocino en tu espacio. Antes de la fecha confirmamos lo necesario para que el día del evento todo fluya.' },
+  { q: '¿Con cuánta antelación conviene reservar?', a: 'Cuanto antes mejor, especialmente en temporada alta. Escríbeme con tu fecha y compruebo la disponibilidad enseguida.' },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  pageKey="faq"
+  title="Preguntas frecuentes · Chef privada Alma Mía"
+  description="Respuestas a las preguntas más frecuentes sobre el servicio de chef privada de Alma Mía: zonas, precios, reservas, dietas y alergias, y cómo es la experiencia a domicilio."
+>
+  <Breadcrumbs items={crumbs} />
+
+  <section class="container-narrow py-10 md:py-14">
+    <p class="eyebrow reveal">{t('nav.faq')}</p>
+    <h1 class="mt-3 text-4xl reveal md:text-5xl">Preguntas frecuentes</h1>
+    <div class="mt-6"><AnswerBox>Resolvemos las dudas más habituales sobre el servicio de chef privada de Alma Mía: zonas, precios, reservas, dietas y cómo se desarrolla la experiencia a domicilio.</AnswerBox></div>
+  </section>
+
+  <Faq items={faq} />
+
+  <CtaBanner lang={lang} />
+</BaseLayout>

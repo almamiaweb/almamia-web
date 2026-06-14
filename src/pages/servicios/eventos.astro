@@ -1,0 +1,56 @@
+---
+import ServicePageLayout from '../../layouts/ServicePageLayout.astro';
+import { route } from '../../i18n/routes';
+import heroImage from '../../assets/placeholders/service-events.jpg';
+
+const lang = 'es' as const;
+const related = [
+  { href: route('zoneIbiza', lang), label: 'Chef privado en Ibiza' },
+  { href: route('zoneBarcelona', lang), label: 'Chef privado en Barcelona' },
+  { href: route('zoneMallorca', lang), label: 'Chef privado en Mallorca' },
+];
+---
+
+<ServicePageLayout
+  lang={lang}
+  pageKey="serviceEvents"
+  seoTitle="Eventos y celebraciones · Catering saludable | Alma Mía"
+  seoDescription="Eventos y celebraciones con catering saludable en Ibiza, Barcelona y Mallorca: cumpleaños, experiencias temáticas y reuniones especiales diseñadas a medida por una chef privada."
+  h1="Eventos y celebraciones"
+  answer="Catering saludable para eventos y celebraciones: cumpleaños, experiencias temáticas y reuniones especiales diseñadas a medida, con un menú coherente con la ocasión y estilismo cuidado, en Ibiza, Barcelona y Mallorca."
+  heroImage={heroImage}
+  heroAlt="Montaje de evento festivo con mesa decorada de forma natural"
+  intro="Cada celebración merece una mesa a su altura. Diseño eventos como un todo coherente —menú, aromas y decoración unidos por un mismo hilo— para que la comida sea parte del recuerdo, no un trámite."
+  sections={[
+    {
+      h2: 'Celebraciones con un hilo conductor',
+      body: [
+        'Cumpleaños, aniversarios o experiencias temáticas: parto de la idea que quieres transmitir y la traduzco en un menú narrado y un montaje que la acompaña. Sabores del mundo con mirada mediterránea, siempre saludables.',
+        'La repostería saludable de la casa puede convertirse en el cierre dulce perfecto, también en formato celebración.',
+      ],
+    },
+    {
+      h2: 'Cuidado en cada detalle',
+      body: [
+        'Del estilismo de mesa al ritmo del servicio, cuido lo que se ve y lo que no. Tú celebras con tus invitados; yo me ocupo de que todo ocurra con calma y elegancia.',
+      ],
+    },
+  ]}
+  includesTitle="Qué incluye el servicio"
+  includes={[
+    'Diseño del concepto y el menú del evento',
+    'Compra y selección de producto fresco',
+    'Elaboración en el lugar del evento',
+    'Montaje y estilismo de la mesa',
+    'Servicio durante la celebración',
+    'Repostería saludable como complemento (opcional)',
+  ]}
+  faq={[
+    { q: '¿Qué tipo de eventos preparas?', a: 'Celebraciones íntimas y a medida: cumpleaños, aniversarios, experiencias temáticas y reuniones especiales. Cuéntame tu idea y la hacemos realidad.' },
+    { q: '¿Puedes encargarte de la decoración de la mesa?', a: 'Sí. El estilismo de mesa es parte del sello de Alma Mía, coherente con el concepto del evento.' },
+    { q: '¿Hay un número mínimo o máximo de invitados?', a: 'Trabajo sobre todo formatos íntimos y medianos para cuidar la experiencia. Escríbeme con los detalles y valoramos la mejor opción.' },
+  ]}
+  serviceName="Eventos y celebraciones con catering saludable"
+  serviceDescription="Diseño y servicio de eventos y celebraciones con catering saludable a medida: concepto, menú, estilismo y servicio."
+  related={related}
+/>

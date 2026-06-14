@@ -1,0 +1,106 @@
+---
+import { route, type Locale, type RouteKey } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+import { SITE, CONTACT, SOCIAL, PENDIENTE, whatsappLink } from '../lib/site';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+
+const navLinks: { key: RouteKey; label: string }[] = [
+  { key: 'services', label: t('nav.services') },
+  { key: 'menus', label: t('nav.menus') },
+  { key: 'pastEvents', label: t('nav.events') },
+  { key: 'about', label: t('nav.about') },
+  { key: 'testimonials', label: t('nav.testimonials') },
+  { key: 'faq', label: t('nav.faq') },
+  { key: 'contact', label: t('nav.contact') },
+];
+
+const zoneLinks: { key: RouteKey; label: string }[] = [
+  { key: 'zoneIbiza', label: lang === 'es' ? 'Chef privado en Ibiza' : 'Private chef in Ibiza' },
+  { key: 'zoneBarcelona', label: lang === 'es' ? 'Chef privado en Barcelona' : 'Private chef in Barcelona' },
+  { key: 'zoneMallorca', label: lang === 'es' ? 'Chef privado en Mallorca' : 'Private chef in Mallorca' },
+];
+
+const legalLinks: { key: RouteKey; label: string }[] = [
+  { key: 'legalNotice', label: lang === 'es' ? 'Aviso legal' : 'Legal notice' },
+  { key: 'privacy', label: lang === 'es' ? 'Privacidad' : 'Privacy' },
+  { key: 'cookies', label: 'Cookies' },
+];
+
+const phonePending = CONTACT.phone === PENDIENTE;
+const emailPending = CONTACT.email === PENDIENTE;
+---
+
+<footer class="mt-24 border-t border-[color:var(--color-linea)] bg-[color:var(--color-arena)]">
+  <div class="container-alma py-16">
+    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <!-- Marca + NAP -->
+      <div>
+        <p class="text-2xl font-serif">Alma Mía</p>
+        <p class="mt-3 max-w-xs text-[color:var(--color-suave)]">{t('footer.tagline')}</p>
+        <address class="mt-5 not-italic text-sm text-[color:var(--color-suave)] leading-relaxed">
+          <p>{t('footer.builtFor')}</p>
+          <p class="mt-2">
+            {lang === 'es' ? 'Tel.' : 'Phone'}:{' '}
+            {phonePending ? <span>{PENDIENTE}</span> : <a class="link-underline" href={`tel:${CONTACT.phone.replace(/\s/g, '')}`}>{CONTACT.phone}</a>}
+          </p>
+          <p>
+            Email:{' '}
+            {emailPending ? <span>{PENDIENTE}</span> : <a class="link-underline" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>}
+          </p>
+        </address>
+      </div>
+
+      <!-- Navegación -->
+      <nav aria-label={t('footer.nav')}>
+        <h2 class="eyebrow">{t('footer.nav')}</h2>
+        <ul class="mt-4 flex flex-col gap-2 text-sm">
+          {navLinks.map((l) => (
+            <li><a href={route(l.key, lang)} class="link-underline text-[color:var(--color-suave)] hover:text-[color:var(--color-carbon)]">{l.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Zonas -->
+      <nav aria-label={t('footer.zones')}>
+        <h2 class="eyebrow">{t('footer.zones')}</h2>
+        <ul class="mt-4 flex flex-col gap-2 text-sm">
+          {zoneLinks.map((l) => (
+            <li><a href={route(l.key, lang)} class="link-underline text-[color:var(--color-suave)] hover:text-[color:var(--color-carbon)]">{l.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Social + legal -->
+      <div>
+        <h2 class="eyebrow">{t('footer.follow')}</h2>
+        <ul class="mt-4 flex flex-col gap-2 text-sm">
+          <li>
+            <a href={SOCIAL.instagram} rel="me noopener" target="_blank" class="link-underline text-[color:var(--color-suave)] hover:text-[color:var(--color-carbon)]">
+              Instagram {SOCIAL.instagramHandle}
+            </a>
+          </li>
+          <li>
+            <a href={whatsappLink()} class="link-underline text-[color:var(--color-suave)] hover:text-[color:var(--color-carbon)]">WhatsApp</a>
+          </li>
+        </ul>
+        <h2 class="eyebrow mt-6">{t('footer.legal')}</h2>
+        <ul class="mt-4 flex flex-col gap-2 text-sm">
+          {legalLinks.map((l) => (
+            <li><a href={route(l.key, lang)} class="link-underline text-[color:var(--color-suave)] hover:text-[color:var(--color-carbon)]">{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col gap-2 border-t border-[color:var(--color-linea)] pt-6 text-xs text-[color:var(--color-suave)] sm:flex-row sm:items-center sm:justify-between">
+      <p>© {year} {SITE.brand}. {t('footer.rights')}</p>
+      <p>{SITE.domain}</p>
+    </div>
+  </div>
+</footer>

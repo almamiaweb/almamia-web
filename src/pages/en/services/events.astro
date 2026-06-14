@@ -1,0 +1,56 @@
+---
+import ServicePageLayout from '../../../layouts/ServicePageLayout.astro';
+import { route } from '../../../i18n/routes';
+import heroImage from '../../../assets/placeholders/service-events.jpg';
+
+const lang = 'en' as const;
+const related = [
+  { href: route('zoneIbiza', lang), label: 'Private chef in Ibiza' },
+  { href: route('zoneBarcelona', lang), label: 'Private chef in Barcelona' },
+  { href: route('zoneMallorca', lang), label: 'Private chef in Mallorca' },
+];
+---
+
+<ServicePageLayout
+  lang={lang}
+  pageKey="serviceEvents"
+  seoTitle="Events & celebrations · Healthy catering | Alma Mía"
+  seoDescription="Events and celebrations with healthy catering in Ibiza, Barcelona and Mallorca: birthdays, themed experiences and special gatherings designed to measure by a private chef."
+  h1="Events & celebrations"
+  answer="Healthy catering for events and celebrations: birthdays, themed experiences and special gatherings designed to measure, with a menu in keeping with the occasion and thoughtful styling, in Ibiza, Barcelona and Mallorca."
+  heroImage={heroImage}
+  heroAlt="Festive event setting with a naturally decorated table"
+  intro="Every celebration deserves a table to match. I design events as one coherent whole —menu, aromas and décor woven by a single thread— so the food becomes part of the memory, not just a formality."
+  sections={[
+    {
+      h2: 'Celebrations with a guiding thread',
+      body: [
+        'Birthdays, anniversaries or themed experiences: I start from the idea you want to convey and translate it into a narrated menu and a setting that accompanies it. Flavours from around the world through a Mediterranean lens, always healthy.',
+        'The house wholesome pastry can become the perfect sweet finale, in celebration format too.',
+      ],
+    },
+    {
+      h2: 'Care in every detail',
+      body: [
+        'From the table styling to the rhythm of the service, I take care of what is seen and what is not. You celebrate with your guests; I make sure everything unfolds with calm and elegance.',
+      ],
+    },
+  ]}
+  includesTitle="What the service includes"
+  includes={[
+    'Design of the concept and the event menu',
+    'Sourcing and selection of fresh produce',
+    'Preparation at the event location',
+    'Table setting and styling',
+    'Service throughout the celebration',
+    'Wholesome pastry as a complement (optional)',
+  ]}
+  faq={[
+    { q: 'What kind of events do you prepare?', a: 'Intimate, bespoke celebrations: birthdays, anniversaries, themed experiences and special gatherings. Tell me your idea and we make it real.' },
+    { q: 'Can you take care of the table décor?', a: 'Yes. Table styling is part of the Alma Mía signature, in keeping with the concept of the event.' },
+    { q: 'Is there a minimum or maximum number of guests?', a: 'I mostly work with intimate and mid-sized formats to care for the experience. Write to me with the details and we will find the best option.' },
+  ]}
+  serviceName="Events & celebrations with healthy catering"
+  serviceDescription="Design and service of events and celebrations with bespoke healthy catering: concept, menu, styling and service."
+  related={related}
+/>

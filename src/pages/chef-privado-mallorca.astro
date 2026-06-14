@@ -1,0 +1,57 @@
+---
+import ZonePageLayout from '../layouts/ZonePageLayout.astro';
+import { route } from '../i18n/routes';
+import heroImage from '../assets/placeholders/zone-mallorca.jpg';
+
+const lang = 'es' as const;
+const services = [
+  { href: route('dinners', lang), label: 'Cenas privadas', desc: 'Cenas a medida en tu finca o villa mallorquina.' },
+  { href: route('breakfasts', lang), label: 'Desayunos y brunch', desc: 'Brunch saludable con producto isleño.' },
+  { href: route('serviceEvents', lang), label: 'Eventos y celebraciones', desc: 'Catering saludable para tus celebraciones.' },
+  { href: route('experience', lang), label: 'Experiencia de chef privado', desc: 'Servicio completo de principio a fin.' },
+  { href: route('lunches', lang), label: 'Comidas y almuerzos', desc: 'Almuerzos mediterráneos sin prisa.' },
+];
+const related = [
+  { href: route('zoneIbiza', lang), label: 'Chef privado en Ibiza' },
+  { href: route('zoneBarcelona', lang), label: 'Chef privado en Barcelona' },
+];
+---
+
+<ZonePageLayout
+  lang={lang}
+  pageKey="zoneMallorca"
+  zoneName="Mallorca"
+  seoTitle="Chef privado en Mallorca · Cenas y catering saludable | Alma Mía"
+  seoDescription="Chef privado en Mallorca a domicilio: cenas privadas, brunch saludable y catering para eventos en tu finca o villa. Jenn Garrido, personal chef de cocina mediterránea saludable."
+  h1="Chef privado en Mallorca"
+  answer="¿Buscas un chef privado en Mallorca? Alma Mía lleva a tu finca o villa cenas privadas, brunch saludable y catering para eventos: cocina mediterránea saludable a domicilio, con producto de temporada y servicio completo."
+  heroImage={heroImage}
+  heroAlt="Mesa de cena privada en una finca de Mallorca"
+  intro="Mallorca, con sus fincas, calas y luz mediterránea, es un escenario perfecto para una experiencia gastronómica privada. Alma Mía se desplaza a la isla para llevar a tu mesa una cocina saludable, cuidada y a medida."
+  sections={[
+    {
+      h2: 'Chef a domicilio para tu finca o villa',
+      body: [
+        'Diseño el menú, selecciono el producto, cocino en tu espacio y me ocupo del servicio y la recogida. Una experiencia pensada para que disfrutes de Mallorca y de la mesa sin preocuparte de nada.',
+        'Cocina mediterránea saludable con sabores del mundo, producto de temporada y estilismo de mesa en sintonía con el entorno isleño.',
+      ],
+    },
+    {
+      h2: 'Experiencias privadas para tus días en la isla',
+      body: [
+        'Cenas privadas para celebrar, brunch saludable para mañanas sin prisa o el catering de un evento íntimo: cada propuesta se adapta a tu estancia y a la ocasión.',
+      ],
+    },
+  ]}
+  servicesTitle="Servicios de personal chef en Mallorca"
+  services={services}
+  coverageTitle="Disponibilidad para desplazarme a Mallorca"
+  coverage="Con base en Ibiza, me desplazo a Mallorca para eventos y estancias. Escríbeme con tu fecha y ubicación y organizamos juntos los detalles del desplazamiento."
+  faq={[
+    { q: '¿Cuánto cuesta un chef privado en Mallorca?', a: 'El precio depende del menú, el número de comensales, la ubicación y el desplazamiento. Cuéntame los detalles y te preparo una propuesta a medida.' },
+    { q: '¿Te desplazas a cualquier punto de Mallorca?', a: 'Estudio cada caso según fecha y ubicación. Escríbeme y organizamos los detalles del desplazamiento desde Ibiza.' },
+    { q: '¿Cocinas en fincas y villas con su equipamiento?', a: 'Sí. Cocino en tu espacio; antes de la fecha confirmamos lo necesario para que todo funcione el día del evento.' },
+    { q: '¿Ofreces opciones saludables y para dietas especiales?', a: 'Siempre: cocina saludable de temporada con opciones vegetarianas, veganas, sin gluten o sin lactosa.' },
+  ]}
+  related={related}
+/>

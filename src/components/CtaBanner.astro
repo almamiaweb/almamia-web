@@ -1,0 +1,41 @@
+---
+import { route, type Locale } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+import { whatsappLink } from '../lib/site';
+
+interface Props {
+  lang: Locale;
+  title?: string;
+  text?: string;
+}
+const { lang, title, text } = Astro.props;
+const t = useTranslations(lang);
+
+const defaultTitle = lang === 'es' ? '¿Lo celebramos en tu mesa?' : 'Shall we celebrate at your table?';
+const defaultText =
+  lang === 'es'
+    ? 'Cuéntame qué ocasión tienes en mente y diseñamos juntos una experiencia a tu medida.'
+    : 'Tell me the occasion you have in mind and we will design a bespoke experience together.';
+const waMsg =
+  lang === 'es'
+    ? 'Hola Jenn, me gustaría reservar una experiencia con Alma Mía.'
+    : 'Hi Jenn, I would like to book an experience with Alma Mía.';
+---
+
+<section class="container-alma py-8">
+  <div class="card-alma overflow-hidden bg-[color:var(--color-oliva)] text-[color:var(--color-crema)]">
+    <div class="relative px-6 py-14 text-center md:px-16">
+      <hr class="rule-ocre mx-auto" />
+      <h2 class="mt-5 text-3xl md:text-4xl text-[color:var(--color-crema)]">{title ?? defaultTitle}</h2>
+      <p class="mx-auto mt-4 max-w-xl text-[color:var(--color-crema)]/90">{text ?? defaultText}</p>
+      <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a href={whatsappLink(waMsg)} class="btn bg-[color:var(--color-crema)] text-[color:var(--color-oliva-700)] hover:bg-white" data-cta="reserve">
+          {t('cta.reserve')}
+        </a>
+        <a href={route('contact', lang)} class="btn border border-[color:var(--color-crema)]/60 text-[color:var(--color-crema)] hover:bg-[color:var(--color-oliva-700)]">
+          {t('cta.contact')}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

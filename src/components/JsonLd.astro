@@ -1,0 +1,14 @@
+---
+/**
+ * Inyecta datos estructurados JSON-LD de forma segura.
+ * application/ld+json no es ejecutable, por lo que la CSP no lo bloquea.
+ */
+interface Props {
+  data: Record<string, unknown> | Record<string, unknown>[];
+}
+const { data } = Astro.props;
+// Evita romper el bloque <script> si algún texto contiene "</script>".
+const json = JSON.stringify(data).replace(/</g, '\\u003c');
+---
+
+<script type="application/ld+json" is:inline set:html={json} />

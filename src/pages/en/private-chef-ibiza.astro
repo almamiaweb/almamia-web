@@ -1,0 +1,57 @@
+---
+import ZonePageLayout from '../../layouts/ZonePageLayout.astro';
+import { route } from '../../i18n/routes';
+import heroImage from '../../assets/placeholders/zone-ibiza.jpg';
+
+const lang = 'en' as const;
+const services = [
+  { href: route('dinners', lang), label: 'Private dinners', desc: 'Multi-course menus by the sea or in your villa.' },
+  { href: route('breakfasts', lang), label: 'Breakfast & brunch', desc: 'Healthy mornings with fresh island produce.' },
+  { href: route('serviceEvents', lang), label: 'Events & celebrations', desc: 'Healthy catering for your special occasions.' },
+  { href: route('experience', lang), label: 'Private chef experience', desc: 'A complete service from start to finish.' },
+  { href: route('lunches', lang), label: 'Lunches', desc: 'Mediterranean lunches at the pace of the day.' },
+];
+const related = [
+  { href: route('zoneBarcelona', lang), label: 'Private chef in Barcelona' },
+  { href: route('zoneMallorca', lang), label: 'Private chef in Mallorca' },
+];
+---
+
+<ZonePageLayout
+  lang={lang}
+  pageKey="zoneIbiza"
+  zoneName="Ibiza"
+  seoTitle="Private chef in Ibiza · Private dinners & healthy catering | Alma Mía"
+  seoDescription="Private chef in Ibiza at your home: private dinners, healthy brunch and dining experiences in your villa. Jenn Garrido, personal chef based on the island. Formentera too."
+  h1="Private chef in Ibiza"
+  answer="Looking for a private chef in Ibiza? Jenn Garrido brings Alma Mía to your villa or apartment: private dinners, healthy brunch and private dining experiences at home, made with seasonal produce. Coverage in Formentera too."
+  heroImage={heroImage}
+  heroAlt="Private dinner table set in an Ibiza villa at sunset"
+  intro="Ibiza is home to Alma Mía. Here, among villas, coves and sunsets, I offer a private chef service at your home, designed for those who want to live the island from the table too, without giving up eating well."
+  sections={[
+    {
+      h2: 'A private chef at home for your villa in Ibiza',
+      body: [
+        'I bring the kitchen to your space: I design the menu, source the produce, cook and serve in your villa or apartment. You and your guests simply enjoy the evening, whether it is an intimate dinner or a celebration.',
+        'I cook a healthy Mediterranean cuisine with flavours from around the world, always with seasonal produce and careful table styling, very much in tune with the island light.',
+      ],
+    },
+    {
+      h2: 'Private dinners and experiences by the sea',
+      body: [
+        'Private dinners are one of the most sought-after experiences in Ibiza: a long table, candles, lavender and a menu told course by course. A private dining experience that turns an ordinary night into a lasting memory.',
+      ],
+    },
+  ]}
+  servicesTitle="Personal chef services in Ibiza"
+  services={services}
+  coverageTitle="Coverage in Ibiza and Formentera"
+  coverage="Based in Ibiza, I cover the whole island and also Formentera. If your event is somewhere else, get in touch: I look at each case and my availability to travel."
+  faq={[
+    { q: 'How much does a private chef in Ibiza cost?', a: 'The price depends on the menu, the number of guests and the location. Send me the details and I will prepare a tailor-made proposal, with no obligation.' },
+    { q: 'Do you cover Formentera and the whole island of Ibiza?', a: 'Yes. I am based in Ibiza, I cover the whole island and also Formentera. For other locations, ask me about availability.' },
+    { q: 'Do you cook in my villa with its equipment?', a: 'Yes, I cook in your space. Before the date we confirm everything needed so that the day of the event flows perfectly.' },
+    { q: 'Do you offer healthy options and special diets?', a: 'Always. Healthy seasonal cuisine with vegetarian, vegan, gluten-free or lactose-free options as needed.' },
+  ]}
+  related={related}
+/>

@@ -1,0 +1,29 @@
+# dependencias
+node_modules/
+
+# salida de build
+dist/
+.vercel/
+.output/
+
+# Astro
+.astro/
+
+# entorno
+.env
+.env.production
+.env.local
+*.local
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# sistema operativo / editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

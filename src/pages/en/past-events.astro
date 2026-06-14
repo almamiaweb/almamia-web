@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import EventCard from '../../components/EventCard.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import { route } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import { getEventos } from '../../lib/content';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+const eventos = await getEventos(lang);
+const crumbs = [
+  { name: t('breadcrumb.home'), url: route('home', lang) },
+  { name: t('nav.events'), url: route('pastEvents', lang) },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  pageKey="pastEvents"
+  title="Past events · Alma Mía experiences"
+  description="A selection of the private dining experiences Alma Mía designs: private dinners, celebration brunches, themed events and villa lunches in Ibiza, Barcelona and Mallorca."
+>
+  <Breadcrumbs items={crumbs} />
+
+  <section class="container-alma py-10 md:py-14">
+    <p class="eyebrow reveal">{t('nav.events')}</p>
+    <h1 class="mt-3 text-4xl reveal md:text-5xl lg:text-6xl">Experiences brought to life</h1>
+    <div class="mt-6"><AnswerBox>A glimpse of the kind of private dining experiences Alma Mía designs: dinners under the stars, celebration brunches, themed events and villa lunches, always tailor-made.</AnswerBox></div>
+    <p class="mt-6 max-w-2xl text-[color:var(--color-suave)] reveal">
+      These proposals illustrate the kind of experiences I create for each client. Every event is unique and designed from scratch around the occasion.
+    </p>
+  </section>
+
+  <section class="container-alma pb-12">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {eventos.map((e) => (
+        <EventCard
+          title={e.data.title}
+          story={e.data.story}
+          type={e.data.type}
+          zona={e.data.zona}
+          image={e.data.image}
+          alt={e.data.imageAlt}
+        />
+      ))}
+    </div>
+  </section>
+
+  <CtaBanner lang={lang} />
+</BaseLayout>

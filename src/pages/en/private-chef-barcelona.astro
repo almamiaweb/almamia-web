@@ -1,0 +1,57 @@
+---
+import ZonePageLayout from '../../layouts/ZonePageLayout.astro';
+import { route } from '../../i18n/routes';
+import heroImage from '../../assets/placeholders/zone-barcelona.jpg';
+
+const lang = 'en' as const;
+const services = [
+  { href: route('dinners', lang), label: 'Private dinners', desc: 'Bespoke evenings in your flat, penthouse or terrace.' },
+  { href: route('breakfasts', lang), label: 'Breakfast & brunch', desc: 'Healthy brunch to celebrate at home.' },
+  { href: route('serviceEvents', lang), label: 'Events & celebrations', desc: 'Healthy catering for your gatherings.' },
+  { href: route('experience', lang), label: 'Private chef experience', desc: 'A complete service from start to finish.' },
+  { href: route('lunches', lang), label: 'Lunches', desc: 'Mediterranean lunches to bring your loved ones together.' },
+];
+const related = [
+  { href: route('zoneIbiza', lang), label: 'Private chef in Ibiza' },
+  { href: route('zoneMallorca', lang), label: 'Private chef in Mallorca' },
+];
+---
+
+<ZonePageLayout
+  lang={lang}
+  pageKey="zoneBarcelona"
+  zoneName="Barcelona"
+  seoTitle="Private chef in Barcelona · Private dinners & healthy catering | Alma Mía"
+  seoDescription="Private chef in Barcelona at your home: private dinners, healthy brunch and event catering at your home or terrace. Jenn Garrido, personal chef of healthy Mediterranean cuisine."
+  h1="Private chef in Barcelona"
+  answer="Looking for a private chef in Barcelona? Alma Mía brings private dinners, healthy brunch and event catering to your home, penthouse or terrace: healthy Mediterranean cuisine at home, designed and served just for you."
+  heroImage={heroImage}
+  heroAlt="Private dinner table set on a Barcelona terrace"
+  intro="Barcelona is where Jenn specialised in healthy gastronomy and fine pastry. It is a city that lives around the table, and Alma Mía fits right in: private dining experiences, refined and tailor-made, in your own space."
+  sections={[
+    {
+      h2: 'A private chef at home in any corner of the city',
+      body: [
+        'From the Eixample to the nearby coast, I bring the kitchen to your flat, penthouse or terrace. I design the menu, buy the produce, cook and serve, and leave the kitchen spotless. You simply welcome your guests.',
+        'Healthy Mediterranean cuisine with flavours from around the world, precise technique and seasonal produce straight from the market.',
+      ],
+    },
+    {
+      h2: 'Dinners, brunch and events at home',
+      body: [
+        'Whether you want a private dinner to celebrate something special, a healthy weekend brunch or the catering for an intimate event, I tailor every proposal to the space and the occasion.',
+      ],
+    },
+  ]}
+  servicesTitle="Personal chef services in Barcelona"
+  services={services}
+  coverageTitle="Coverage in Barcelona and surroundings"
+  coverage="I cover the city of Barcelona and its nearby area. For events in other towns across Catalonia, get in touch and we will look at my availability to travel."
+  faq={[
+    { q: 'How much does a private chef in Barcelona cost?', a: 'It depends on the menu, the number of guests and the location. Tell me the details and I will prepare a tailor-made proposal.' },
+    { q: 'Can you cook in a small flat or on a terrace?', a: 'Yes. I adapt the menu and the format to the available space; before the date we confirm everything needed.' },
+    { q: 'Do you offer healthy catering for events in Barcelona?', a: 'Yes, I design tailor-made healthy catering for celebrations and intimate gatherings, with careful table styling.' },
+    { q: 'Do you work with market and seasonal produce?', a: 'Whenever possible. Seasonal produce shapes every menu.' },
+  ]}
+  related={related}
+/>

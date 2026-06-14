@@ -1,0 +1,56 @@
+---
+import ServicePageLayout from '../../../layouts/ServicePageLayout.astro';
+import { route } from '../../../i18n/routes';
+import heroImage from '../../../assets/placeholders/service-experience.jpg';
+
+const lang = 'en' as const;
+const related = [
+  { href: route('zoneIbiza', lang), label: 'Private chef in Ibiza' },
+  { href: route('zoneBarcelona', lang), label: 'Private chef in Barcelona' },
+  { href: route('zoneMallorca', lang), label: 'Private chef in Mallorca' },
+];
+---
+
+<ServicePageLayout
+  lang={lang}
+  pageKey="experience"
+  seoTitle="Private chef experience · Complete service | Alma Mía"
+  seoDescription="At-home private chef experience in Ibiza, Barcelona and Mallorca: a complete service from start to finish, from menu design to the last lingering conversation, with healthy Mediterranean cooking and a warm, personal touch."
+  h1="Private chef experience"
+  answer="The private chef experience is the complete Alma Mía service: from menu design to the last lingering conversation. Jenn takes care of everything —produce, cooking, service and clean-up— so all you do is live the table."
+  heroImage={heroImage}
+  heroAlt="Private chef finishing a plate in a home kitchen"
+  intro="When you want to forget about absolutely everything, this is the proposal. A complete private chef experience, designed so that your only job is to sit down and enjoy."
+  sections={[
+    {
+      h2: 'From start to finish, with you',
+      body: [
+        'We begin with a conversation: the occasion, the tastes, the people. From there I design the menu, select the produce, cook in your space, serve every course and leave the kitchen as I found it.',
+        'It is the fullest way to experience Alma Mía: healthy Mediterranean cooking, thoughtful styling and a warm, personal touch that shows in every detail.',
+      ],
+    },
+    {
+      h2: 'A cuisine with intention',
+      body: [
+        'Ten years of craft spanning catering, events and restaurants, training in fine cuisine and fine pastry, and a clear philosophy: to bring intention to every dish with love, combining creativity and precision.',
+      ],
+    },
+  ]}
+  includesTitle="What the experience includes"
+  includes={[
+    'A prior conversation to design the experience',
+    'A bespoke menu based on occasion, tastes and diets',
+    'Sourcing and selection of fresh produce',
+    'Complete preparation in your space',
+    'Setting, styling and table service',
+    'Clean-up, leaving the kitchen spotless',
+  ]}
+  faq={[
+    { q: 'What sets the private chef experience apart from the other services?', a: 'It is the most complete format: it includes accompaniment from start to finish, from menu design to table service and clean-up. You have to take care of nothing.' },
+    { q: 'Can I book the experience for a specific occasion?', a: 'Yes: special dinners, celebrations, villa stays or any moment you want to turn into something memorable.' },
+    { q: 'Do you work with local and seasonal produce?', a: 'Whenever possible, yes. Seasonal produce is the compass of every menu.' },
+  ]}
+  serviceName="At-home private chef experience"
+  serviceDescription="A complete at-home private chef service: menu design, sourcing, preparation, styling, table service and clean-up."
+  related={related}
+/>

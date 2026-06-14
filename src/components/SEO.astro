@@ -1,0 +1,70 @@
+---
+import { SITE } from '../lib/site';
+import { ROUTES, type Locale, type RouteKey } from '../i18n/routes';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Locale;
+  pageKey: RouteKey;
+  /** Ruta de la imagen OG (relativa al sitio o absoluta). */
+  ogImage?: string | undefined;
+  ogType?: 'website' | 'article' | undefined;
+  noindex?: boolean | undefined;
+}
+
+const {
+  title,
+  description,
+  lang,
+  pageKey,
+  ogImage = '/og/og-default.jpg',
+  ogType = 'website',
+  noindex = false,
+} = Astro.props;
+
+const abs = (path: string): string => new URL(path, SITE.url).href;
+
+const paths = ROUTES[pageKey];
+const canonical = abs(paths[lang]);
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : abs(ogImage);
+
+const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
+const ogLocaleAlt = lang === 'es' ? 'en_US' : 'es_ES';
+
+// Slots de verificación (sin claves reales; se rellenan vía .env).
+const gsc = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+const bing = import.meta.env.PUBLIC_BING_SITE_VERIFICATION;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+{/* hreflang: español, inglés y x-default (= español) */}
+<link rel="alternate" hreflang="es" href={abs(paths.es)} />
+<link rel="alternate" hreflang="en" href={abs(paths.en)} />
+<link rel="alternate" hreflang="x-default" href={abs(paths.es)} />
+
+{/* Open Graph */}
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content={SITE.brand} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content={ogLocale} />
+<meta property="og:locale:alternate" content={ogLocaleAlt} />
+
+{/* Twitter / X */}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
+
+{gsc && <meta name="google-site-verification" content={gsc} />}
+{bing && <meta name="msvalidate.01" content={bing} />}

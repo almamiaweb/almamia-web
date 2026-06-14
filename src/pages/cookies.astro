@@ -1,0 +1,50 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { SITE, CONTACT } from '../lib/site';
+
+const lang = 'es' as const;
+---
+
+<LegalLayout
+  lang={lang}
+  pageKey="cookies"
+  title="Política de cookies | Alma Mía"
+  description="Política de cookies de Alma Mía: qué cookies utiliza el sitio, con qué finalidad y cómo gestionarlas, conforme a la LSSI-CE y la normativa de protección de datos."
+  h1="Política de cookies"
+  lastUpdated="14/06/2026"
+>
+  <p>
+    Esta política explica qué son las cookies y cuáles utiliza el sitio web {SITE.domain},
+    conforme a la LSSI-CE y a las directrices de la Agencia Española de Protección de Datos.
+  </p>
+
+  <h2>1. ¿Qué son las cookies?</h2>
+  <p>
+    Las cookies son pequeños archivos que se descargan en tu dispositivo al visitar determinadas
+    páginas web y que permiten, entre otras cosas, recordar preferencias o medir el uso del sitio.
+  </p>
+
+  <h2>2. Cookies que utiliza este sitio</h2>
+  <p>
+    Actualmente este sitio utiliza únicamente la analítica de Vercel (Vercel Web Analytics y
+    Speed Insights), una solución que <strong>no emplea cookies</strong> ni recopila datos
+    personales identificables, por lo que no requiere consentimiento previo.
+  </p>
+  <p>
+    En caso de incorporarse en el futuro herramientas de medición o publicidad que sí utilicen
+    cookies (por ejemplo, Google Analytics 4, Google Tag Manager o píxeles publicitarios), se
+    actualizará esta política y se habilitará un banner de consentimiento conforme al Consent
+    Mode v2, de modo que dichas cookies solo se activen tras tu aceptación.
+  </p>
+
+  <h2>3. Gestión de cookies</h2>
+  <p>
+    Puedes permitir, bloquear o eliminar las cookies instaladas en tu dispositivo desde la
+    configuración de tu navegador. Consulta la ayuda de tu navegador para conocer cómo hacerlo.
+  </p>
+
+  <h2>4. Más información</h2>
+  <p>
+    Si tienes cualquier duda sobre esta política de cookies, puedes escribirnos a {CONTACT.email}.
+  </p>
+</LegalLayout>

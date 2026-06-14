@@ -1,0 +1,213 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import EventCard from '../../components/EventCard.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import { route } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import { localBusinessSchema } from '../../lib/schema';
+import { whatsappLink, SOCIAL } from '../../lib/site';
+import { getEventos, getTestimonios } from '../../lib/content';
+
+import heroImg from '../../assets/placeholders/hero.jpg';
+import jennImg from '../../assets/placeholders/jenn-portrait.jpg';
+import imgBreakfast from '../../assets/placeholders/service-breakfast.jpg';
+import imgLunch from '../../assets/placeholders/service-lunch.jpg';
+import imgDinner from '../../assets/placeholders/service-dinner.jpg';
+import imgEvents from '../../assets/placeholders/service-events.jpg';
+import imgExperience from '../../assets/placeholders/service-experience.jpg';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+
+const eventos = (await getEventos(lang)).filter((e) => e.data.featured).slice(0, 4);
+const testimonios = (await getTestimonios(lang)).filter((tt) => !tt.data.pending);
+
+const waMsg = 'Hi Jenn, I would love to book an Alma Mía experience.';
+
+const services = [
+  { key: 'breakfasts' as const, title: 'Healthy breakfasts & brunch', blurb: 'Luminous mornings, fresh produce and wholesome pastries with thoughtful table styling.', image: imgBreakfast, alt: 'Healthy brunch table with fresh fruit and breads' },
+  { key: 'lunches' as const, title: 'Lunches & midday meals', blurb: 'Mediterranean lunches served at the pace of the day, without ever compromising on eating well.', image: imgLunch, alt: 'Mediterranean lunch plate, carefully plated' },
+  { key: 'dinners' as const, title: 'Private dinners', blurb: 'Multi-course menus made for lingering, with the cooking taken care of from start to finish.', image: imgDinner, alt: 'Private dinner table set with candles and lavender' },
+  { key: 'serviceEvents' as const, title: 'Events & celebrations', blurb: 'Birthdays and themed experiences designed as one coherent whole.', image: imgEvents, alt: 'Festive event setting with natural décor' },
+  { key: 'experience' as const, title: 'Private chef experience', blurb: 'A complete service from start to finish: from menu design to the last lingering conversation.', image: imgExperience, alt: 'Private chef finishing a plate in a kitchen' },
+];
+
+const faq = [
+  { q: 'What is a private chef at home?', a: 'It is a service in which the chef designs the menu, sources the produce, cooks in your space and handles the service and clean-up. You simply enjoy the experience with your guests.' },
+  { q: 'Which areas does Alma Mía cover?', a: 'The base is in Ibiza, with coverage extending to Formentera, as well as Barcelona and Mallorca. For other locations, get in touch and I will check my availability to travel.' },
+  { q: 'Are the menus adapted to allergies or special diets?', a: 'Yes. Every menu is tailored around allergies, intolerances and preferences, with plant-based options and wholesome desserts.' },
+  { q: 'How do I book and how much does it cost?', a: 'You can book by writing to me on WhatsApp or through the contact form. The price depends on the menu, the number of guests and the location; I will put together a bespoke proposal for you.' },
+];
+
+const business = localBusinessSchema(lang, '/og/og-default.jpg');
+---
+
+<BaseLayout
+  lang={lang}
+  pageKey="home"
+  title="Alma Mía · Private chef in Ibiza, Barcelona & Mallorca | Jenn Garrido"
+  description="Private cooking that nourishes body and soul. Jenn Garrido Umaña, private chef based in Ibiza: private dinners, healthy brunch and at-home dining experiences in Ibiza, Barcelona and Mallorca."
+  jsonLd={[business]}
+>
+  <!-- Hero -->
+  <section class="container-alma grid items-center gap-10 pt-12 pb-8 md:pt-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:pt-20">
+    <div>
+      <p class="eyebrow reveal">Private chef · Ibiza · Barcelona · Mallorca</p>
+      <h1 class="mt-4 display-fluid reveal">
+        Private cooking that nourishes<br class="hidden md:block" />
+        <em class="italic text-[color:var(--color-oliva)]">body and soul</em>
+      </h1>
+      <p class="mt-6 max-w-lg text-lg text-[color:var(--color-suave)] reveal">
+        Bespoke at-home dining experiences, with seasonal produce treated with
+        respect and intention in every dish.
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row reveal">
+        <a href={whatsappLink(waMsg)} class="btn btn-primary" data-cta="reserve">{t('cta.reserve')}</a>
+        <a href={route('contact', lang)} class="btn btn-secondary">{t('cta.contact')}</a>
+      </div>
+    </div>
+    <div class="reveal">
+      <Image
+        src={heroImg}
+        alt="Alma Mía private dinner table set with linen, candles and lavender"
+        widths={[600, 900, 1200]}
+        sizes="(min-width: 1024px) 45vw, 92vw"
+        format="avif"
+        loading="eager"
+        fetchpriority="high"
+        class="aspect-[4/5] w-full rounded-[var(--radius-2xl)] object-cover shadow-[var(--shadow-lift)]"
+      />
+    </div>
+  </section>
+
+  <!-- Respuesta directa AEO -->
+  <section class="container-alma py-10">
+    <AnswerBox>
+      Alma Mía is the private chef service of Jenn Garrido Umaña: healthy
+      Mediterranean cooking and at-home dining experiences in Ibiza, Barcelona
+      and Mallorca, with seasonal produce and intention in every dish.
+    </AnswerBox>
+  </section>
+
+  <!-- Servicios -->
+  <section class="container-alma py-12">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <hr class="rule-ocre reveal" />
+        <h2 class="mt-4 text-3xl md:text-4xl reveal">A table for every occasion</h2>
+      </div>
+      <a href={route('services', lang)} class="text-sm font-semibold text-[color:var(--color-oliva-700)] link-underline reveal">{t('cta.viewServices')}</a>
+    </div>
+    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {services.map((s) => (
+        <ServiceCard
+          title={s.title}
+          blurb={s.blurb}
+          href={route(s.key, lang)}
+          image={s.image}
+          alt={s.alt}
+          cta={t('cta.discover')}
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- Teaser Jenn -->
+  <section class="container-alma py-12">
+    <div class="grid items-center gap-10 md:grid-cols-2">
+      <div class="reveal order-2 md:order-1">
+        <hr class="rule-ocre" />
+        <h2 class="mt-4 text-3xl md:text-4xl">Behind every dish, an intention</h2>
+        <p class="mt-5 text-[color:var(--color-suave)] leading-relaxed">
+          Jenn Garrido Umaña is a Colombian chef with a decade of craft spanning
+          catering, events and restaurants across several countries. Trained at Mausi
+          Sebess (Argentina) and specialised in healthy gastronomy and fine pastry
+          in Barcelona, she created Alma Mía in 2024 to bring to every table a
+          mindful Mediterranean cuisine, made with creativity, precision and care.
+        </p>
+        <a href={route('about', lang)} class="mt-6 inline-flex btn btn-secondary">{t('nav.about')}</a>
+      </div>
+      <div class="reveal order-1 md:order-2">
+        <Image
+          src={jennImg}
+          alt="Portrait of Jenn Garrido Umaña, chef of Alma Mía"
+          widths={[400, 600, 800]}
+          sizes="(min-width: 768px) 45vw, 90vw"
+          format="avif"
+          loading="lazy"
+          class="aspect-[4/5] w-full rounded-[var(--radius-2xl)] object-cover shadow-[var(--shadow-soft)]"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Eventos destacados -->
+  {eventos.length > 0 && (
+    <section class="container-alma py-12">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <hr class="rule-ocre reveal" />
+          <h2 class="mt-4 text-3xl md:text-4xl reveal">Experiences that have come to life</h2>
+        </div>
+        <a href={route('pastEvents', lang)} class="text-sm font-semibold text-[color:var(--color-oliva-700)] link-underline reveal">{t('cta.viewAll')}</a>
+      </div>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
+        {eventos.slice(0, 2).map((e) => (
+          <EventCard
+            title={e.data.title}
+            story={e.data.story}
+            type={e.data.type}
+            zona={e.data.zona}
+            image={e.data.image}
+            alt={e.data.imageAlt}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Testimonios -->
+  <section class="container-narrow py-12 text-center">
+    <hr class="rule-ocre mx-auto reveal" />
+    <h2 class="mt-4 text-3xl md:text-4xl reveal">What you feel at the table</h2>
+    {testimonios.length > 0 ? (
+      <div class="mt-8 grid gap-6">
+        {testimonios.map((tt) => (
+          <figure class="card-alma reveal p-7 text-left">
+            <blockquote class="text-lg text-[color:var(--color-carbon)] font-serif">“{tt.data.text}”</blockquote>
+            <figcaption class="mt-4 text-sm text-[color:var(--color-suave)]">— {tt.data.author}{tt.data.location ? `, ${tt.data.location}` : ''}</figcaption>
+          </figure>
+        ))}
+      </div>
+    ) : (
+      <p class="mt-6 text-[color:var(--color-suave)] reveal">
+        We are gathering the first real reviews from clients. Very soon, right here.
+        <br />
+        <a href={route('testimonials', lang)} class="link-underline font-semibold text-[color:var(--color-oliva-700)]">{t('nav.testimonials')}</a>
+      </p>
+    )}
+  </section>
+
+  <!-- Instagram -->
+  <section class="container-alma py-12">
+    <div class="card-alma reveal flex flex-col items-center gap-4 bg-[color:var(--color-arena)] px-6 py-12 text-center">
+      <hr class="rule-ocre" />
+      <h2 class="text-3xl md:text-4xl">Cooking, the table and life on Instagram</h2>
+      <p class="max-w-xl text-[color:var(--color-suave)]">
+        I share the day-to-day of Alma Mía with a community of more than 6,000
+        people. Inspiration, recipes and the table always set.
+      </p>
+      <a href={SOCIAL.instagram} target="_blank" rel="me noopener" class="btn btn-primary">
+        Follow {SOCIAL.instagramHandle}
+      </a>
+    </div>
+  </section>
+
+  <Faq items={faq} title={t('common.faqTitle')} />
+
+  <CtaBanner lang={lang} />
+</BaseLayout>

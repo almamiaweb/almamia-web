@@ -1,0 +1,56 @@
+---
+import ServicePageLayout from '../../layouts/ServicePageLayout.astro';
+import { route } from '../../i18n/routes';
+import heroImage from '../../assets/placeholders/service-experience.jpg';
+
+const lang = 'es' as const;
+const related = [
+  { href: route('zoneIbiza', lang), label: 'Chef privado en Ibiza' },
+  { href: route('zoneBarcelona', lang), label: 'Chef privado en Barcelona' },
+  { href: route('zoneMallorca', lang), label: 'Chef privado en Mallorca' },
+];
+---
+
+<ServicePageLayout
+  lang={lang}
+  pageKey="experience"
+  seoTitle="Experiencia de chef privado · Servicio completo | Alma Mía"
+  seoDescription="Experiencia de chef privado a domicilio en Ibiza, Barcelona y Mallorca: servicio completo de principio a fin, del diseño del menú a la sobremesa, con cocina mediterránea saludable y trato cercano."
+  h1="Experiencia de chef privado"
+  answer="La experiencia de chef privado es el servicio completo de Alma Mía: del diseño del menú a la sobremesa. Jenn se ocupa de todo —producto, cocina, servicio y recogida— para que tú solo vivas la mesa."
+  heroImage={heroImage}
+  heroAlt="Chef privada terminando un emplatado en una cocina doméstica"
+  intro="Cuando quieres olvidarte de absolutamente todo, esta es la propuesta. Una experiencia de chef privado integral, pensada para que tu único trabajo sea sentarte a disfrutar."
+  sections={[
+    {
+      h2: 'De principio a fin, contigo',
+      body: [
+        'Empezamos por una conversación: la ocasión, los gustos, las personas. A partir de ahí diseño el menú, selecciono el producto, cocino en tu espacio, sirvo cada plato y dejo la cocina como la encontré.',
+        'Es la forma más completa de vivir Alma Mía: cocina mediterránea saludable, estilismo cuidado y un trato cercano que se nota en cada detalle.',
+      ],
+    },
+    {
+      h2: 'Una cocina con intención',
+      body: [
+        'Diez años de oficio entre caterings, eventos y restaurantes, formación en alta cocina y alta pastelería, y una filosofía clara: intencionar cada plato con amor, combinando creatividad y precisión.',
+      ],
+    },
+  ]}
+  includesTitle="Qué incluye la experiencia"
+  includes={[
+    'Conversación previa para diseñar la experiencia',
+    'Menú a medida según ocasión, gustos y dietas',
+    'Compra y selección de producto fresco',
+    'Elaboración completa en tu espacio',
+    'Montaje, estilismo y servicio en mesa',
+    'Recogida y dejar la cocina impecable',
+  ]}
+  faq={[
+    { q: '¿Qué diferencia la experiencia de chef privado de los otros servicios?', a: 'Es el formato más integral: incluye el acompañamiento de principio a fin, del diseño del menú al servicio en mesa y la recogida. Tú no tienes que ocuparte de nada.' },
+    { q: '¿Puedo contratar la experiencia para una ocasión concreta?', a: 'Sí: cenas especiales, celebraciones, estancias en villa o cualquier momento que quieras convertir en algo memorable.' },
+    { q: '¿Trabajas con producto local y de temporada?', a: 'Siempre que es posible, sí. El producto de temporada es la brújula de cada menú.' },
+  ]}
+  serviceName="Experiencia de chef privado a domicilio"
+  serviceDescription="Servicio completo de chef privado a domicilio: diseño de menú, compra, elaboración, estilismo, servicio en mesa y recogida."
+  related={related}
+/>

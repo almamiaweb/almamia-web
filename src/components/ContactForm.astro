@@ -1,0 +1,178 @@
+---
+import type { Locale } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const zones =
+  lang === 'es'
+    ? ['Ibiza', 'Formentera', 'Barcelona', 'Mallorca', 'Otra']
+    : ['Ibiza', 'Formentera', 'Barcelona', 'Mallorca', 'Other'];
+
+const services =
+  lang === 'es'
+    ? ['Cena privada', 'Desayunos y brunch', 'Comidas y almuerzos', 'Eventos y celebraciones', 'Experiencia de chef privado', 'Otro']
+    : ['Private dinner', 'Breakfast & brunch', 'Lunches', 'Events & celebrations', 'Private chef experience', 'Other'];
+---
+
+<form id="contact-form" class="card-alma reveal p-7 md:p-9" novalidate>
+  <div class="grid gap-5 sm:grid-cols-2">
+    <div class="sm:col-span-2">
+      <label class="form-label" for="cf-name">{t('form.name')} *</label>
+      <input class="form-input" id="cf-name" name="name" type="text" required autocomplete="name" />
+    </div>
+    <div>
+      <label class="form-label" for="cf-email">{t('form.email')} *</label>
+      <input class="form-input" id="cf-email" name="email" type="email" required autocomplete="email" />
+    </div>
+    <div>
+      <label class="form-label" for="cf-phone">{t('form.phone')}</label>
+      <input class="form-input" id="cf-phone" name="phone" type="tel" autocomplete="tel" />
+    </div>
+    <div>
+      <label class="form-label" for="cf-zone">{t('form.zone')}</label>
+      <select class="form-input" id="cf-zone" name="zone">
+        <option value="">{t('form.selectOption')}</option>
+        {zones.map((z) => <option value={z}>{z}</option>)}
+      </select>
+    </div>
+    <div>
+      <label class="form-label" for="cf-service">{t('form.service')}</label>
+      <select class="form-input" id="cf-service" name="service">
+        <option value="">{t('form.selectOption')}</option>
+        {services.map((s) => <option value={s}>{s}</option>)}
+      </select>
+    </div>
+    <div>
+      <label class="form-label" for="cf-date">{t('form.date')}</label>
+      <input class="form-input" id="cf-date" name="date" type="date" />
+    </div>
+    <div>
+      <label class="form-label" for="cf-guests">{t('form.guests')}</label>
+      <input class="form-input" id="cf-guests" name="guests" type="number" min="1" inputmode="numeric" />
+    </div>
+    <div class="sm:col-span-2">
+      <label class="form-label" for="cf-message">{t('form.message')} *</label>
+      <textarea class="form-input" id="cf-message" name="message" rows="5" required></textarea>
+    </div>
+
+    <!-- Honeypot anti-spam: oculto a personas, tentador para bots -->
+    <div class="hp-field" aria-hidden="true">
+      <label for="cf-company">No rellenar este campo</label>
+      <input id="cf-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <div class="sm:col-span-2">
+      <label class="flex items-start gap-2.5 text-sm text-[color:var(--color-suave)]">
+        <input id="cf-consent" name="consent" type="checkbox" required class="mt-1" />
+        <span>{t('form.consent')}</span>
+      </label>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-6 w-full sm:w-auto" data-cta="contact-submit">
+    {t('form.send')}
+  </button>
+
+  <p id="cf-status" class="mt-4 text-sm" role="status" aria-live="polite"></p>
+</form>
+
+<script
+  is:inline
+  define:vars={{
+    sending: t('form.sending'),
+    successMsg: t('form.success'),
+    errorMsg: t('form.error'),
+    requiredMsg: t('form.required'),
+    invalidEmailMsg: t('form.invalidEmail'),
+  }}
+>
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('cf-status');
+  const btn = form?.querySelector('button[type="submit"]');
+
+  function setStatus(msg, kind) {
+    if (!status) return;
+    status.textContent = msg;
+    status.style.color = kind === 'error' ? '#9a3324' : kind === 'ok' ? '#3a5a40' : 'var(--color-suave)';
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!(form instanceof HTMLFormElement)) return;
+    const data = new FormData(form);
+
+    const name = String(data.get('name') || '').trim();
+    const email = String(data.get('email') || '').trim();
+    const message = String(data.get('message') || '').trim();
+    const consent = data.get('consent');
+
+    if (!name || !email || !message || !consent) {
+      setStatus(requiredMsg, 'error');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setStatus(invalidEmailMsg, 'error');
+      return;
+    }
+
+    const payload = Object.fromEntries(data.entries());
+    btn?.setAttribute('disabled', 'true');
+    setStatus(sending, 'info');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error('Request failed');
+      form.reset();
+      setStatus(successMsg, 'ok');
+    } catch (err) {
+      setStatus(errorMsg, 'error');
+    } finally {
+      btn?.removeAttribute('disabled');
+    }
+  });
+</script>
+
+<style>
+  .form-label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-carbon);
+  }
+  .form-input {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid var(--color-linea);
+    border-radius: var(--radius-md);
+    background: var(--color-crema);
+    color: var(--color-carbon);
+    font: inherit;
+    transition: border-color 0.2s var(--ease-soft), box-shadow 0.2s var(--ease-soft);
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--color-oliva);
+    box-shadow: 0 0 0 3px rgba(95, 110, 80, 0.15);
+  }
+  .hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  button[disabled] {
+    opacity: 0.6;
+    cursor: progress;
+  }
+</style>

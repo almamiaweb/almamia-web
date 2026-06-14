@@ -1,0 +1,42 @@
+{
+  "name": "almamia-web",
+  "version": "1.0.0",
+  "description": "Web profesional de Alma Mía — chef privada Jenn Garrido Umaña (Ibiza, Barcelona, Mallorca)",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "keywords": [
+    "chef privado",
+    "personal chef",
+    "Ibiza",
+    "Barcelona",
+    "Mallorca",
+    "catering saludable",
+    "cena privada"
+  ],
+  "author": "Alma Mía",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@astrojs/mdx": "^6.0.3",
+    "@astrojs/partytown": "^2.1.7",
+    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/vercel": "^10.0.8",
+    "@vercel/speed-insights": "^2.0.0",
+    "astro": "^6.4.6",
+    "resend": "^6.12.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@tailwindcss/vite": "^4.3.1",
+    "sharp": "^0.35.1",
+    "tailwindcss": "4.3.1",
+    "typescript": "^6.0.3"
+  }
+}

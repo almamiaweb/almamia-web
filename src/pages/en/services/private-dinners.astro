@@ -1,0 +1,56 @@
+---
+import ServicePageLayout from '../../../layouts/ServicePageLayout.astro';
+import { route } from '../../../i18n/routes';
+import heroImage from '../../../assets/placeholders/service-dinner.jpg';
+
+const lang = 'en' as const;
+const related = [
+  { href: route('zoneIbiza', lang), label: 'Private chef in Ibiza' },
+  { href: route('zoneBarcelona', lang), label: 'Private chef in Barcelona' },
+  { href: route('zoneMallorca', lang), label: 'Private chef in Mallorca' },
+];
+---
+
+<ServicePageLayout
+  lang={lang}
+  pageKey="dinners"
+  seoTitle="Private dinners at home | Alma Mía private chef"
+  seoDescription="Private dinners at home in Ibiza, Barcelona and Mallorca. Bespoke multi-course menus with seasonal produce, table styling and the complete service of a private chef."
+  h1="Private dinners"
+  answer="A private dinner service at home: a bespoke multi-course menu, cooked and served in your space, with seasonal produce, thoughtful table styling and the cooking taken care of from start to finish."
+  heroImage={heroImage}
+  heroAlt="Private dinner table at dusk with candles, linen and lavender"
+  intro="A private dinner is far more than eating well: it is the making of a moment. I design multi-course experiences made for lingering, where the cooking happens close by, as part of the conversation."
+  sections={[
+    {
+      h2: 'A menu told, course by course',
+      body: [
+        'Each dinner is composed as a sequence: openers, several main courses with the produce of the moment and a wholesome dessert to close. Flavours from around the world reimagined through a Mediterranean lens, every dish made with care and intention.',
+        'The presentation and table styling —the light, the linen, the dried flowers, the lavender— awaken the senses before the first bite.',
+      ],
+    },
+    {
+      h2: 'For occasions that call for something special',
+      body: [
+        'Anniversaries, intimate celebrations, corporate dinners or, quite simply, a different evening at home. You choose the occasion; I make sure it is memorable and that you have nothing to think about.',
+      ],
+    },
+  ]}
+  includesTitle="What the service includes"
+  includes={[
+    'Bespoke multi-course menu design',
+    'Sourcing and selection of fresh produce',
+    'Preparation in your space',
+    'Table setting and styling',
+    'Service throughout the dinner',
+    'Clean-up, leaving the kitchen spotless',
+  ]}
+  faq={[
+    { q: 'How many courses does a private dinner have?', a: 'It depends on the format we choose: from a three-course proposal to a more extensive tasting menu. We define it together based on the occasion.' },
+    { q: 'Does it include drink pairing?', a: 'I can recommend the pairing and, if you prefer, take care of sourcing the drinks. Tell me what you need and we will fold it into the proposal.' },
+    { q: 'How far in advance should I book?', a: 'The sooner the better, especially in high season. Write to me with your date and I will check availability straight away.' },
+  ]}
+  serviceName="Private dinners at home"
+  serviceDescription="A private dinner service at home with a bespoke multi-course menu, table styling and the complete service of a private chef."
+  related={related}
+/>

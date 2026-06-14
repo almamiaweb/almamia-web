@@ -1,0 +1,56 @@
+---
+import ServicePageLayout from '../../layouts/ServicePageLayout.astro';
+import { route } from '../../i18n/routes';
+import heroImage from '../../assets/placeholders/service-lunch.jpg';
+
+const lang = 'es' as const;
+const related = [
+  { href: route('zoneIbiza', lang), label: 'Chef privado en Ibiza' },
+  { href: route('zoneBarcelona', lang), label: 'Chef privado en Barcelona' },
+  { href: route('zoneMallorca', lang), label: 'Chef privado en Mallorca' },
+];
+---
+
+<ServicePageLayout
+  lang={lang}
+  pageKey="lunches"
+  seoTitle="Comidas y almuerzos privados a domicilio | Alma Mía"
+  seoDescription="Almuerzos mediterráneos saludables a domicilio en Ibiza, Barcelona y Mallorca. Una chef privada que diseña, cocina y sirve para que tú solo disfrutes de la mesa."
+  h1="Comidas y almuerzos"
+  answer="Servicio de comidas y almuerzos privados a domicilio: cocina mediterránea saludable servida al ritmo del día, con producto de temporada y la mesa resuelta de principio a fin, en tu casa o villa."
+  heroImage={heroImage}
+  heroAlt="Plato de almuerzo mediterráneo de temporada con emplatado cuidado"
+  intro="El almuerzo es un momento para reunirse sin solemnidad. Diseño comidas mediterráneas ligeras y completas, pensadas para disfrutar en buena compañía mientras yo me ocupo de todo lo demás."
+  sections={[
+    {
+      h2: 'Mediterráneo saludable, sin renunciar al sabor',
+      body: [
+        'Verduras de temporada, pescado tratado con cuidado, legumbres y cereales bien cocinados, y opciones vegetales de autor. Una cocina que se siente ligera y, a la vez, satisface de verdad.',
+        'Cada menú se construye alrededor del producto del momento, con técnica precisa y sin artificios: dejar que el ingrediente hable.',
+      ],
+    },
+    {
+      h2: 'Para reuniones que merecen calma',
+      body: [
+        'Ideal para comidas familiares, de trabajo o entre amigos en casa, villa o apartamento. Tú pones la mesa y la conversación; yo, la cocina, el servicio y que todo quede impecable.',
+      ],
+    },
+  ]}
+  includesTitle="Qué incluye el servicio"
+  includes={[
+    'Diseño del menú a medida según temporada y preferencias',
+    'Compra y selección de producto fresco',
+    'Elaboración en tu espacio',
+    'Montaje y estilismo de la mesa',
+    'Servicio durante la comida',
+    'Recogida y dejar la cocina impecable',
+  ]}
+  faq={[
+    { q: '¿Qué tipo de cocina ofreces en los almuerzos?', a: 'Cocina mediterránea saludable con sabores del mundo, equilibrada y de temporada, siempre adaptada a tus gustos y necesidades.' },
+    { q: '¿Puedes cocinar en mi casa o villa?', a: 'Sí. Cocino en tu espacio con tu equipamiento; antes de la fecha confirmamos lo necesario para que todo fluya el día de la comida.' },
+    { q: '¿Se adapta el menú a dietas especiales?', a: 'Por completo: opciones vegetarianas, veganas, sin gluten o sin lactosa según se necesite.' },
+  ]}
+  serviceName="Comidas y almuerzos privados a domicilio"
+  serviceDescription="Servicio de almuerzos mediterráneos saludables a domicilio con producto de temporada, montaje de mesa y servicio completo."
+  related={related}
+/>

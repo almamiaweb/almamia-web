@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import AnswerBox from '../../../components/AnswerBox.astro';
+import ServiceCard from '../../../components/ServiceCard.astro';
+import CtaBanner from '../../../components/CtaBanner.astro';
+import { route } from '../../../i18n/routes';
+import { useTranslations } from '../../../i18n/ui';
+
+import imgBreakfast from '../../../assets/placeholders/service-breakfast.jpg';
+import imgLunch from '../../../assets/placeholders/service-lunch.jpg';
+import imgDinner from '../../../assets/placeholders/service-dinner.jpg';
+import imgEvents from '../../../assets/placeholders/service-events.jpg';
+import imgExperience from '../../../assets/placeholders/service-experience.jpg';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+const crumbs = [
+  { name: t('breadcrumb.home'), url: route('home', lang) },
+  { name: t('nav.services'), url: route('services', lang) },
+];
+
+const services = [
+  { key: 'breakfasts' as const, title: 'Healthy breakfasts & brunch', blurb: 'Luminous mornings with fresh produce, plant-based options and wholesome pastries.', image: imgBreakfast, alt: 'Healthy brunch table with fruit and breads' },
+  { key: 'lunches' as const, title: 'Lunches & midday meals', blurb: 'Mediterranean lunches served at the pace of the day.', image: imgLunch, alt: 'Mediterranean lunch plate, carefully plated' },
+  { key: 'dinners' as const, title: 'Private dinners', blurb: 'Multi-course menus made for lingering.', image: imgDinner, alt: 'Private dinner table with candles and lavender' },
+  { key: 'serviceEvents' as const, title: 'Events & celebrations', blurb: 'Birthdays and themed experiences designed to measure.', image: imgEvents, alt: 'Festive event setting with natural décor' },
+  { key: 'experience' as const, title: 'Private chef experience', blurb: 'A complete service from start to finish.', image: imgExperience, alt: 'Private chef finishing a plate' },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  pageKey="services"
+  title="At-home private chef services | Alma Mía"
+  description="Alma Mía services: healthy breakfasts and brunch, lunches, private dinners, events and the complete at-home private chef experience in Ibiza, Barcelona and Mallorca."
+>
+  <Breadcrumbs items={crumbs} />
+
+  <section class="container-alma py-10 md:py-14">
+    <p class="eyebrow reveal">{t('nav.services')}</p>
+    <h1 class="mt-3 text-4xl reveal md:text-5xl lg:text-6xl">Services made for you</h1>
+    <div class="mt-6"><AnswerBox>Alma Mía offers healthy breakfasts and brunch, lunches, private dinners, events and the complete at-home private chef experience, with healthy Mediterranean cooking and seasonal produce.</AnswerBox></div>
+    <p class="mt-6 max-w-2xl text-lg text-[color:var(--color-suave)] reveal">
+      Every service is tailored to the occasion, the space and the people. Choose your starting point; we build the rest together.
+    </p>
+  </section>
+
+  <section class="container-alma pb-12">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {services.map((s) => (
+        <ServiceCard
+          title={s.title}
+          blurb={s.blurb}
+          href={route(s.key, lang)}
+          image={s.image}
+          alt={s.alt}
+          cta={t('cta.readMore')}
+        />
+      ))}
+    </div>
+  </section>
+
+  <CtaBanner lang={lang} />
+</BaseLayout>

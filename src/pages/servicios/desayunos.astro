@@ -1,0 +1,56 @@
+---
+import ServicePageLayout from '../../layouts/ServicePageLayout.astro';
+import { route } from '../../i18n/routes';
+import heroImage from '../../assets/placeholders/service-breakfast.jpg';
+
+const lang = 'es' as const;
+const related = [
+  { href: route('zoneIbiza', lang), label: 'Chef privado en Ibiza' },
+  { href: route('zoneBarcelona', lang), label: 'Chef privado en Barcelona' },
+  { href: route('zoneMallorca', lang), label: 'Chef privado en Mallorca' },
+];
+---
+
+<ServicePageLayout
+  lang={lang}
+  pageKey="breakfasts"
+  seoTitle="Desayunos y brunch saludable a domicilio | Alma Mía"
+  seoDescription="Brunch y desayunos saludables a domicilio en Ibiza, Barcelona y Mallorca. Producto fresco de temporada, opciones vegetales y repostería saludable, con estilismo de mesa cuidado."
+  h1="Desayunos y brunch saludable"
+  answer="Servicio de desayunos y brunch saludable a domicilio: una mesa de mañana equilibrada, con producto fresco de temporada, opciones vegetales y repostería saludable, montada y servida en tu espacio."
+  heroImage={heroImage}
+  heroAlt="Mesa de brunch saludable con fruta de temporada, panes y flores"
+  intro="Empezar el día con una mesa cuidada cambia el tono de toda la jornada. Diseño desayunos y brunch que equilibran sabor y bienestar, pensados para celebrar en confianza o para regalarte una mañana sin prisa."
+  sections={[
+    {
+      h2: 'Una mañana luminosa, equilibrada y bonita',
+      body: [
+        'Panes y bollería saludable recién horneados, fruta en su punto, bowls, opciones vegetales y proteínas suaves. Cada mesa se compone como un pequeño paisaje: color, textura y aroma al servicio de un desayuno que sienta bien.',
+        'Trabajo con producto de temporada y reduzco al mínimo lo superfluo, para que lo que llega a tu plato sea fresco, honesto y reconfortante.',
+      ],
+    },
+    {
+      h2: 'A medida, también en lo dulce',
+      body: [
+        'La repostería saludable es parte del sello de Alma Mía: dulces equilibrados que cierran la mesa sin pesar. Adapto cada propuesta a alergias, intolerancias y preferencias, con alternativas vegetales y sin azúcares añadidos cuando hace falta.',
+      ],
+    },
+  ]}
+  includesTitle="Qué incluye el servicio"
+  includes={[
+    'Diseño del menú a medida según temporada y preferencias',
+    'Compra y selección de producto fresco',
+    'Elaboración en tu espacio',
+    'Montaje y estilismo de la mesa',
+    'Servicio durante la experiencia',
+    'Recogida y dejar la cocina impecable',
+  ]}
+  faq={[
+    { q: '¿Para cuántas personas se puede preparar un brunch?', a: 'Desde un grupo reducido e íntimo hasta celebraciones más amplias. Cuéntame el número de comensales y te preparo una propuesta a medida.' },
+    { q: '¿Hay opciones vegetarianas, veganas o sin gluten?', a: 'Sí. Cada menú se adapta a dietas y alergias, con opciones vegetales y alternativas sin gluten o sin lactosa cuando se necesitan.' },
+    { q: '¿En qué zonas ofreces el servicio de brunch?', a: 'Con base en Ibiza y cobertura en Formentera, además de Barcelona y Mallorca. Para otras ubicaciones, consulta disponibilidad.' },
+  ]}
+  serviceName="Desayunos y brunch saludable a domicilio"
+  serviceDescription="Servicio de desayunos y brunch saludable a domicilio con producto de temporada, opciones vegetales y repostería saludable."
+  related={related}
+/>

@@ -1,0 +1,132 @@
+---
+import '../styles/global.css';
+import { Font } from 'astro:assets';
+import SpeedInsights from '@vercel/speed-insights/astro';
+
+import SEO from '../components/SEO.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import JsonLd from '../components/JsonLd.astro';
+import Analytics from '../components/Analytics.astro';
+import { useTranslations } from '../i18n/ui';
+import type { Locale, RouteKey } from '../i18n/routes';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Locale;
+  pageKey: RouteKey;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+  /** Datos estructurados adicionales (LocalBusiness, Service, Article…). */
+  jsonLd?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  lang,
+  pageKey,
+  ogImage,
+  ogType,
+  noindex,
+  jsonLd = [],
+} = Astro.props;
+
+const t = useTranslations(lang);
+---
+
+<!doctype html>
+<html lang={lang} dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {/* Fuentes: precarga la display (titulares = LCP frecuente) */}
+    <Font cssVariable="--ff-display" preload />
+    <Font cssVariable="--ff-body" />
+
+    <SEO
+      title={title}
+      description={description}
+      lang={lang}
+      pageKey={pageKey}
+      ogImage={ogImage}
+      ogType={ogType}
+      noindex={noindex}
+    />
+
+    {jsonLd.map((data) => <JsonLd data={data} />)}
+
+    {/* Slots GTM/GA4/píxeles (desactivados salvo variables de entorno) */}
+    <Analytics />
+  </head>
+  <body>
+    <a href="#contenido" class="skip-link">{t('common.skipToContent')}</a>
+
+    <Header lang={lang} pageKey={pageKey} />
+
+    <main id="contenido">
+      <slot />
+    </main>
+
+    <Footer lang={lang} />
+    <WhatsAppButton lang={lang} />
+
+    <SpeedInsights />
+
+    <style>
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        z-index: 100;
+        padding: 0.75rem 1.25rem;
+        background: var(--color-oliva-700);
+        color: #fff;
+        border-radius: 0 0 var(--radius-md) 0;
+      }
+      .skip-link:focus {
+        left: 0;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+
+    {/* Micro-animaciones de entrada al scroll (respetan reduced-motion) */}
+    <script>
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const els = document.querySelectorAll('.reveal');
+      if (prefersReduced || !('IntersectionObserver' in window)) {
+        els.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.1 }
+        );
+        els.forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>

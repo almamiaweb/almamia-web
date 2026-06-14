@@ -1,0 +1,78 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { SITE, LEGAL, CONTACT, PENDIENTE } from '../../lib/site';
+
+const lang = 'en' as const;
+---
+
+<LegalLayout
+  lang={lang}
+  pageKey="privacy"
+  title="Privacy policy | Alma Mía"
+  description="Privacy policy of Alma Mía pursuant to the GDPR and the Spanish Data Protection Act (LOPDGDD): what data we process, for what purpose, legal basis, retention and the rights of users."
+  h1="Privacy policy"
+  lastUpdated="14/06/2026"
+>
+  <p>
+    This privacy policy describes how {SITE.brand} processes the personal data that users
+    provide through {SITE.domain}, in accordance with Regulation (EU) 2016/679 (GDPR) and the
+    Spanish Organic Law 3/2018 on the Protection of Personal Data and the guarantee of digital
+    rights (LOPDGDD).
+  </p>
+
+  <h2>1. Data controller</h2>
+  <ul>
+    <li><strong>Controller:</strong> {LEGAL.titularName} {LEGAL.titularName === PENDIENTE && '(pending completion)'}</li>
+    <li><strong>NIF/NIE:</strong> {LEGAL.nif}</li>
+    <li><strong>Address:</strong> {LEGAL.address}</li>
+    <li><strong>Email:</strong> {CONTACT.email}</li>
+  </ul>
+
+  <h2>2. Data we process and purpose</h2>
+  <p>
+    Through the contact form we process the data you provide (name, email, telephone, area,
+    date, number of guests and the message) for the purpose of handling your request for
+    information and, where applicable, preparing a service proposal.
+  </p>
+
+  <h2>3. Legal basis</h2>
+  <p>
+    The legal basis for the processing is your consent, which you give when submitting the form,
+    and the application of pre-contractual measures at your request. You may withdraw your
+    consent at any time.
+  </p>
+
+  <h2>4. Data retention</h2>
+  <p>
+    We will retain your data for as long as necessary to handle your request and, if no
+    contractual relationship is formalised, for the period legally required to address possible
+    liabilities.
+  </p>
+
+  <h2>5. Recipients</h2>
+  <p>
+    Your data will not be disclosed to third parties except where legally required. To send the
+    form emails we use an email delivery service provider (data processor) that acts in
+    accordance with our instructions and with the appropriate safeguards.
+  </p>
+
+  <h2>6. Users' rights</h2>
+  <p>
+    You may exercise your rights of access, rectification, erasure, objection, restriction of
+    processing and data portability by writing to {CONTACT.email}. You also have the right to
+    lodge a complaint with the Spanish Data Protection Agency
+    (<a href="https://www.aepd.es" rel="noopener" target="_blank">www.aepd.es</a>) if you
+    consider that the processing does not comply with the regulations.
+  </p>
+
+  <h2>7. Security measures</h2>
+  <p>
+    {SITE.brand} applies the appropriate technical and organisational measures to ensure the
+    security of personal data and to prevent its alteration, loss or unauthorised access.
+  </p>
+
+  <p>
+    <em>The data marked as {PENDIENTE} must be completed with the controller's actual tax
+    information before the site is published.</em>
+  </p>
+</LegalLayout>

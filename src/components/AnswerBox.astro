@@ -1,0 +1,26 @@
+---
+/**
+ * Respuesta directa (GEO/AEO): ≤40 palabras a la intención de búsqueda de la
+ * sección. Se coloca al inicio de cada página/sección clave.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<p class={`answer-box reveal ${className}`}>
+  <slot />
+</p>
+
+<style>
+  .answer-box {
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 2.6vw, 1.65rem);
+    line-height: 1.45;
+    color: var(--color-carbon);
+    max-width: 44rem;
+    padding-left: 1.1rem;
+    border-left: 3px solid var(--color-ocre);
+  }
+</style>

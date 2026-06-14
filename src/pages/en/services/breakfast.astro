@@ -1,0 +1,56 @@
+---
+import ServicePageLayout from '../../../layouts/ServicePageLayout.astro';
+import { route } from '../../../i18n/routes';
+import heroImage from '../../../assets/placeholders/service-breakfast.jpg';
+
+const lang = 'en' as const;
+const related = [
+  { href: route('zoneIbiza', lang), label: 'Private chef in Ibiza' },
+  { href: route('zoneBarcelona', lang), label: 'Private chef in Barcelona' },
+  { href: route('zoneMallorca', lang), label: 'Private chef in Mallorca' },
+];
+---
+
+<ServicePageLayout
+  lang={lang}
+  pageKey="breakfasts"
+  seoTitle="Healthy breakfasts & brunch at home | Alma Mía"
+  seoDescription="Healthy brunch and breakfasts at home in Ibiza, Barcelona and Mallorca. Fresh seasonal produce, plant-based options and wholesome pastries, with thoughtful table styling."
+  h1="Healthy breakfasts & brunch"
+  answer="A healthy breakfast and brunch service at home: a balanced morning table with fresh seasonal produce, plant-based options and wholesome pastries, set up and served in your space."
+  heroImage={heroImage}
+  heroAlt="Healthy brunch table with seasonal fruit, breads and flowers"
+  intro="Starting the day with a beautifully set table changes the tone of the whole day. I design breakfasts and brunches that balance flavour and wellbeing, made to celebrate among loved ones or simply to gift yourself an unhurried morning."
+  sections={[
+    {
+      h2: 'A luminous, balanced and beautiful morning',
+      body: [
+        'Freshly baked wholesome breads and pastries, fruit at its peak, bowls, plant-based options and gentle proteins. Each table is composed like a small landscape: colour, texture and aroma in service of a breakfast that makes you feel good.',
+        'I work with seasonal produce and pare back anything superfluous, so that what reaches your plate is fresh, honest and comforting.',
+      ],
+    },
+    {
+      h2: 'Bespoke, including the sweet things',
+      body: [
+        'Wholesome pastry is part of the Alma Mía signature: balanced sweets that close the table without weighing it down. I adapt every proposal to allergies, intolerances and preferences, with plant-based alternatives and no added sugars when needed.',
+      ],
+    },
+  ]}
+  includesTitle="What the service includes"
+  includes={[
+    'Bespoke menu design based on the season and your preferences',
+    'Sourcing and selection of fresh produce',
+    'Preparation in your space',
+    'Table setting and styling',
+    'Service throughout the experience',
+    'Clean-up, leaving the kitchen spotless',
+  ]}
+  faq={[
+    { q: 'How many people can a brunch be prepared for?', a: 'From a small, intimate group to larger celebrations. Tell me the number of guests and I will put together a bespoke proposal.' },
+    { q: 'Are there vegetarian, vegan or gluten-free options?', a: 'Yes. Every menu is adapted to diets and allergies, with plant-based options and gluten-free or lactose-free alternatives when needed.' },
+    { q: 'Which areas do you offer the brunch service in?', a: 'Based in Ibiza with coverage in Formentera, as well as Barcelona and Mallorca. For other locations, get in touch to check availability.' },
+  ]}
+  serviceName="Healthy breakfasts & brunch at home"
+  serviceDescription="A healthy breakfast and brunch service at home with seasonal produce, plant-based options and wholesome pastries."
+  related={related}
+/>

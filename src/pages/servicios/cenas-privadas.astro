@@ -1,0 +1,56 @@
+---
+import ServicePageLayout from '../../layouts/ServicePageLayout.astro';
+import { route } from '../../i18n/routes';
+import heroImage from '../../assets/placeholders/service-dinner.jpg';
+
+const lang = 'es' as const;
+const related = [
+  { href: route('zoneIbiza', lang), label: 'Chef privado en Ibiza' },
+  { href: route('zoneBarcelona', lang), label: 'Chef privado en Barcelona' },
+  { href: route('zoneMallorca', lang), label: 'Chef privado en Mallorca' },
+];
+---
+
+<ServicePageLayout
+  lang={lang}
+  pageKey="dinners"
+  seoTitle="Cenas privadas a domicilio | Chef privada Alma Mía"
+  seoDescription="Cenas privadas a domicilio en Ibiza, Barcelona y Mallorca. Menús de varios pasos diseñados a medida, con producto de temporada, estilismo de mesa y servicio completo de una chef privada."
+  h1="Cenas privadas"
+  answer="Servicio de cenas privadas a domicilio: un menú de varios pasos diseñado a medida, cocinado y servido en tu espacio, con producto de temporada, estilismo de mesa cuidado y la cocina resuelta de principio a fin."
+  heroImage={heroImage}
+  heroAlt="Mesa de cena privada al atardecer con velas, lino y lavanda"
+  intro="Una cena privada es mucho más que comer bien: es crear un momento. Diseño experiencias de varios pasos para compartir sin prisa, donde la cocina sucede cerca, como parte de la conversación."
+  sections={[
+    {
+      h2: 'Un menú narrado, paso a paso',
+      body: [
+        'Cada cena se compone como una secuencia: aperturas, varios platos principales con producto del momento y un cierre de repostería saludable. Sabores del mundo reinterpretados con mirada mediterránea, intencionando cada plato con cariño.',
+        'La presentación y el estilismo de mesa —la luz, el lino, las flores secas, la lavanda— preparan los sentidos antes del primer bocado.',
+      ],
+    },
+    {
+      h2: 'Para ocasiones que piden algo especial',
+      body: [
+        'Aniversarios, celebraciones íntimas, cenas de empresa o, simplemente, una velada distinta en casa. Tú eliges la ocasión; yo me ocupo de que sea memorable y de que no tengas que pensar en nada.',
+      ],
+    },
+  ]}
+  includesTitle="Qué incluye el servicio"
+  includes={[
+    'Diseño del menú de varios pasos a medida',
+    'Compra y selección de producto fresco',
+    'Elaboración en tu espacio',
+    'Montaje y estilismo de la mesa',
+    'Servicio durante toda la cena',
+    'Recogida y dejar la cocina impecable',
+  ]}
+  faq={[
+    { q: '¿Cuántos pasos tiene una cena privada?', a: 'Depende del formato que elijamos: desde una propuesta de tres pasos hasta un menú degustación más amplio. Lo definimos juntos según la ocasión.' },
+    { q: '¿Incluye maridaje de bebidas?', a: 'Puedo recomendarte el maridaje y, si lo prefieres, encargarte de la compra de bebidas. Cuéntame qué necesitas y lo integramos en la propuesta.' },
+    { q: '¿Con cuánta antelación conviene reservar?', a: 'Cuanto antes, mejor, sobre todo en temporada alta. Escríbeme con tu fecha y compruebo disponibilidad enseguida.' },
+  ]}
+  serviceName="Cenas privadas a domicilio"
+  serviceDescription="Servicio de cenas privadas a domicilio con menú de varios pasos a medida, estilismo de mesa y servicio completo de chef privada."
+  related={related}
+/>

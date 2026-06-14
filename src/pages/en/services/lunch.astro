@@ -1,0 +1,56 @@
+---
+import ServicePageLayout from '../../../layouts/ServicePageLayout.astro';
+import { route } from '../../../i18n/routes';
+import heroImage from '../../../assets/placeholders/service-lunch.jpg';
+
+const lang = 'en' as const;
+const related = [
+  { href: route('zoneIbiza', lang), label: 'Private chef in Ibiza' },
+  { href: route('zoneBarcelona', lang), label: 'Private chef in Barcelona' },
+  { href: route('zoneMallorca', lang), label: 'Private chef in Mallorca' },
+];
+---
+
+<ServicePageLayout
+  lang={lang}
+  pageKey="lunches"
+  seoTitle="Private lunches & midday meals at home | Alma Mía"
+  seoDescription="Healthy Mediterranean lunches at home in Ibiza, Barcelona and Mallorca. A private chef who designs, cooks and serves so you can simply enjoy the table."
+  h1="Lunches & midday meals"
+  answer="A private lunch service at home: healthy Mediterranean cooking served at the pace of the day, with seasonal produce and the table taken care of from start to finish, in your home or villa."
+  heroImage={heroImage}
+  heroAlt="Seasonal Mediterranean lunch plate, carefully plated"
+  intro="Lunch is a moment to come together without formality. I design light yet complete Mediterranean meals, made to enjoy in good company while I take care of everything else."
+  sections={[
+    {
+      h2: 'Healthy Mediterranean, without compromising on flavour',
+      body: [
+        'Seasonal vegetables, carefully treated fish, well-cooked pulses and grains, and signature plant-based options. A cuisine that feels light and, at the same time, truly satisfies.',
+        'Each menu is built around the produce of the moment, with precise technique and no fuss: letting the ingredient speak.',
+      ],
+    },
+    {
+      h2: 'For gatherings that deserve calm',
+      body: [
+        'Ideal for family, work or friends lunches at home, in a villa or apartment. You bring the table and the conversation; I bring the cooking, the service and leave everything spotless.',
+      ],
+    },
+  ]}
+  includesTitle="What the service includes"
+  includes={[
+    'Bespoke menu design based on the season and your preferences',
+    'Sourcing and selection of fresh produce',
+    'Preparation in your space',
+    'Table setting and styling',
+    'Service throughout the lunch',
+    'Clean-up, leaving the kitchen spotless',
+  ]}
+  faq={[
+    { q: 'What kind of cuisine do you offer for lunches?', a: 'Healthy Mediterranean cooking with flavours from around the world, balanced and seasonal, always tailored to your tastes and needs.' },
+    { q: 'Can you cook in my home or villa?', a: 'Yes. I cook in your space with your equipment; before the date we confirm everything needed so the day runs smoothly.' },
+    { q: 'Is the menu adapted to special diets?', a: 'Completely: vegetarian, vegan, gluten-free or lactose-free options as needed.' },
+  ]}
+  serviceName="Private lunches & midday meals at home"
+  serviceDescription="A healthy Mediterranean lunch service at home with seasonal produce, table setting and complete service."
+  related={related}
+/>

@@ -1,0 +1,92 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import { route } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import { personSchema } from '../../lib/schema';
+import jennImg from '../../assets/placeholders/jenn-portrait.jpg';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+const crumbs = [
+  { name: t('breadcrumb.home'), url: route('home', lang) },
+  { name: t('nav.about'), url: route('about', lang) },
+];
+
+const credentials = [
+  { title: 'Mausi Sebess school (Argentina)', desc: 'Professional culinary training.' },
+  { title: 'Bellart school (Barcelona, 2022)', desc: 'Gastronomic management, healthy gastronomy, fine cuisine and fine pastry.' },
+  { title: '10 years of craft', desc: 'Production kitchens, catering, events and restaurants across several countries.' },
+  { title: 'Alma Mía, since 2024', desc: 'Her own private chef brand based in Ibiza.' },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  pageKey="about"
+  title="About Jenn Garrido Umaña · Chef of Alma Mía"
+  description="Meet Jenn Garrido Umaña, a Colombian chef with 10 years of experience, trained at Mausi Sebess and Bellart. She created Alma Mía in 2024: healthy, intentional Mediterranean cuisine."
+  ogImage="/og/og-default.jpg"
+  jsonLd={[personSchema()]}
+>
+  <Breadcrumbs items={crumbs} />
+
+  <section class="container-alma grid items-center gap-10 py-10 md:py-14 lg:grid-cols-[0.9fr_1.1fr]">
+    <div class="reveal order-2 lg:order-1">
+      <Image
+        src={jennImg}
+        alt="Portrait of Jenn Garrido Umaña, chef of Alma Mía"
+        widths={[500, 800, 1000]}
+        sizes="(min-width: 1024px) 40vw, 90vw"
+        format="avif"
+        loading="eager"
+        fetchpriority="high"
+        class="aspect-[4/5] w-full rounded-[var(--radius-2xl)] object-cover shadow-[var(--shadow-lift)]"
+      />
+    </div>
+    <div class="order-1 lg:order-2">
+      <p class="eyebrow reveal">{t('nav.about')}</p>
+      <h1 class="mt-3 text-4xl reveal md:text-5xl">Jenn Garrido Umaña</h1>
+      <div class="mt-6"><AnswerBox>Jenn Garrido Umaña is a Colombian chef with ten years of experience. Trained at Mausi Sebess and Bellart, she created Alma Mía in 2024 to offer healthy, intentional Mediterranean cuisine as a private chef in Ibiza.</AnswerBox></div>
+    </div>
+  </section>
+
+  <section class="container-narrow py-8">
+    <div class="reveal">
+      <h2 class="text-2xl md:text-3xl">A life among the stoves</h2>
+      <p class="mt-4 text-[color:var(--color-suave)] leading-relaxed">
+        Born in Colombia, Jenn has made cooking her way of looking at the world. Ten years of craft have taken her through food production kitchens, catering, events and restaurants in different countries, building a broad perspective that she now pours into every Alma Mía proposal.
+      </p>
+      <p class="mt-4 text-[color:var(--color-suave)] leading-relaxed">
+        Her training unites the technical discipline of the Mausi Sebess school (Argentina) with the specialisation in gastronomic management, healthy gastronomy, fine cuisine and fine pastry she completed at the Bellart school in Barcelona in 2022.
+      </p>
+    </div>
+
+    <div class="reveal mt-10">
+      <h2 class="text-2xl md:text-3xl">The philosophy of Alma Mía</h2>
+      <p class="mt-4 text-[color:var(--color-suave)] leading-relaxed">
+        Alma Mía was born in 2024 out of a conviction: gastronomy is a sensory experience that nourishes both body and soul. Jenn combines ingredients with creativity and precision, treats fresh produce with respect and gives every dish intention with love.
+      </p>
+      <p class="mt-4 text-[color:var(--color-suave)] leading-relaxed">
+        The result is a healthy Mediterranean cuisine open to flavours from around the world, with carefully considered plating and table styling —lavender, dried flowers, light— that accompany and elevate the experience.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-alma py-8">
+    <h2 class="text-2xl md:text-3xl reveal">Training and career</h2>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2">
+      {credentials.map((c) => (
+        <div class="card-alma reveal p-6">
+          <h3 class="text-xl">{c.title}</h3>
+          <p class="mt-2 text-sm text-[color:var(--color-suave)]">{c.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CtaBanner lang={lang} title="Shall we cook your next occasion together?" />
+</BaseLayout>

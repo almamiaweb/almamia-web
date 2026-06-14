@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import { route } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+const crumbs = [
+  { name: t('breadcrumb.home'), url: route('home', lang) },
+  { name: t('nav.faq'), url: route('faq', lang) },
+];
+
+const faq = [
+  { q: 'What is a private chef at home?', a: 'It is a service in which the chef designs the menu, sources the produce, cooks in your space and takes care of the service and the clean-up. You simply enjoy the experience with your guests.' },
+  { q: 'Which areas does Alma Mía cover?', a: 'The base is in Ibiza and Formentera is also covered, along with Barcelona and Mallorca. For other locations, ask about my availability to travel.' },
+  { q: 'How much does it cost to hire a private chef?', a: 'The price depends on the menu, the number of guests and the location. I always prepare a tailored, no-obligation proposal; write to me with the details.' },
+  { q: 'How do I book an experience?', a: 'Message me on WhatsApp or fill in the contact form with the date, the area and the type of experience. I will reply with availability and a personalised proposal.' },
+  { q: 'Are menus adapted to allergies and diets?', a: 'Yes. Every menu is designed with allergies, intolerances and preferences in mind, with vegetarian, vegan, gluten-free or lactose-free options whenever needed.' },
+  { q: 'What kind of cuisine do you offer?', a: 'Healthy Mediterranean cuisine open to flavours from around the world, with seasonal produce treated with respect and healthy pastry as a complement.' },
+  { q: 'Do you cook in my home or villa with its equipment?', a: 'Yes, I cook in your space. Before the date we confirm everything needed so that on the day of the event it all flows smoothly.' },
+  { q: 'How far in advance should I book?', a: 'The sooner the better, especially in high season. Write to me with your date and I will check availability right away.' },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  pageKey="faq"
+  title="Frequently asked questions · Private chef Alma Mía"
+  description="Answers to the most frequent questions about Alma Mía's private chef service: areas, prices, bookings, diets and allergies, and what the at-home experience is like."
+>
+  <Breadcrumbs items={crumbs} />
+
+  <section class="container-narrow py-10 md:py-14">
+    <p class="eyebrow reveal">{t('nav.faq')}</p>
+    <h1 class="mt-3 text-4xl reveal md:text-5xl">Frequently asked questions</h1>
+    <div class="mt-6"><AnswerBox>We answer the most common questions about Alma Mía's private chef service: areas, prices, bookings, diets and how the at-home experience unfolds.</AnswerBox></div>
+  </section>
+
+  <Faq items={faq} />
+
+  <CtaBanner lang={lang} />
+</BaseLayout>

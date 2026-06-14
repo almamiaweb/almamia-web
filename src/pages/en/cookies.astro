@@ -1,0 +1,51 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { SITE, CONTACT } from '../../lib/site';
+
+const lang = 'en' as const;
+---
+
+<LegalLayout
+  lang={lang}
+  pageKey="cookies"
+  title="Cookie policy | Alma Mía"
+  description="Cookie policy of Alma Mía: which cookies the site uses, for what purpose and how to manage them, pursuant to the Spanish LSSI-CE and data protection regulations."
+  h1="Cookie policy"
+  lastUpdated="14/06/2026"
+>
+  <p>
+    This policy explains what cookies are and which ones the website {SITE.domain} uses, in
+    accordance with the Spanish LSSI-CE and the guidelines of the Spanish Data Protection Agency.
+  </p>
+
+  <h2>1. What are cookies?</h2>
+  <p>
+    Cookies are small files that are downloaded to your device when you visit certain websites
+    and that allow, among other things, preferences to be remembered or the use of the site to
+    be measured.
+  </p>
+
+  <h2>2. Cookies used by this site</h2>
+  <p>
+    This site currently uses only Vercel analytics (Vercel Web Analytics and Speed Insights), a
+    solution that <strong>does not use cookies</strong> nor collect identifiable personal data,
+    and therefore does not require prior consent.
+  </p>
+  <p>
+    Should measurement or advertising tools that do use cookies be incorporated in the future
+    (for example, Google Analytics 4, Google Tag Manager or advertising pixels), this policy will
+    be updated and a consent banner compliant with Consent Mode v2 will be enabled, so that such
+    cookies are only activated after your acceptance.
+  </p>
+
+  <h2>3. Managing cookies</h2>
+  <p>
+    You can allow, block or delete the cookies installed on your device from your browser's
+    settings. Consult your browser's help to find out how to do so.
+  </p>
+
+  <h2>4. More information</h2>
+  <p>
+    If you have any questions about this cookie policy, you can write to us at {CONTACT.email}.
+  </p>
+</LegalLayout>

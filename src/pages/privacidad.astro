@@ -1,0 +1,78 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { SITE, LEGAL, CONTACT, PENDIENTE } from '../lib/site';
+
+const lang = 'es' as const;
+---
+
+<LegalLayout
+  lang={lang}
+  pageKey="privacy"
+  title="Política de privacidad | Alma Mía"
+  description="Política de privacidad de Alma Mía conforme al RGPD y la LOPDGDD: qué datos tratamos, con qué finalidad, base legal, conservación y derechos de las personas usuarias."
+  h1="Política de privacidad"
+  lastUpdated="14/06/2026"
+>
+  <p>
+    Esta política de privacidad describe cómo {SITE.brand} trata los datos personales que las
+    personas usuarias facilitan a través de {SITE.domain}, de conformidad con el Reglamento (UE)
+    2016/679 (RGPD) y la Ley Orgánica 3/2018 de Protección de Datos Personales y garantía de los
+    derechos digitales (LOPDGDD).
+  </p>
+
+  <h2>1. Responsable del tratamiento</h2>
+  <ul>
+    <li><strong>Responsable:</strong> {LEGAL.titularName} {LEGAL.titularName === PENDIENTE && '(pendiente de completar)'}</li>
+    <li><strong>NIF/NIE:</strong> {LEGAL.nif}</li>
+    <li><strong>Domicilio:</strong> {LEGAL.address}</li>
+    <li><strong>Correo electrónico:</strong> {CONTACT.email}</li>
+  </ul>
+
+  <h2>2. Datos que tratamos y finalidad</h2>
+  <p>
+    A través del formulario de contacto tratamos los datos que nos facilitas (nombre, correo
+    electrónico, teléfono, zona, fecha, número de comensales y el mensaje) con la finalidad de
+    atender tu solicitud de información y, en su caso, elaborar una propuesta de servicio.
+  </p>
+
+  <h2>3. Base legal</h2>
+  <p>
+    La base legal del tratamiento es tu consentimiento, que otorgas al enviar el formulario, y
+    la aplicación de medidas precontractuales a petición tuya. Puedes retirar tu consentimiento
+    en cualquier momento.
+  </p>
+
+  <h2>4. Conservación de los datos</h2>
+  <p>
+    Conservaremos tus datos durante el tiempo necesario para atender tu solicitud y, si no llega
+    a formalizarse una relación contractual, durante el plazo legalmente exigible para atender
+    posibles responsabilidades.
+  </p>
+
+  <h2>5. Destinatarios</h2>
+  <p>
+    Tus datos no se cederán a terceros salvo obligación legal. Para el envío de los correos del
+    formulario utilizamos un proveedor de servicios de envío de correo (encargado del
+    tratamiento) que actúa conforme a nuestras instrucciones y con las debidas garantías.
+  </p>
+
+  <h2>6. Derechos de las personas usuarias</h2>
+  <p>
+    Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación del
+    tratamiento y portabilidad escribiendo a {CONTACT.email}. Asimismo, tienes derecho a
+    presentar una reclamación ante la Agencia Española de Protección de Datos
+    (<a href="https://www.aepd.es" rel="noopener" target="_blank">www.aepd.es</a>) si consideras
+    que el tratamiento no se ajusta a la normativa.
+  </p>
+
+  <h2>7. Medidas de seguridad</h2>
+  <p>
+    {SITE.brand} aplica las medidas técnicas y organizativas apropiadas para garantizar la
+    seguridad de los datos personales y evitar su alteración, pérdida o acceso no autorizado.
+  </p>
+
+  <p>
+    <em>Los datos marcados como {PENDIENTE} deben completarse con la información fiscal real del
+    responsable antes de la publicación del sitio.</em>
+  </p>
+</LegalLayout>

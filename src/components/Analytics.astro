@@ -1,0 +1,68 @@
+---
+/**
+ * Slots de analítica y Ads de terceros, cargados FUERA del hilo principal con
+ * Partytown. Todo está DESACTIVADO por defecto: solo se inyecta si existe la
+ * variable de entorno correspondiente.
+ *
+ * ⚠️ CONSENTIMIENTO: GTM, GA4 y los píxeles usan cookies. Antes de activarlos en
+ * producción hace falta un banner de consentimiento (Consent Mode v2). Mientras
+ * tanto, la analítica activa del sitio es Vercel (sin cookies), ya integrada.
+ *
+ * ⚠️ CSP: al activar GTM/GA4 hay que añadir sus dominios a la política CSP en
+ * astro.config.mjs (script-src/connect-src/img-src de googletagmanager.com,
+ * google-analytics.com, etc.). Ver README → Analítica.
+ *
+ * Variables (en .env): PUBLIC_GTM_ID, PUBLIC_GA4_ID, PUBLIC_META_PIXEL_ID,
+ * PUBLIC_GOOGLE_ADS_ID.
+ */
+const gtmId = import.meta.env.PUBLIC_GTM_ID;
+const ga4Id = import.meta.env.PUBLIC_GA4_ID;
+const metaPixelId = import.meta.env.PUBLIC_META_PIXEL_ID;
+const googleAdsId = import.meta.env.PUBLIC_GOOGLE_ADS_ID;
+---
+
+{/* Google Tag Manager (recomendado: orquesta GA4, Ads y Meta desde el contenedor) */}
+{gtmId && (
+  <>
+    <script type="text/partytown" is:inline define:vars={{ gtmId }}>
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    </script>
+    <script type="text/partytown" is:inline src={`https://www.googletagmanager.com/gtm.js?id=${gtmId}`}></script>
+  </>
+)}
+
+{/* GA4 directo (alternativa a GTM si no se usa contenedor) */}
+{!gtmId && ga4Id && (
+  <>
+    <script type="text/partytown" is:inline src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>
+    <script type="text/partytown" is:inline define:vars={{ ga4Id }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', ga4Id);
+    </script>
+  </>
+)}
+
+{/* Google Ads (conversiones). Normalmente se gestiona desde GTM. */}
+{!gtmId && googleAdsId && (
+  <script type="text/partytown" is:inline define:vars={{ googleAdsId }}>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { window.dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', googleAdsId);
+  </script>
+)}
+
+{/* Meta (Facebook/Instagram) Pixel */}
+{metaPixelId && (
+  <script type="text/partytown" is:inline define:vars={{ metaPixelId }}>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', metaPixelId); fbq('track', 'PageView');
+  </script>
+)}

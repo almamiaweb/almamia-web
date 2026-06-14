@@ -1,0 +1,8 @@
+# Alma Mía — robots.txt
+# Indexación permitida. Sitemap referenciado abajo.
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://almamia.es/sitemap-index.xml

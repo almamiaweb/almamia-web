@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import AnswerBox from '../components/AnswerBox.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { route } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+import { localBusinessSchema } from '../lib/schema';
+import { CONTACT, SOCIAL, PENDIENTE, whatsappLink, AREAS_SERVED } from '../lib/site';
+
+const lang = 'es' as const;
+const t = useTranslations(lang);
+const crumbs = [
+  { name: t('breadcrumb.home'), url: route('home', lang) },
+  { name: t('nav.contact'), url: route('contact', lang) },
+];
+const business = localBusinessSchema(lang, '/og/og-default.jpg');
+const waMsg = 'Hola Jenn, me gustaría más información sobre Alma Mía.';
+const phonePending = CONTACT.phone === PENDIENTE;
+const emailPending = CONTACT.email === PENDIENTE;
+---
+
+<BaseLayout
+  lang={lang}
+  pageKey="contact"
+  title="Contacto · Reserva tu experiencia con Alma Mía"
+  description="Contacta con Alma Mía para reservar tu experiencia de chef privada en Ibiza, Barcelona o Mallorca. Escríbeme por WhatsApp o desde el formulario y te preparo una propuesta a medida."
+  jsonLd={[business]}
+>
+  <Breadcrumbs items={crumbs} />
+
+  <section class="container-alma py-10 md:py-14">
+    <p class="eyebrow reveal">{t('nav.contact')}</p>
+    <h1 class="mt-3 text-4xl reveal md:text-5xl lg:text-6xl">Hablemos de tu mesa</h1>
+    <div class="mt-6"><AnswerBox>Cuéntame la ocasión, la fecha y la zona, y te preparo una propuesta a medida. Puedes escribirme por WhatsApp para una respuesta rápida o usar el formulario; te responderé personalmente.</AnswerBox></div>
+  </section>
+
+  <section class="container-alma pb-12">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1.3fr]">
+      <!-- Vías de contacto -->
+      <div class="reveal">
+        <h2 class="text-2xl">Contacto directo</h2>
+        <ul class="mt-5 flex flex-col gap-4 text-[color:var(--color-suave)]">
+          <li>
+            <span class="block text-sm font-semibold text-[color:var(--color-carbon)]">WhatsApp</span>
+            <a href={whatsappLink(waMsg)} class="link-underline" data-cta="whatsapp">{t('cta.whatsapp')}</a>
+          </li>
+          <li>
+            <span class="block text-sm font-semibold text-[color:var(--color-carbon)]">Email</span>
+            {emailPending ? <span>{PENDIENTE}</span> : <a class="link-underline" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>}
+          </li>
+          <li>
+            <span class="block text-sm font-semibold text-[color:var(--color-carbon)]">Teléfono</span>
+            {phonePending ? <span>{PENDIENTE}</span> : <a class="link-underline" href={`tel:${CONTACT.phone.replace(/\s/g, '')}`}>{CONTACT.phone}</a>}
+          </li>
+          <li>
+            <span class="block text-sm font-semibold text-[color:var(--color-carbon)]">Instagram</span>
+            <a class="link-underline" href={SOCIAL.instagram} target="_blank" rel="me noopener">{SOCIAL.instagramHandle}</a>
+          </li>
+          <li>
+            <span class="block text-sm font-semibold text-[color:var(--color-carbon)]">Zonas de servicio</span>
+            <span>{AREAS_SERVED.join(' · ')}</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Formulario -->
+      <div>
+        <h2 class="text-2xl reveal">Escríbeme</h2>
+        <p class="mt-2 text-sm text-[color:var(--color-suave)] reveal">Los campos marcados con * son obligatorios.</p>
+        <div class="mt-5">
+          <ContactForm lang={lang} />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

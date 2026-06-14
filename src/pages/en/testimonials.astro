@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import { route } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import { getTestimonios } from '../../lib/content';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+const all = await getTestimonios(lang);
+const real = all.filter((tt) => !tt.data.pending);
+const crumbs = [
+  { name: t('breadcrumb.home'), url: route('home', lang) },
+  { name: t('nav.testimonials'), url: route('testimonials', lang) },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  pageKey="testimonials"
+  title="Testimonials · What people say about Alma Mía"
+  description="Real reviews and testimonials from Alma Mía clients, private chef in Ibiza, Barcelona and Mallorca. Authentic feedback from genuine private dining experiences."
+>
+  <Breadcrumbs items={crumbs} />
+
+  <section class="container-narrow py-10 md:py-14 text-center">
+    <p class="eyebrow reveal">{t('nav.testimonials')}</p>
+    <h1 class="mt-3 text-4xl reveal md:text-5xl">What you feel at the table</h1>
+    <div class="mt-6 text-left"><AnswerBox>Here we gather real testimonials from Alma Mía clients. We only publish authentic reviews, shared and authorised by those who have lived the experience.</AnswerBox></div>
+  </section>
+
+  <section class="container-narrow pb-12">
+    {real.length > 0 ? (
+      <div class="grid gap-6">
+        {real.map((tt) => (
+          <figure class="card-alma reveal p-7">
+            <blockquote class="text-lg text-[color:var(--color-carbon)] font-serif">“{tt.data.text}”</blockquote>
+            <figcaption class="mt-4 text-sm text-[color:var(--color-suave)]">
+              — {tt.data.author}{tt.data.location ? `, ${tt.data.location}` : ''}{tt.data.service ? ` · ${tt.data.service}` : ''}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    ) : (
+      <div class="card-alma reveal mx-auto max-w-xl p-9 text-center">
+        <hr class="rule-ocre mx-auto" />
+        <p class="mt-5 text-lg text-[color:var(--color-carbon)] font-serif">We are gathering our first real reviews.</p>
+        <p class="mt-3 text-[color:var(--color-suave)]">
+          Very soon, you will find here the words of those who have already enjoyed an experience with Alma Mía. Would you like to be among the first?
+        </p>
+        <a href={route('contact', lang)} class="btn btn-primary mt-6">{t('cta.contact')}</a>
+      </div>
+    )}
+  </section>
+
+  <CtaBanner lang={lang} />
+</BaseLayout>
