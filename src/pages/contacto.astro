@@ -45,14 +45,18 @@ const emailPending = CONTACT.email === PENDIENTE;
             <span class="block text-sm font-semibold text-[color:var(--color-carbon)]">WhatsApp</span>
             <a href={whatsappLink(waMsg)} class="link-underline" data-cta="whatsapp">{t('cta.whatsapp')}</a>
           </li>
-          <li>
-            <span class="block text-sm font-semibold text-[color:var(--color-carbon)]">Email</span>
-            {emailPending ? <span>{PENDIENTE}</span> : <a class="link-underline" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>}
-          </li>
-          <li>
-            <span class="block text-sm font-semibold text-[color:var(--color-carbon)]">Teléfono</span>
-            {phonePending ? <span>{PENDIENTE}</span> : <a class="link-underline" href={`tel:${CONTACT.phone.replace(/\s/g, '')}`}>{CONTACT.phone}</a>}
-          </li>
+          {!emailPending && (
+            <li>
+              <span class="block text-sm font-semibold text-[color:var(--color-carbon)]">Email</span>
+              <a class="link-underline" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+            </li>
+          )}
+          {!phonePending && (
+            <li>
+              <span class="block text-sm font-semibold text-[color:var(--color-carbon)]">Teléfono</span>
+              <a class="link-underline" href={`tel:${CONTACT.phone.replace(/\s/g, '')}`}>{CONTACT.phone}</a>
+            </li>
+          )}
           <li>
             <span class="block text-sm font-semibold text-[color:var(--color-carbon)]">Instagram</span>
             <a class="link-underline" href={SOCIAL.instagram} target="_blank" rel="me noopener">{SOCIAL.instagramHandle}</a>
