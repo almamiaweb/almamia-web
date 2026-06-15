@@ -72,9 +72,10 @@ export default defineConfig({
         // 'frame-ancestors' se ignora en <meta>; el anticlickjacking lo da
         // X-Frame-Options: DENY (cabecera HTTP en vercel.json).
       ],
-      // Permite el toolbar de Vercel (vercel.live) además de los hashes propios.
-      scriptDirective: { resources: ['https://vercel.live'] },
-      styleDirective: { resources: ['https://vercel.live', 'https://assets.vercel.com'] },
+      // OJO: al usar resources hay que incluir 'self' explícito, o Astro lo
+      // reemplaza y bloquea el CSS/JS del propio sitio (mismo origen).
+      scriptDirective: { resources: ["'self'", 'https://vercel.live'] },
+      styleDirective: { resources: ["'self'", 'https://vercel.live', 'https://assets.vercel.com'] },
     },
   },
 
