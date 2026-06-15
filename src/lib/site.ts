@@ -30,12 +30,12 @@ export const CHEF = {
  * NO usar ningún número de Take a Chef ni inventar.
  */
 export const CONTACT: { phone: string; whatsapp: string; email: string } = {
-  // Teléfono propio de Jenn — pendiente de aportar (NO usar el de Take a Chef; no inventar).
-  phone: PENDIENTE,
-  // WhatsApp en formato internacional sin signos para wa.me cuando se aporte.
-  whatsapp: PENDIENTE,
-  // Email de contacto del proyecto (cuenta real de Alma Mía).
-  email: 'almamiaweb@gmail.com',
+  // Teléfono de empresa de Alma Mía (dato real aportado).
+  phone: '+34 636 59 62 97',
+  // WhatsApp en formato internacional (wa.me toma solo los dígitos).
+  whatsapp: '+34636596297',
+  // Email de contacto real de Alma Mía / Jenn.
+  email: 'contacto.jgarrido@gmail.com',
 };
 
 /**

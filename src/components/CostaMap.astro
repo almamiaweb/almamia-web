@@ -1,0 +1,71 @@
+---
+/**
+ * Mapa estilizado de las zonas de servicio: costa de Barcelona + Islas Baleares
+ * (Menorca, Mallorca, Ibiza, Formentera). SVG ligero, sin dependencias.
+ * Colores en hex (los atributos SVG no resuelven var() de CSS).
+ */
+interface Props {
+  class?: string | undefined;
+}
+const { class: className = '' } = Astro.props;
+
+const places: { name: string; x: number; y: number; lx: number; ly: number; anchor: 'start' | 'middle' | 'end' }[] = [
+  { name: 'Barcelona', x: 140, y: 20, lx: 152, ly: 16, anchor: 'start' },
+  { name: 'Menorca', x: 352, y: 150, lx: 338, ly: 138, anchor: 'end' },
+  { name: 'Mallorca', x: 216, y: 192, lx: 216, ly: 234, anchor: 'middle' },
+  { name: 'Ibiza', x: 50, y: 256, lx: 38, ly: 252, anchor: 'end' },
+  { name: 'Formentera', x: 62, y: 286, lx: 62, ly: 306, anchor: 'middle' },
+];
+---
+
+<figure class={className} aria-hidden="false">
+  <svg
+    viewBox="0 0 380 320"
+    class="costa-map h-auto w-full"
+    role="img"
+    aria-label="Zonas de servicio: Barcelona y las Islas Baleares (Menorca, Mallorca, Ibiza y Formentera)"
+  >
+    <!-- Costa peninsular (Barcelona) arriba a la izquierda -->
+    <path d="M0,58 C55,46 110,34 165,6 L165,0 L0,0 Z" fill="#EFE7DA" />
+    <path d="M0,58 C55,46 110,34 165,6" fill="none" stroke="#5F6E50" stroke-width="1.4" stroke-opacity="0.45" />
+
+    <!-- Islas -->
+    <ellipse cx="216" cy="192" rx="41" ry="27" fill="#9CAE8E" fill-opacity="0.45" stroke="#5F6E50" stroke-opacity="0.5" />
+    <ellipse cx="352" cy="150" rx="23" ry="11" fill="#9CAE8E" fill-opacity="0.45" stroke="#5F6E50" stroke-opacity="0.5" />
+    <ellipse cx="50" cy="256" rx="18" ry="14" fill="#9CAE8E" fill-opacity="0.45" stroke="#5F6E50" stroke-opacity="0.5" />
+    <ellipse cx="62" cy="286" rx="9" ry="5" fill="#9CAE8E" fill-opacity="0.45" stroke="#5F6E50" stroke-opacity="0.5" />
+
+    <!-- Marcadores -->
+    {places.map((p) => (
+      <g class="costa-pin">
+        <circle cx={p.x} cy={p.y} r="10" fill="none" stroke="#C9A24E" stroke-opacity="0.4" />
+        <circle cx={p.x} cy={p.y} r="4.5" fill="#C9A24E" />
+      </g>
+    ))}
+
+    <!-- Etiquetas -->
+    {places.map((p) => (
+      <text class="costa-label" x={p.lx} y={p.ly} text-anchor={p.anchor}>{p.name}</text>
+    ))}
+  </svg>
+</figure>
+
+<style>
+  .costa-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    fill: var(--color-carbon);
+  }
+  .costa-pin circle:last-child {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: pinPulse 3s ease-in-out infinite;
+  }
+  .costa-pin:nth-child(2) circle:last-child { animation-delay: 0.4s; }
+  .costa-pin:nth-child(3) circle:last-child { animation-delay: 0.8s; }
+  @keyframes pinPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }
+</style>

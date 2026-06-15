@@ -13,6 +13,7 @@ const { lang, pageKey, overlay = true } = Astro.props;
 const t = useTranslations(lang);
 
 const links: { key: RouteKey; label: string }[] = [
+  { key: 'home', label: t('nav.home') },
   { key: 'services', label: t('nav.services') },
   { key: 'menus', label: t('nav.menus') },
   { key: 'pastEvents', label: t('nav.events') },
@@ -21,10 +22,14 @@ const links: { key: RouteKey; label: string }[] = [
   { key: 'faq', label: t('nav.faq') },
   { key: 'contact', label: t('nav.contact') },
 ];
-const zones: { key: RouteKey; label: string }[] = [
-  { key: 'zoneIbiza', label: 'Ibiza' },
-  { key: 'zoneBarcelona', label: 'Barcelona' },
-  { key: 'zoneMallorca', label: 'Mallorca' },
+// Zonas: "Chef privado en" + ciudades. Las que tienen página propia van con enlace;
+// Menorca y Formentera (cobertura, sin página dedicada) van como texto.
+const zones: { name: string; key?: RouteKey }[] = [
+  { name: 'Ibiza', key: 'zoneIbiza' },
+  { name: 'Mallorca', key: 'zoneMallorca' },
+  { name: 'Menorca' },
+  { name: 'Formentera' },
+  { name: 'Barcelona', key: 'zoneBarcelona' },
 ];
 const home = route('home', lang);
 ---
@@ -51,10 +56,17 @@ const home = route('home', lang);
         <li><a href={route(l.key, lang)}>{l.label}</a></li>
       ))}
     </ul>
-    <div class="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm uppercase tracking-[0.18em] text-[color:var(--color-crema)]/70">
-      {zones.map((z) => (
-        <a href={route(z.key, lang)} class="hover:text-[color:var(--color-ocre)]">Chef · {z.label}</a>
-      ))}
+    <div class="mt-10">
+      <p class="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--color-crema)]/55">Chef privado en</p>
+      <div class="mt-2 flex flex-wrap gap-x-5 gap-y-1.5 text-base text-[color:var(--color-crema)]/85">
+        {zones.map((z) =>
+          z.key ? (
+            <a href={route(z.key, lang)} class="hover:text-[color:var(--color-ocre)]">{z.name}</a>
+          ) : (
+            <span>{z.name}</span>
+          )
+        )}
+      </div>
     </div>
   </div>
 </nav>

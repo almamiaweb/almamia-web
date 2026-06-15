@@ -6,6 +6,7 @@ import type { Locale } from './routes';
 
 export const UI = {
   es: {
+    'nav.home': 'Inicio',
     'nav.services': 'Servicios',
     'nav.zones': 'Zonas',
     'nav.about': 'Sobre Jenn',
@@ -62,6 +63,7 @@ export const UI = {
     'common.relatedZones': 'Dónde trabajo',
   },
   en: {
+    'nav.home': 'Home',
     'nav.services': 'Services',
     'nav.zones': 'Areas',
     'nav.about': 'About Jenn',
