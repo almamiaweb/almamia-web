@@ -581,16 +581,13 @@ a.card-alma:active {
 
 /* Respeto absoluto a quien reduce el movimiento */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
-  .reveal {
-    opacity: 1;
-    transform: none;
+  /* El propietario quiere que las animaciones se vean siempre. Mantenemos las
+     animaciones decorativas (respeto a reduce-motion es WCAG AAA, opcional);
+     el carrusel auto sigue siendo pausable al hover (AA 2.2.2). Solo
+     garantizamos que el contenido sea visible aunque no corra el reveal. */
+  .reveal,
+  .reveal-x {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
