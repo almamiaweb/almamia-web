@@ -60,22 +60,21 @@ export default defineConfig({
   // analítica de Vercel. GTM/GA4 vía Partytown se documentan en el README.
   security: {
     csp: {
+      // CSP limpia: solo el propio sitio (Astro añade los hashes de scripts/
+      // estilos propios automáticamente) + la analítica de Vercel.
+      // 'frame-ancestors' se omite (se ignora en <meta>); el anticlickjacking
+      // lo da X-Frame-Options: DENY (cabecera HTTP en vercel.json).
+      // No se permite vercel.live: su toolbar mete estilos inline incompatibles
+      // con la CSP; se desactiva el Toolbar en Vercel en su lugar.
       directives: [
         "default-src 'self'",
         "img-src 'self' data: https:",
-        "font-src 'self' data: https://vercel.live https://assets.vercel.com",
-        "connect-src 'self' https://*.vercel-insights.com https://vitals.vercel-insights.com https://vercel.live wss://vercel.live",
-        "frame-src https://vercel.live",
+        "font-src 'self' data:",
+        "connect-src 'self' https://*.vercel-insights.com https://vitals.vercel-insights.com",
         "base-uri 'self'",
         "form-action 'self'",
         "object-src 'none'",
-        // 'frame-ancestors' se ignora en <meta>; el anticlickjacking lo da
-        // X-Frame-Options: DENY (cabecera HTTP en vercel.json).
       ],
-      // OJO: al usar resources hay que incluir 'self' explícito, o Astro lo
-      // reemplaza y bloquea el CSS/JS del propio sitio (mismo origen).
-      scriptDirective: { resources: ["'self'", 'https://vercel.live'] },
-      styleDirective: { resources: ["'self'", 'https://vercel.live', 'https://assets.vercel.com'] },
     },
   },
 
