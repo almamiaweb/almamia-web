@@ -1,56 +1,182 @@
 ---
-import ServicePageLayout from '../../layouts/ServicePageLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
 import { route } from '../../i18n/routes';
-import heroImage from '../../assets/placeholders/service-breakfast.jpg';
+import { useTranslations } from '../../i18n/ui';
+import { serviceSchema } from '../../lib/schema';
+import { whatsappLink, SITE } from '../../lib/site';
 
 const lang = 'es' as const;
-const related = [
-  { href: route('zoneIbiza', lang), label: 'Chef privado en Ibiza' },
-  { href: route('zoneBarcelona', lang), label: 'Chef privado en Barcelona' },
-  { href: route('zoneMallorca', lang), label: 'Chef privado en Mallorca' },
+const t = useTranslations(lang);
+const crumbs = [
+  { name: t('breadcrumb.home'), url: route('home', lang) },
+  { name: t('nav.services'), url: route('services', lang) },
+  { name: 'Desayunos y brunch', url: route('breakfasts', lang) },
 ];
+
+const tiers = [
+  {
+    name: 'Desayuno Continental',
+    price: '35€',
+    per: 'por persona · IVA incl.',
+    min: 'Mínimo recomendado: 8-10 personas',
+    tagline: 'Ideal para desayunos ligeros y villas familiares.',
+    featured: false,
+    items: [
+      'Café de especialidad, té e infusiones, leche',
+      'Zumo natural de naranja y fruta fresca de temporada',
+      'Yogur natural/griego y granola o muesli',
+      'Croissants, napolitanas y rollos de canela artesanales',
+      'Pan artesanal, mantequilla, miel y mermeladas',
+      'Tabla mediterránea de quesos y jamón',
+      'Huevos revueltos, cocidos y fritos',
+    ],
+  },
+  {
+    name: 'Desayuno Saludable Mediterráneo Premium',
+    price: '48€',
+    per: 'por persona · IVA incl.',
+    min: 'Mínimo recomendado: 6-8 personas',
+    tagline: 'Superfoods e ingredientes funcionales. Para retreats wellness, villas luxury y grupos fitness.',
+    featured: true,
+    items: [
+      'Shots energéticos (jengibre y espirulina / cúrcuma y naranja)',
+      'Jugo verde detox y jugo rojo antioxidante, zumo de naranja',
+      'Huevos al gusto y tostada mediterránea de setas y aguacate',
+      'Bowls healthy: pudín de chía, avena trasnochada, frutos secos',
+      'Granola casera, yogur griego, crema de anacardos, compota y miel local',
+      'Pan de masa madre, banana bread, pancakes o crepes de avena y coco',
+      'Tabla mediterránea de quesos y jamones, fruta premium',
+      'Café de especialidad y bebidas saludables: golden milk / matcha',
+      'Extras premium: colágeno, proteína, polen, maca, cacao puro, ashwagandha…',
+    ],
+  },
+  {
+    name: 'Alma Mía Brunch Experience',
+    price: '68€',
+    per: 'por persona · IVA incl.',
+    min: 'Experiencia gastronómica soulful y visual',
+    tagline: 'El brunch completo con presentación luxury villa y decoración boho.',
+    featured: false,
+    items: [
+      'Todo lo del Premium, ampliado y con montaje de autor',
+      'Tortilla de patatas / frittata con espinacas y dátiles',
+      'Trío de hummus casero con crudités',
+      'Tostada de burrata y salmón ahumado',
+      'Ensalada de quinoa con vegetales frescos',
+      'Mocktails y aguas infusionadas',
+      'Decoración boho y presentación luxury villa',
+    ],
+  },
+];
+
+const upgrade = {
+  title: 'Mini Brunch Upgrade · +12€ pp',
+  desc: 'Suma un plato premium por persona al Desayuno Continental:',
+  items: [
+    'Tostada mediterránea de setas y aguacate',
+    'Omelette de claras',
+    'Pancakes saludables con frutos rojos',
+    'Smoothie bowl Ibiza tropical o yogur bowl premium',
+    'Tostada de salmón ahumado, mini shakshuka o crepes con frutos rojos',
+  ],
+};
+
+const extras = [
+  'DJ set en vivo (Organic / Afro House)',
+  'Decoración floral y vajilla premium',
+  'Smoothie station y ritual de bienvenida',
+  'Opciones Vegan / Keto / Gluten Free',
+  'Live Cooking Paella Experience',
+];
+
+const faq = [
+  { q: '¿Cuál es el mínimo de personas?', a: 'El Continental se recomienda para 8-10 personas y el Premium/Brunch Experience para 6-8. Cuéntame tu grupo y lo ajustamos.' },
+  { q: '¿Los precios incluyen IVA?', a: 'Sí, todos los precios son por persona con IVA incluido (tarifa de temporada en Ibiza).' },
+  { q: '¿Cómo se reserva la fecha?', a: 'Se solicita un 50% para confirmar la fecha. Escríbeme por WhatsApp o desde el formulario y te paso la propuesta.' },
+  { q: '¿Adaptáis el menú a alergias o dietas?', a: 'Sí. Todos los menús se personalizan según alergias e intolerancias, con opciones vegana, keto o sin gluten.' },
+];
+
+const service = serviceSchema({
+  name: 'Desayunos y brunch privado a domicilio',
+  description: 'Desayunos y brunch privados saludables en villas, retreats y eventos en Ibiza y Barcelona. Tres experiencias desde 35€ por persona.',
+  url: route('breakfasts', lang),
+  image: SITE.url + '/og/og-default.jpg',
+});
 ---
 
-<ServicePageLayout
+<BaseLayout
   lang={lang}
   pageKey="breakfasts"
-  seoTitle="Desayunos y brunch saludable a domicilio | Alma Mía"
-  seoDescription="Brunch y desayunos saludables a domicilio en Ibiza, Barcelona y Mallorca. Producto fresco de temporada, opciones vegetales y repostería saludable, con estilismo de mesa cuidado."
-  h1="Desayunos y brunch saludable"
-  answer="Servicio de desayunos y brunch saludable a domicilio: una mesa de mañana equilibrada, con producto fresco de temporada, opciones vegetales y repostería saludable, montada y servida en tu espacio."
-  heroImage={heroImage}
-  heroAlt="Mesa de brunch saludable con fruta de temporada, panes y flores"
-  intro="Empezar el día con una mesa cuidada cambia el tono de toda la jornada. Diseño desayunos y brunch que equilibran sabor y bienestar, pensados para celebrar en confianza o para regalarte una mañana sin prisa."
-  sections={[
-    {
-      h2: 'Una mañana luminosa, equilibrada y bonita',
-      body: [
-        'Panes y bollería saludable recién horneados, fruta en su punto, bowls, opciones vegetales y proteínas suaves. Cada mesa se compone como un pequeño paisaje: color, textura y aroma al servicio de un desayuno que sienta bien.',
-        'Trabajo con producto de temporada y reduzco al mínimo lo superfluo, para que lo que llega a tu plato sea fresco, honesto y reconfortante.',
-      ],
-    },
-    {
-      h2: 'A medida, también en lo dulce',
-      body: [
-        'La repostería saludable es parte del sello de Alma Mía: dulces equilibrados que cierran la mesa sin pesar. Adapto cada propuesta a alergias, intolerancias y preferencias, con alternativas vegetales y sin azúcares añadidos cuando hace falta.',
-      ],
-    },
-  ]}
-  includesTitle="Qué incluye el servicio"
-  includes={[
-    'Diseño del menú a medida según temporada y preferencias',
-    'Compra y selección de producto fresco',
-    'Elaboración en tu espacio',
-    'Montaje y estilismo de la mesa',
-    'Servicio durante la experiencia',
-    'Recogida y dejar la cocina impecable',
-  ]}
-  faq={[
-    { q: '¿Para cuántas personas se puede preparar un brunch?', a: 'Desde un grupo reducido e íntimo hasta celebraciones más amplias. Cuéntame el número de comensales y te preparo una propuesta a medida.' },
-    { q: '¿Hay opciones vegetarianas, veganas o sin gluten?', a: 'Sí. Cada menú se adapta a dietas y alergias, con opciones vegetales y alternativas sin gluten o sin lactosa cuando se necesitan.' },
-    { q: '¿En qué zonas ofreces el servicio de brunch?', a: 'Con base en Ibiza y cobertura en Formentera, además de Barcelona y Mallorca. Para otras ubicaciones, consulta disponibilidad.' },
-  ]}
-  serviceName="Desayunos y brunch saludable a domicilio"
-  serviceDescription="Servicio de desayunos y brunch saludable a domicilio con producto de temporada, opciones vegetales y repostería saludable."
-  related={related}
-/>
+  title="Desayunos y brunch privado en Ibiza · desde 35€ | Alma Mía"
+  description="Desayunos y brunch privados saludables para villas, retreats y eventos en Ibiza y Barcelona. Tres experiencias: Continental (35€), Premium (48€) y Brunch Experience (68€), IVA incluido."
+  jsonLd={[service]}
+>
+  <Breadcrumbs items={crumbs} />
+
+  <section class="container-alma py-10 md:py-14">
+    <p class="eyebrow reveal">Desayunos y brunch · Ibiza · Barcelona</p>
+    <h1 class="mt-3 text-4xl reveal md:text-5xl lg:text-6xl">Desayunos privados, conscientes y bonitos</h1>
+    <div class="mt-6"><AnswerBox>Experiencias de desayuno y brunch saludable a domicilio para villas, retreats y eventos en Ibiza y Barcelona. Tres niveles desde 35€ por persona (IVA incl.), con producto de temporada y estilismo de mesa cuidado.</AnswerBox></div>
+    <p class="mt-6 max-w-xl text-lg text-[color:var(--color-suave)] reveal">
+      Cocina <em>healthy &amp; soulful</em> mediterránea: ingredientes frescos tratados con respeto e intención, y una mesa pensada para empezar el día sintiéndote bien.
+    </p>
+  </section>
+
+  <!-- Tres niveles con precio -->
+  <section class="container-alma pb-6">
+    <div class="grid gap-6 lg:grid-cols-3">
+      {tiers.map((tier) => (
+        <article class:list={['card-alma reveal flex flex-col p-7', { 'frame-top': tier.featured }]}>
+          {tier.featured && <span class="mb-3 inline-flex w-fit rounded-full bg-[color:var(--color-arena)] px-3 py-1 font-mono text-xs uppercase tracking-[0.15em] text-[color:var(--color-oliva-700)]">Más elegido</span>}
+          <h2 class="text-2xl">{tier.name}</h2>
+          <p class="mt-2 flex items-baseline gap-2">
+            <span class="text-4xl font-serif text-[color:var(--color-oliva-700)]">{tier.price}</span>
+            <span class="text-xs text-[color:var(--color-suave)]">{tier.per}</span>
+          </p>
+          <p class="mt-3 text-sm text-[color:var(--color-suave)]">{tier.tagline}</p>
+          <ul class="mt-5 flex flex-1 flex-col gap-2 text-sm text-[color:var(--color-carbon)]">
+            {tier.items.map((item) => (
+              <li class="flex items-start gap-2">
+                <svg class="mt-1 shrink-0 text-[color:var(--color-oliva)]" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-5 border-t border-[color:var(--color-linea)] pt-4 font-mono text-xs uppercase tracking-[0.12em] text-[color:var(--color-suave)]">{tier.min}</p>
+          <a href={whatsappLink(`Hola Jenn, me interesa el ${tier.name} de Alma Mía.`)} class="btn btn-primary mt-5" data-cta="reserve">Reservar</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Upgrade + extras -->
+  <section class="container-alma py-8">
+    <div class="grid gap-6 md:grid-cols-2">
+      <div class="card-alma reveal p-7">
+        <h2 class="text-xl">{upgrade.title}</h2>
+        <p class="mt-2 text-sm text-[color:var(--color-suave)]">{upgrade.desc}</p>
+        <ul class="mt-4 flex flex-col gap-2 text-sm">
+          {upgrade.items.map((item) => <li class="text-[color:var(--color-carbon)]">· {item}</li>)}
+        </ul>
+      </div>
+      <div class="card-alma reveal bg-[color:var(--color-arena)] p-7">
+        <h2 class="text-xl">Extras disponibles</h2>
+        <p class="mt-2 text-sm text-[color:var(--color-suave)]">Consulta precio y disponibilidad:</p>
+        <ul class="mt-4 flex flex-col gap-2 text-sm">
+          {extras.map((item) => <li class="text-[color:var(--color-carbon)]">· {item}</li>)}
+        </ul>
+      </div>
+    </div>
+    <p class="mt-6 text-center text-sm text-[color:var(--color-suave)] reveal">
+      Tarifa de temporada en Ibiza · Se solicita un 50% para confirmar la fecha · Menús personalizados según alergias e intolerancias.
+    </p>
+  </section>
+
+  <Faq items={faq} title={t('common.faqTitle')} />
+
+  <CtaBanner lang={lang} title="¿Montamos tu desayuno o brunch?" />
+</BaseLayout>
