@@ -63,13 +63,18 @@ export default defineConfig({
       directives: [
         "default-src 'self'",
         "img-src 'self' data: https:",
-        "font-src 'self' data:",
-        "connect-src 'self' https://*.vercel-insights.com https://vitals.vercel-insights.com",
+        "font-src 'self' data: https://vercel.live https://assets.vercel.com",
+        "connect-src 'self' https://*.vercel-insights.com https://vitals.vercel-insights.com https://vercel.live wss://vercel.live",
+        "frame-src https://vercel.live",
         "base-uri 'self'",
         "form-action 'self'",
         "object-src 'none'",
-        "frame-ancestors 'none'",
+        // 'frame-ancestors' se ignora en <meta>; el anticlickjacking lo da
+        // X-Frame-Options: DENY (cabecera HTTP en vercel.json).
       ],
+      // Permite el toolbar de Vercel (vercel.live) además de los hashes propios.
+      scriptDirective: { resources: ['https://vercel.live'] },
+      styleDirective: { resources: ['https://vercel.live', 'https://assets.vercel.com'] },
     },
   },
 
