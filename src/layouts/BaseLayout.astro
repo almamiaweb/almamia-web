@@ -124,6 +124,35 @@ const t = useTranslations(lang);
       }
       if (document.readyState !== 'loading') initReveals();
       else document.addEventListener('DOMContentLoaded', initReveals);
+
+      // Scroll vertical suave por JS para anclajes internos (#...) — desliza
+      // aunque el navegador tenga reduce-motion (que fuerza el scroll nativo instantáneo).
+      function smoothScrollY(targetY: number, duration: number) {
+        const startY = window.scrollY;
+        const change = targetY - startY;
+        if (Math.abs(change) < 1) return;
+        const t0 = performance.now();
+        const ease = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+        const step = (now: number) => {
+          const t = Math.min(1, (now - t0) / duration);
+          window.scrollTo(0, startY + change * ease(t));
+          if (t < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }
+      document.addEventListener('click', (e) => {
+        const t = e.target;
+        const a = t instanceof Element ? t.closest('a[href^="#"]') : null;
+        if (!a) return;
+        const href = a.getAttribute('href');
+        if (!href || href === '#') return;
+        const el = document.querySelector(href);
+        if (!el) return;
+        e.preventDefault();
+        const y = el.getBoundingClientRect().top + window.scrollY - 72;
+        smoothScrollY(y, 700);
+        history.pushState(null, '', href);
+      });
     </script>
   </body>
 </html>

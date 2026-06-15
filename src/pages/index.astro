@@ -135,6 +135,21 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
   </section>
 
   <script>
+    // Scroll horizontal suave por JS (no lo bloquea reduce-motion como sí pasa con scrollIntoView)
+    function smoothScrollX(el: Element, target: number, duration: number) {
+      const start = el.scrollLeft;
+      const change = target - start;
+      if (Math.abs(change) < 1) return;
+      const t0 = performance.now();
+      const ease = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+      const step = (now: number) => {
+        const t = Math.min(1, (now - t0) / duration);
+        el.scrollLeft = start + change * ease(t);
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
     function setupCarousel(carousel: Element, tabs: Element[] | null) {
       const slides = Array.from(carousel.querySelectorAll('.svc-slide'));
       if (slides.length < 1) return null;
@@ -142,7 +157,11 @@ const business = localBusinessSchema(lang, '/og/og-default.jpg');
       let timer: number | null = null;
       const go = (i: number) => {
         idx = (i + slides.length) % slides.length;
-        slides[idx]?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+        const slide = slides[idx];
+        if (!slide) return;
+        const target =
+          slide.getBoundingClientRect().left - carousel.getBoundingClientRect().left + carousel.scrollLeft;
+        smoothScrollX(carousel, target, 650);
       };
       const stop = () => {
         if (timer !== null) { clearInterval(timer); timer = null; }
